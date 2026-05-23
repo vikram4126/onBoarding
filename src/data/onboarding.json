@@ -1,0 +1,419 @@
+[
+  {
+    "day": 1,
+    "tasks": [
+      {
+        "id": "t1_1",
+        "title": "Received Office ID card and Building ID card from reception",
+        "category": "Kommence",
+        "projectCode": "1197827",
+        "taskCode": "01",
+        "status": "pending"
+      },
+      {
+        "id": "t1_2",
+        "title": "Team building",
+        "description": "Intro to each other and some team building activities",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_3",
+        "title": "Intro to KPMG and Values",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_4",
+        "title": "HR Induction",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_5",
+        "title": "IT Induction (Received Laptop)",
+        "description": "Receive your work laptop from IT and complete initial hardware checklist.",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_6",
+        "title": "Admin Induction",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_7",
+        "title": "Finance Induction",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "t1_8",
+        "title": "Meet Reporting Manager",
+        "description": "Introduction 1:1 with your Reporting Manager. Understand team structure, your role, and immediate priorities.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "t1_9",
+        "title": "Setup Corporate Email & Microsoft Teams",
+        "description": "Configure your KPMG email account on Outlook and login to Microsoft Teams.",
+        "category": "IT Setup",
+        "url": "https://portal.office.com",
+        "status": "pending"
+      },
+      {
+        "id": "t1_10",
+        "title": "Configure Laptop — VPN & AVD Setup",
+        "description": "Complete laptop configuration — install VPN client, Azure Virtual Desktop, and verify network access.",
+        "category": "IT Setup",
+        "url": "https://myapps.microsoft.com",
+        "status": "pending"
+      },
+      {
+        "id": "t1_11",
+        "title": "Sign Welcome Kit & Acknowledgement Documents",
+        "description": "Sign and return the Welcome Kit acknowledgement, office policies, and Day 1 induction documents shared by HR.",
+        "category": "HR",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "tasks": [
+      {
+        "id": "t2_1",
+        "title": "Update details in K-Pass (for ID card)",
+        "description": "Login to the Kommence portal and fill in your personal details for ID card generation.",
+        "category": "Kommence",
+        "projectCode": "1197827",
+        "taskCode": "01",
+        "status": "pending",
+        "url": "https://kpmg.com/kommence"
+      },
+      {
+        "id": "t2_2",
+        "title": "Received Permanent ID card",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "t2_3",
+        "title": "Document submission — Pichainlabs portal",
+        "description": "Upload documents related to education, experience, AADHAAR, PAN etc. in the Pichainlabs portal.",
+        "category": "HR",
+        "status": "pending",
+        "url": "https://app.pichainlabs.com"
+      },
+      {
+        "id": "t2_4",
+        "title": "Review 'Welcome to KPMG' e-mail",
+        "description": "Review e-mail received from the HR team. Check bank info, education info etc.",
+        "category": "HR",
+        "remark": "Bank Info, Education info etc.",
+        "status": "pending"
+      },
+      {
+        "id": "t2_5",
+        "title": "TalentKonnect — Personal details update",
+        "description": "Login to TalentKonnect and update your personal profile details.",
+        "category": "HR Portal",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t2_6",
+        "title": "Update Bank Account details in TalentKonnect",
+        "description": "Add your bank account details in TalentKonnect for salary processing.",
+        "category": "HR Portal",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t2_7",
+        "title": "Update Mobile, Home phone number & address on TalentKonnect",
+        "category": "HR Portal",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t2_8",
+        "title": "Connect with your Buddy",
+        "description": "Reach out to your assigned buddy for reporting office, working hours and other information.",
+        "category": "General",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "tasks": [
+      {
+        "id": "t3_1",
+        "title": "New Joiner Independence Confirmation Affidavit",
+        "description": "For Assistant Managers and below KGS (2026). Complete the declaration on the Ask Risk portal.",
+        "category": "Affidavit",
+        "remark": "When was going through the questionnaire, and got engaged with some other things, realized the session got stuck. Raised ticket in 'Ask Risk' portal which then got assigned to some executive. Next day, when I tried to access the link, it was working and completed the declaration.",
+        "status": "pending",
+        "url": "https://askyourrisk.kpmg.com"
+      },
+      {
+        "id": "t3_2",
+        "title": "Sign employment contract",
+        "description": "Received email from Pichainlabs to sign employment contract via AADHAAR based digital sign.",
+        "category": "Affidavit",
+        "status": "pending",
+        "url": "https://app.pichainlabs.com"
+      },
+      {
+        "id": "t3_3",
+        "title": "NEW JOINER KIT — HGS Portal login",
+        "description": "Login to the HGS portal to access salary structure and investment declaration.",
+        "category": "Salary & Investment",
+        "remark": "It's locked and will open in the first week of April",
+        "status": "pending",
+        "url": "https://hgs.kpmg.in"
+      },
+      {
+        "id": "t3_4",
+        "title": "Update PF Form-11, LWF/ESIC",
+        "description": "Received an email from IN-FM Power Platform to update details in the Statutory Compliance portal.",
+        "category": "Statutory Compliance",
+        "remark": "Completed all the details in the portal",
+        "status": "pending",
+        "url": "https://compliance.kpmg.in"
+      },
+      {
+        "id": "t3_5",
+        "title": "New Joiner Independence Training — Personal Independence 2024/25 India",
+        "category": "Mandatory Training",
+        "hours": 2,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com",
+        "deadlineDay": 3
+      },
+      {
+        "id": "t3_6",
+        "title": "Building Public Trust — Independence and Conflicts of Interest (Client Facing)",
+        "category": "Mandatory Training",
+        "hours": 1.75,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com",
+        "deadlineDay": 3
+      },
+      {
+        "id": "t3_7",
+        "title": "Building Public Trust — Our Code",
+        "category": "Mandatory Training",
+        "hours": 1.75,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com",
+        "deadlineDay": 4
+      },
+      {
+        "id": "t3_8",
+        "title": "GBH_KGS_ Financial Crime _2025",
+        "category": "Mandatory Training",
+        "hours": 2,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com",
+        "deadlineDay": 5
+      },
+      {
+        "id": "t3_9",
+        "title": "GBH_KGS_ Protecting Information _2025",
+        "category": "Mandatory Training",
+        "hours": 2,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_10",
+        "title": "New Joiner Mandatory Risk Trainings — Due in 28 days (KGS)",
+        "category": "Mandatory Training",
+        "hours": 2,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_11",
+        "title": "Information Protection and Data Privacy Fundamentals 2025 (IP&DPF)",
+        "category": "Mandatory Training",
+        "hours": 1.66,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_12",
+        "title": "Prevention of Sexual Harassment at Workplace — 2025",
+        "category": "Mandatory Training",
+        "hours": 0.5,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_13",
+        "title": "Complying with Sanctions",
+        "category": "Mandatory Training",
+        "hours": 0,
+        "projectCode": "1705912",
+        "taskCode": "02",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_14",
+        "title": "Essential HR policy and guidelines",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_15",
+        "title": "Inclusion, Diversity and Equity at KGS",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_16",
+        "title": "KGS BCP Training",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_17",
+        "title": "KGS Risk and Data Management",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_18",
+        "title": "Open PD tool and Performance Development at KGS",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_19",
+        "title": "Our Workplace Facilities and Policies",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_20",
+        "title": "Corporate Social Responsibility",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_21",
+        "title": "ESG 101 — Foundations — Now is the time (Module 1)",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_22",
+        "title": "ESG 101 — Foundations — Time for Impact (Module 2)",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_23",
+        "title": "ESG 101 — Foundations — Time to Act (Module 3)",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      },
+      {
+        "id": "t3_24",
+        "title": "Learning and Development",
+        "category": "Required Training",
+        "status": "pending",
+        "url": "https://glms.kpmg.com"
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "tasks": [
+      {
+        "id": "t4_1",
+        "title": "Employee Nomination Form — update Nominees",
+        "description": "Fill in your nominee details for insurance and PF in the HR portal.",
+        "category": "Insurance & Benefits",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t4_2",
+        "title": "Term Life Insurance",
+        "description": "Review your Term Life Insurance coverage details and update nominee information.",
+        "category": "Insurance & Benefits",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t4_3",
+        "title": "Personal Accident Insurance",
+        "description": "Review Personal Accident Insurance policy details assigned to you.",
+        "category": "Insurance & Benefits",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t4_4",
+        "title": "Health Insurance claims / Reimbursement",
+        "description": "Review health insurance coverage and understand the claim/reimbursement process.",
+        "category": "Insurance & Benefits",
+        "status": "pending",
+        "url": "https://talentkonnect.kpmg.in"
+      },
+      {
+        "id": "t4_5",
+        "title": "Full and Final Settlement",
+        "description": "If applicable, complete the full and final settlement process for previous employment.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "t4_6",
+        "title": "Any other legitimate due(s)",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "t4_7",
+        "title": "UK Email ID password change and AVD setup",
+        "description": "Change your UK email password as per security policy and complete AVD configuration.",
+        "category": "IT Setup",
+        "status": "pending",
+        "url": "https://myapps.microsoft.com"
+      }
+    ]
+  }
+]

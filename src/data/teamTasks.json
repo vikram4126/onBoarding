@@ -1,0 +1,68 @@
+{
+  "Development": [
+    { "id": "dev1", "day": 4, "title": "Request GitHub/GitLab Repository Access", "description": "Raise a ticket with IT to get access to the company's version control repositories.", "category": "IT Setup", "status": "pending" },
+    { "id": "dev2", "day": 4, "title": "Clone Core Repositories & Run Locally", "description": "Clone the main project repos and verify the app runs on your local machine.", "category": "IT Setup", "status": "pending" },
+    { "id": "dev3", "day": 4, "title": "Setup Development Environment", "description": "Install Docker, Node.js, Python, or other required tools as per team stack.", "category": "IT Setup", "status": "pending" },
+    { "id": "dev4", "day": 4, "title": "Install VS Code / IDE Extensions", "description": "Install recommended extensions, linters, and formatters defined in project .vscode settings.", "category": "IT Setup", "status": "pending" },
+    { "id": "dev5", "day": 5, "title": "Jira / Azure DevOps Access", "description": "Request access to the team's project management and sprint board.", "category": "Tools Access", "status": "pending" },
+    { "id": "dev6", "day": 5, "title": "Review Coding Standards & PR Guidelines", "description": "Read the team's coding conventions, branch naming strategy, and PR review process.", "category": "Team Processes", "status": "pending" },
+    { "id": "dev7", "day": 5, "title": "Meet Tech Lead & Understand Architecture", "description": "Schedule a 1:1 with your tech lead to understand the system architecture and tech stack.", "category": "Team Processes", "status": "pending" },
+    { "id": "dev8", "day": 6, "title": "Complete First Assigned Story/Ticket", "description": "Pick up your first development ticket and complete it with a PR raised for review.", "category": "Work", "status": "pending" },
+    { "id": "dev9", "day": 6, "title": "Attend Sprint Planning / Stand-up", "description": "Join the team's daily stand-up and sprint planning sessions.", "category": "Team Processes", "status": "pending" }
+  ],
+  "QA": [
+    { "id": "qa1", "day": 4, "title": "Request Jira / Zephyr Access", "description": "Get access to the test management tool used by the QA team.", "category": "Tools Access", "status": "pending" },
+    { "id": "qa2", "day": 4, "title": "Request Test Environment Access", "description": "Get credentials and VPN access to QA/UAT environments.", "category": "IT Setup", "status": "pending" },
+    { "id": "qa3", "day": 5, "title": "Review QA Process & Test Strategy", "description": "Study the internal testing guidelines, test case templates, and methodologies.", "category": "Team Processes", "status": "pending" },
+    { "id": "qa4", "day": 5, "title": "Meet QA Lead & Understand Active Projects", "description": "Schedule a 1:1 with your QA lead to understand what projects are currently in testing.", "category": "Team Processes", "status": "pending" },
+    { "id": "qa5", "day": 5, "title": "Setup Postman / API Testing Tools", "description": "Install and configure API testing tools required by the team.", "category": "IT Setup", "status": "pending" },
+    { "id": "qa6", "day": 6, "title": "Review Existing Test Cases", "description": "Go through existing regression and smoke test suites for the assigned project.", "category": "Work", "status": "pending" },
+    { "id": "qa7", "day": 6, "title": "Execute First Test Cycle", "description": "Run your first set of test cases and log defects in Jira.", "category": "Work", "status": "pending" }
+  ],
+  "Design": [
+    { "id": "des1", "day": 4, "title": "Join Corporate Figma Organization", "description": "Request IT/Design Lead to add you to the company's Figma workspace.", "category": "Tools Access", "status": "pending" },
+    { "id": "des2", "day": 4, "title": "Request Adobe Creative Cloud Access", "description": "Raise a request for Adobe CC license if required for your role.", "category": "Tools Access", "status": "pending" },
+    { "id": "des3", "day": 5, "title": "Study Design System & Component Library", "description": "Review the core UI component library, design tokens, and KPMG brand guidelines.", "category": "Team Processes", "status": "pending" },
+    { "id": "des4", "day": 5, "title": "Meet Design Lead & Review Active Projects", "description": "Schedule a 1:1 with the design lead to understand ongoing projects and your role.", "category": "Team Processes", "status": "pending" },
+    { "id": "des5", "day": 5, "title": "Review Brand Guidelines & Style Guide", "description": "Go through KPMG brand guidelines, typography, color palettes, and usage rules.", "category": "Team Processes", "status": "pending" },
+    { "id": "des6", "day": 6, "title": "First Design Assignment", "description": "Pick up your first design task, create wireframes or mockups and share for feedback.", "category": "Work", "status": "pending" }
+  ],
+  "HR": [
+    { "id": "hr1", "day": 4, "title": "Access TalentKonnect HR Portal (Full Access)", "description": "Verify full access to TalentKonnect for payroll, leaves, and HR requests.", "category": "HR Systems", "status": "pending" },
+    { "id": "hr2", "day": 4, "title": "Understand Onboarding Process End-to-End", "description": "Review the complete new joiner onboarding checklist and process owned by HR.", "category": "HR Processes", "status": "pending" },
+    { "id": "hr3", "day": 4, "title": "Access HRMS / People Analytics Tool", "description": "Get credentials for the HRMS system used by the team.", "category": "Tools Access", "status": "pending" },
+    { "id": "hr4", "day": 5, "title": "Meet HR Business Partner", "description": "Introduction with your HR BP who will be your primary point of contact.", "category": "HR Processes", "status": "pending" },
+    { "id": "hr5", "day": 5, "title": "Review HR Policies & Employee Handbook", "description": "Read and acknowledge the company's HR policies, leave policies, and code of conduct.", "category": "HR Processes", "status": "pending" },
+    { "id": "hr6", "day": 5, "title": "Understand Payroll & Compensation Structure", "description": "Get briefed on payroll cycles, salary components, and reimbursement processes.", "category": "HR Processes", "status": "pending" },
+    { "id": "hr7", "day": 6, "title": "Assist in Next Batch Onboarding", "description": "Shadow or assist in onboarding the next batch of new joiners to learn the process.", "category": "Work", "status": "pending" },
+    { "id": "hr8", "day": 6, "title": "Update Employee Records", "description": "Verify and update all employee records for recent joiners in the HRMS system.", "category": "Work", "status": "pending" }
+  ],
+  "Finance": [
+    { "id": "fin1", "day": 4, "title": "Access SAP / ERP Finance System", "description": "Request IT to provision access to the ERP/SAP system used by the Finance team.", "category": "Tools Access", "status": "pending" },
+    { "id": "fin2", "day": 4, "title": "Access Expense Management Tool", "description": "Get access to the expense management portal (Concur/Zoho Expense etc.).", "category": "Tools Access", "status": "pending" },
+    { "id": "fin3", "day": 5, "title": "Meet Finance Manager & Understand Team Structure", "description": "1:1 with Finance Manager to understand the team's responsibilities and reporting structure.", "category": "Team Processes", "status": "pending" },
+    { "id": "fin4", "day": 5, "title": "Review Chart of Accounts & Coding Structure", "description": "Study the company's chart of accounts, cost centres, and project codes.", "category": "Finance Processes", "status": "pending" },
+    { "id": "fin5", "day": 5, "title": "Understand Month-End Closing Process", "description": "Review the monthly financial close checklist and key deadlines.", "category": "Finance Processes", "status": "pending" },
+    { "id": "fin6", "day": 6, "title": "Review Compliance & Internal Controls", "description": "Study KPMG's internal financial controls, audit requirements, and compliance checklists.", "category": "Compliance", "status": "pending" },
+    { "id": "fin7", "day": 6, "title": "First Financial Report Preparation", "description": "Assist in preparing a standard financial report or reconciliation under supervision.", "category": "Work", "status": "pending" }
+  ],
+  "IT Support": [
+    { "id": "it1", "day": 4, "title": "Access IT Ticketing System (ServiceNow)", "description": "Get full access to the IT helpdesk ticketing system to handle support requests.", "category": "Tools Access", "status": "pending" },
+    { "id": "it2", "day": 4, "title": "Access Network & Server Infrastructure Tools", "description": "Get access to network monitoring, AD, and server management tools.", "category": "Tools Access", "status": "pending" },
+    { "id": "it3", "day": 4, "title": "Understand IT Asset Inventory", "description": "Review the IT asset register and understand the device procurement and assignment process.", "category": "IT Processes", "status": "pending" },
+    { "id": "it4", "day": 5, "title": "Meet IT Manager & Understand Team Responsibilities", "description": "Introduction with the IT manager and understand L1/L2/L3 support structure.", "category": "Team Processes", "status": "pending" },
+    { "id": "it5", "day": 5, "title": "Review IT Security Policies & SOPs", "description": "Study the IT security policies, incident response plan, and standard operating procedures.", "category": "IT Processes", "status": "pending" },
+    { "id": "it6", "day": 5, "title": "Understand Laptop Setup & Provisioning Process", "description": "Learn the standard process for setting up new employee laptops and software installation.", "category": "IT Processes", "status": "pending" },
+    { "id": "it7", "day": 6, "title": "Handle First Support Ticket", "description": "Resolve your first assigned IT support ticket under supervision.", "category": "Work", "status": "pending" },
+    { "id": "it8", "day": 6, "title": "Configure AVD / VPN Access for New Joiners", "description": "Assist in setting up AVD and VPN for new joiners as per the IT checklist.", "category": "Work", "status": "pending" }
+  ],
+  "Marketing": [
+    { "id": "mkt1", "day": 4, "title": "Access Marketing Automation Tools", "description": "Get access to tools like HubSpot, Marketo, or Salesforce Marketing Cloud.", "category": "Tools Access", "status": "pending" },
+    { "id": "mkt2", "day": 4, "title": "Access Social Media Management Platform", "description": "Get credentials for the social media scheduling and analytics platform.", "category": "Tools Access", "status": "pending" },
+    { "id": "mkt3", "day": 5, "title": "Meet Marketing Lead & Review Campaign Calendar", "description": "Introduction with the Marketing Manager and review the current campaign schedule.", "category": "Team Processes", "status": "pending" },
+    { "id": "mkt4", "day": 5, "title": "Study KPMG Brand Voice & Content Guidelines", "description": "Review brand tone of voice, content templates, approval workflows, and compliance rules.", "category": "Team Processes", "status": "pending" },
+    { "id": "mkt5", "day": 5, "title": "Review Existing Campaign Performance Reports", "description": "Study past campaign analytics to understand what's working and areas for improvement.", "category": "Team Processes", "status": "pending" },
+    { "id": "mkt6", "day": 6, "title": "First Content Assignment", "description": "Draft your first piece of content (social post, blog, email) and submit for review.", "category": "Work", "status": "pending" },
+    { "id": "mkt7", "day": 6, "title": "Attend Marketing Team Standup / Meeting", "description": "Join the regular marketing team sync to understand ongoing campaigns and priorities.", "category": "Work", "status": "pending" }
+  ]
+}
