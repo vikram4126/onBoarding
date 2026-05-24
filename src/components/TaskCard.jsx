@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 
 const CATEGORY_URLS = {
@@ -13,7 +13,7 @@ const CATEGORY_URLS = {
   'Affidavit': 'https://askyourrisk.kpmg.com'
 };
 
-const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }) => {
+const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, currentDay = 1 }) => {
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const initialNoteText = note || task.remark || '';
   const [noteText, setNoteText] = useState(initialNoteText);
@@ -29,6 +29,53 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
   const contact = contactsData[task.title.length % contactsData.length];
 
   const currentNote = note !== undefined ? note : task.remark;
+
+  const getDueStatus = () => {
+    if (isCompleted) {
+      return { 
+        text: 'Completed', 
+        colorClass: 'text-green-700', 
+        icon: <CheckCircle2 className="w-3.5 h-3.5 text-green-600" /> 
+      };
+    }
+    
+    // Fallback: If deadlineDay is present, use it. Otherwise, use task.day if it's a number.
+    const targetDay = task.deadlineDay || (task.day !== 'Custom' && !isNaN(parseInt(task.day)) ? parseInt(task.day) : null);
+    
+    if (!targetDay || isNaN(targetDay)) {
+      return { 
+        text: 'Pending', 
+        colorClass: 'text-slate-400', 
+        icon: <Clock className="w-3.5 h-3.5 text-slate-400" /> 
+      };
+    }
+    
+    if (currentDay === targetDay) {
+      return { 
+        text: 'Due Today', 
+        colorClass: 'text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/50', 
+        icon: <Clock className="w-3.5 h-3.5 text-amber-600" /> 
+      };
+    } else if (currentDay === targetDay + 1) {
+      return { 
+        text: 'Due Yesterday', 
+        colorClass: 'text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200/50 font-semibold', 
+        icon: <AlertCircle className="w-3.5 h-3.5 text-rose-500" /> 
+      };
+    } else if (currentDay > targetDay + 1) {
+      return { 
+        text: 'Overdue', 
+        colorClass: 'text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200/50 font-bold', 
+        icon: <AlertCircle className="w-3.5 h-3.5 text-red-600" /> 
+      };
+    } else {
+      return { 
+        text: `Due Day ${targetDay}`, 
+        colorClass: 'text-slate-500 bg-slate-50 px-2 py-0.5 rounded border border-slate-200/50', 
+        icon: <Clock className="w-3.5 h-3.5 text-slate-400" /> 
+      };
+    }
+  };
 
   return (
     <div className={`card p-3 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
@@ -142,16 +189,15 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
           {/* Footer Row */}
           <div className="flex items-center justify-between pt-2.5 mt-1.5">
             <div className="flex items-center gap-2">
-              {isCompleted ? (
-                <>
-                  <div className="flex items-center gap-1 text-green-700">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span className="text-[13px] font-semibold">Completed</span>
+              {(() => {
+                const status = getDueStatus();
+                return (
+                  <div className={`flex items-center gap-1 text-[13px] ${status.colorClass}`}>
+                    {status.icon}
+                    <span className="font-semibold">{status.text}</span>
                   </div>
-                </>
-              ) : (
-                <span className="text-[13px] font-medium text-slate-400"></span>
-              )}
+                );
+              })()}
             </div>
             
             <div className="flex items-center gap-3">

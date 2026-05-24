@@ -144,6 +144,7 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                           saveNote={saveNote}
                           onDeleteTask={onDeleteTask}
                           onEditTask={onEditTask}
+                          currentDay={currentDay}
                         />
                       ))}
                     </div>
