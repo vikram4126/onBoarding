@@ -69,10 +69,11 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                 </div>
               )}
 
-              {task.category && (
-                CATEGORY_URLS[task.category] ? (
+              {task.category && (() => {
+                const categoryLink = task.url || CATEGORY_URLS[task.category];
+                return categoryLink ? (
                   <a
-                    href={CATEGORY_URLS[task.category]}
+                    href={categoryLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={e => e.stopPropagation()}
@@ -85,8 +86,8 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-medium border border-blue-100 whitespace-nowrap">
                     <Folder className="w-2.5 h-2.5" /> {task.category}
                   </span>
-                )
-              )}
+                );
+              })()}
               {task.type === 'team' && (
                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[10px] font-medium whitespace-nowrap">
                   <Tag className="w-2.5 h-2.5" /> Team

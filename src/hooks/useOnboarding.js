@@ -13,25 +13,35 @@ export const useOnboarding = () => {
   useEffect(() => {
     if (!profile) return;
 
-    // Build the full expected task list from JSON
-    let baseTasks = [];
-    onboardingData.forEach(dayPlan => {
-      dayPlan.tasks.forEach(task => {
-        baseTasks.push({ ...task, day: dayPlan.day, type: 'default' });
-      });
-    });
+    // Check if manager has uploaded an Excel template
+    const taskTemplate = getStorage(STORAGE_KEYS.TASK_TEMPLATE, null);
 
-    if (profile.team && teamTasksData[profile.team]) {
-      teamTasksData[profile.team].forEach(task => {
-        baseTasks.push({ ...task, type: 'team' });
+    let baseTasks = [];
+
+    if (taskTemplate) {
+      // Use manager-uploaded Excel tasks: Common + team-specific
+      const commonTasks = taskTemplate['Common'] || [];
+      const teamTasks = profile.team ? (taskTemplate[profile.team] || []) : [];
+      baseTasks = [...commonTasks, ...teamTasks];
+    } else {
+      // Fallback: use onboarding.json + teamTasks.json
+      onboardingData.forEach(dayPlan => {
+        dayPlan.tasks.forEach(task => {
+          baseTasks.push({ ...task, day: dayPlan.day, type: 'default' });
+        });
       });
+      if (profile.team && teamTasksData[profile.team]) {
+        teamTasksData[profile.team].forEach(task => {
+          baseTasks.push({ ...task, type: 'team' });
+        });
+      }
     }
 
-    // Build a set of all valid task IDs from JSON (to remove stale ones)
+    // Build a set of all valid task IDs
     const validIds = new Set(baseTasks.map(t => t.id));
     const currentTasks = getStorage(STORAGE_KEYS.TASKS, {});
 
-    // Remove stale tasks that no longer exist in JSON (e.g., from old team)
+    // Remove stale tasks that no longer exist
     const cleanedTasks = {};
     Object.keys(currentTasks).forEach(id => {
       if (validIds.has(id)) {
@@ -39,7 +49,7 @@ export const useOnboarding = () => {
       }
     });
 
-    // Merge: keep existing status but sync all other fields from JSON
+    // Merge: keep existing status but sync all other fields
     let isUpdated = Object.keys(cleanedTasks).length !== Object.keys(currentTasks).length;
     baseTasks.forEach(task => {
       const existing = cleanedTasks[task.id];

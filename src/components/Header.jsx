@@ -1,14 +1,26 @@
 import React, { useState } from 'react';
-import { Search, Plus, Bell, AlertCircle, Calendar } from 'lucide-react';
+import { Search, Plus, Bell, AlertCircle, Calendar, Menu } from 'lucide-react';
 
-const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1 }) => {
+const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1, onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   
-  const overdueTasks = tasks.filter(t => t.deadlineDay && currentDay > t.deadlineDay && t.status !== 'completed');
+  const overdueTasks = tasks.filter(t => {
+    if (t.status === 'completed') return false;
+    if (t.deadlineDay && currentDay > t.deadlineDay) return true;
+    if (t.day && t.day !== 'Custom' && parseInt(t.day) < currentDay) return true;
+    return false;
+  });
+
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10">
-      <div className="flex-1 flex items-center">
-        <div className="relative w-96">
+      <div className="flex-1 flex items-center gap-3">
+        <button 
+          onClick={onToggleSidebar}
+          className="p-2 -ml-2 text-slate-500 hover:text-primary-600 lg:hidden"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+        <div className="relative w-full max-w-sm">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input 
             type="text" 
@@ -58,7 +70,7 @@ const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1 }) =>
                         <div>
                           <p className="text-sm font-medium text-slate-800 leading-tight mb-1">{task.title}</p>
                           <p className="text-xs text-red-600 font-medium flex items-center gap-1">
-                            <Calendar className="w-3 h-3" /> Was due Day {task.deadlineDay}
+                            <Calendar className="w-3 h-3" /> Was due Day {task.deadlineDay || task.day}
                           </p>
                         </div>
                       </div>

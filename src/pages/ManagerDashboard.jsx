@@ -1,11 +1,13 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Users, LogOut, FileJson, CheckCircle2, Target, Calendar } from 'lucide-react';
+import { Upload, Users, LogOut, FileJson, CheckCircle2, Target, Calendar, Settings } from 'lucide-react';
 import { getStorage, setStorage, STORAGE_KEYS } from '../utils/storage';
 import kpmgLogo from '../assets/kpmg-logo.svg';
+import TaskManager from '../components/TaskManager';
 
 const ManagerDashboard = ({ onLogout }) => {
   const [employees, setEmployees] = useState(() => getStorage(STORAGE_KEYS.MANAGER_EMPLOYEES, []));
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [activeTab, setActiveTab] = useState('team');
   const fileInputRef = useRef(null);
 
   const handleFileUpload = (e) => {
@@ -209,12 +211,14 @@ const ManagerDashboard = ({ onLogout }) => {
             onChange={handleFileUpload} 
             className="hidden" 
           />
-          <button 
-            onClick={() => fileInputRef.current?.click()}
-            className="btn-primary py-2 px-4 text-sm flex items-center gap-2"
-          >
-            <Upload className="w-4 h-4" /> Import Employee File
-          </button>
+          {activeTab === 'team' && (
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              className="btn-primary py-2 px-4 text-sm flex items-center gap-2"
+            >
+              <Upload className="w-4 h-4" /> Import Employee File
+            </button>
+          )}
           
           <button 
             onClick={onLogout}
@@ -226,8 +230,39 @@ const ManagerDashboard = ({ onLogout }) => {
         </div>
       </header>
 
+      {/* Tab Navigation */}
+      <div className="bg-white border-b border-slate-200 px-6">
+        <div className="flex gap-1">
+          <button
+            onClick={() => setActiveTab('team')}
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'team' ? 'border-primary-500 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            <Users className="w-4 h-4" /> My Team
+          </button>
+          <button
+            onClick={() => setActiveTab('tasks')}
+            className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              activeTab === 'tasks' ? 'border-primary-500 text-primary-600' : 'border-transparent text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            <Settings className="w-4 h-4" /> Task Manager
+          </button>
+        </div>
+      </div>
+
       <main className="flex-1 overflow-auto p-8">
-        <div className="max-w-6xl mx-auto">
+        {activeTab === 'tasks' ? (
+          <div className="max-w-2xl mx-auto">
+            <div className="flex items-center gap-3 mb-6">
+              <Settings className="w-6 h-6 text-primary-500" />
+              <h2 className="text-xl font-bold text-slate-800">Task Manager</h2>
+            </div>
+            <TaskManager />
+          </div>
+        ) : (
+          <div className="max-w-6xl mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <Users className="w-6 h-6 text-primary-500" />
             <h2 className="text-xl font-bold text-slate-800">My Team ({employees.length})</h2>
@@ -305,6 +340,7 @@ const ManagerDashboard = ({ onLogout }) => {
             </div>
           )}
         </div>
+        )}
       </main>
     </div>
   );

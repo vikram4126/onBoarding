@@ -9,6 +9,7 @@ import AddTaskModal from '../components/AddTaskModal';
 const Dashboard = () => {
   const { profile, tasks, toggleTask, addCustomTask, deleteCustomTask, editCustomTask, resetProfile, notes, saveNote, currentDay } = useOnboarding();
   const [activeTab, setActiveTab] = useState('timeline');
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAddTaskModalOpen, setAddTaskModalOpen] = useState(false);
   const [selectedDayForTask, setSelectedDayForTask] = useState('Custom');
   const [editingTask, setEditingTask] = useState(null);
@@ -44,10 +45,21 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-[#f8fafc] overflow-hidden">
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} profile={profile} onReset={resetProfile} />
+      {/* Mobile Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-20 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - fixed on mobile, relative on desktop */}
+      <div className={`fixed inset-y-0 left-0 z-30 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <Sidebar activeTab={activeTab} setActiveTab={(tab) => { setActiveTab(tab); setSidebarOpen(false); }} profile={profile} onReset={resetProfile} />
+      </div>
       
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
-        <Header profile={profile} onSearch={handleSearch} onAddTask={() => handleOpenAddTask('Custom')} tasks={tasks} currentDay={currentDay} />
+      <div className="flex-1 flex flex-col h-full overflow-hidden relative w-full">
+        <Header profile={profile} onSearch={handleSearch} onAddTask={() => handleOpenAddTask('Custom')} tasks={tasks} currentDay={currentDay} onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
         
         <main className="flex-1 overflow-auto">
           <div className="flex h-full">
