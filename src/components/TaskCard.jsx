@@ -31,31 +31,31 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
   const currentNote = note !== undefined ? note : task.remark;
 
   return (
-    <div className={`card p-4 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
-      <div className="flex gap-3">
+    <div className={`card p-3 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
+      <div className="flex gap-2.5">
         {/* Checkbox */}
         <button 
           onClick={() => toggleTask(task.id)}
-          className={`mt-1 w-6 h-6 rounded-md flex items-center justify-center border-2 transition-all duration-200 flex-shrink-0
+          className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border-2 transition-all duration-200 flex-shrink-0
             ${isCompleted 
               ? 'bg-green-600 border-green-600 text-white shadow-sm' 
               : 'border-slate-300 hover:border-green-500 bg-white'}`}
         >
-          {isCompleted && <Check className="w-4 h-4" strokeWidth={3} />}
+          {isCompleted && <Check className="w-3.5 h-3.5" strokeWidth={3} />}
         </button>
 
         <div className="flex-1 min-w-0">
           {/* Header Row */}
           <div className="flex justify-between items-start gap-3 mb-1">
-            <h4 className="text-base font-semibold text-slate-800 leading-snug">
+            <h4 className="text-[15px] font-semibold text-slate-800 leading-snug">
               {task.title}
             </h4>
-            <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
+            <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
               {/* Category Badge */}
               {task.category && (() => {
                 const categoryLink = task.url || CATEGORY_URLS[task.category];
                 const BadgeContent = (
-                  <span className="px-3 py-1 rounded-full bg-[#e6ebfc] text-[#3b5bd9] text-xs font-semibold border border-[#d1d9f5] whitespace-nowrap">
+                  <span className="px-2 py-0.5 rounded bg-[#e6ebfc] text-[#3b5bd9] text-[11px] font-semibold border border-[#d1d9f5] whitespace-nowrap">
                     {task.category}
                   </span>
                 );
@@ -79,14 +79,14 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                 className="text-slate-400 hover:text-slate-700 transition-colors"
                 title="Add or edit remark"
               >
-                <MessageSquare className="w-5 h-5" strokeWidth={2} />
+                <MessageSquare className="w-[18px] h-[18px]" strokeWidth={2} />
               </button>
             </div>
           </div>
           
           {/* Description */}
           {task.description && (
-            <p className="text-slate-600 text-sm mb-2.5 leading-relaxed pr-6">
+            <p className="text-slate-600 text-[13px] mb-2 leading-relaxed pr-6">
               {task.description}
             </p>
           )}
@@ -104,16 +104,16 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                     autoFocus
                   />
                   <div className="flex flex-col gap-1.5">
-                    <button onClick={handleSaveNote} className="btn-primary py-1.5 px-3 text-xs font-medium">Save</button>
-                    <button onClick={() => setIsNoteOpen(false)} className="py-1.5 px-3 text-xs text-slate-500 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
+                    <button onClick={handleSaveNote} className="btn-primary py-1 px-3 text-[11px] font-medium">Save</button>
+                    <button onClick={() => setIsNoteOpen(false)} className="py-1 px-3 text-[11px] text-slate-500 hover:bg-slate-100 rounded font-medium transition-colors">Cancel</button>
                   </div>
                 </div>
               ) : (
-                <div className="bg-[#ffebe0] text-[#331100] p-3 pr-4 rounded-r-lg border-l-[4px] border-[#ffb38e] flex items-start gap-3 shadow-sm">
-                  <div className="bg-[#8b4513] text-white p-1 rounded-md shadow-sm mt-0.5 flex-shrink-0">
-                    <MessageSquare className="w-3.5 h-3.5" strokeWidth={2.5} />
+                <div className="bg-[#ffebe0] text-[#331100] p-2.5 pr-3 rounded-r border-l-[3px] border-[#ffb38e] flex items-start gap-2 shadow-sm">
+                  <div className="bg-[#8b4513] text-white p-1 rounded-sm shadow-sm mt-0.5 flex-shrink-0">
+                    <MessageSquare className="w-3 h-3" strokeWidth={2.5} />
                   </div>
-                  <p className="italic text-sm font-medium leading-relaxed">
+                  <p className="italic text-[13px] font-medium leading-relaxed">
                     "{currentNote}"
                   </p>
                 </div>
@@ -140,17 +140,17 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
           )}
 
           {/* Footer Row */}
-          <div className="flex items-center justify-between pt-3 mt-1.5">
+          <div className="flex items-center justify-between pt-2.5 mt-1.5">
             <div className="flex items-center gap-2">
               {isCompleted ? (
                 <>
                   <div className="flex items-center gap-1 text-green-700">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span className="text-sm font-semibold">Completed</span>
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span className="text-[13px] font-semibold">Completed</span>
                   </div>
                 </>
               ) : (
-                <span className="text-sm font-medium text-slate-400"></span>
+                <span className="text-[13px] font-medium text-slate-400"></span>
               )}
             </div>
             
