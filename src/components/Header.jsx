@@ -51,7 +51,7 @@ const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1, onTo
           </button>
           
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-white border border-slate-200 shadow-xl rounded-xl z-50 overflow-hidden">
+            <div className="absolute -right-14 sm:right-0 mt-2 w-[300px] sm:w-80 bg-white border border-slate-200 shadow-xl rounded-xl z-50 overflow-hidden">
               <div className="px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-slate-800">Notifications</h3>
                 {overdueTasks.length > 0 && (
