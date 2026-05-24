@@ -31,8 +31,8 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
   const currentNote = note !== undefined ? note : task.remark;
 
   return (
-    <div className={`card p-5 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
-      <div className="flex gap-4">
+    <div className={`card p-4 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
+      <div className="flex gap-3">
         {/* Checkbox */}
         <button 
           onClick={() => toggleTask(task.id)}
@@ -46,8 +46,8 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
 
         <div className="flex-1 min-w-0">
           {/* Header Row */}
-          <div className="flex justify-between items-start gap-4 mb-2">
-            <h4 className="text-[17px] font-semibold text-slate-800 leading-snug">
+          <div className="flex justify-between items-start gap-3 mb-1">
+            <h4 className="text-base font-semibold text-slate-800 leading-snug">
               {task.title}
             </h4>
             <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
@@ -79,21 +79,21 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                 className="text-slate-400 hover:text-slate-700 transition-colors"
                 title="Add or edit remark"
               >
-                <MessageSquare className="w-6 h-6" strokeWidth={2} />
+                <MessageSquare className="w-5 h-5" strokeWidth={2} />
               </button>
             </div>
           </div>
           
           {/* Description */}
           {task.description && (
-            <p className="text-slate-600 text-[15px] mb-4 leading-relaxed pr-8">
+            <p className="text-slate-600 text-sm mb-2.5 leading-relaxed pr-6">
               {task.description}
             </p>
           )}
 
           {/* Note Area */}
           {(isNoteOpen || currentNote) && (
-            <div className="mb-5 mt-2">
+            <div className="mb-3 mt-1.5">
               {isNoteOpen ? (
                 <div className="flex gap-2">
                   <textarea 
@@ -103,17 +103,17 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                     className="input-field text-sm py-2 px-3 min-h-[80px]"
                     autoFocus
                   />
-                  <div className="flex flex-col gap-2">
-                    <button onClick={handleSaveNote} className="btn-primary py-2 px-4 text-sm font-medium">Save</button>
-                    <button onClick={() => setIsNoteOpen(false)} className="py-2 px-4 text-sm text-slate-500 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
+                  <div className="flex flex-col gap-1.5">
+                    <button onClick={handleSaveNote} className="btn-primary py-1.5 px-3 text-xs font-medium">Save</button>
+                    <button onClick={() => setIsNoteOpen(false)} className="py-1.5 px-3 text-xs text-slate-500 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
                   </div>
                 </div>
               ) : (
-                <div className="bg-[#ffebe0] text-[#331100] p-4 pr-6 rounded-r-lg border-l-[6px] border-[#ffb38e] flex items-start gap-4 shadow-sm">
-                  <div className="bg-[#8b4513] text-white p-1.5 rounded-md shadow-sm mt-0.5 flex-shrink-0">
-                    <MessageSquare className="w-4 h-4" strokeWidth={2.5} />
+                <div className="bg-[#ffebe0] text-[#331100] p-3 pr-4 rounded-r-lg border-l-[4px] border-[#ffb38e] flex items-start gap-3 shadow-sm">
+                  <div className="bg-[#8b4513] text-white p-1 rounded-md shadow-sm mt-0.5 flex-shrink-0">
+                    <MessageSquare className="w-3.5 h-3.5" strokeWidth={2.5} />
                   </div>
-                  <p className="italic text-[15px] font-medium leading-relaxed">
+                  <p className="italic text-sm font-medium leading-relaxed">
                     "{currentNote}"
                   </p>
                 </div>
@@ -140,21 +140,21 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
           )}
 
           {/* Footer Row */}
-          <div className="flex items-center justify-between pt-4 mt-2">
+          <div className="flex items-center justify-between pt-3 mt-1.5">
             <div className="flex items-center gap-2">
               {isCompleted ? (
                 <>
-                  <div className="flex items-center gap-1.5 text-green-700">
-                    <CheckCircle2 className="w-5 h-5" />
-                    <span className="text-[15px] font-semibold">Completed</span>
+                  <div className="flex items-center gap-1 text-green-700">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="text-sm font-semibold">Completed</span>
                   </div>
                 </>
               ) : (
-                <span className="text-[15px] font-medium text-slate-400"></span>
+                <span className="text-sm font-medium text-slate-400"></span>
               )}
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {/* Project Codes */}
               {(task.projectCode || task.taskCode) && (
                 <div className="flex items-center gap-2 mr-2">
@@ -169,9 +169,9 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
               
               {/* Contact Info */}
               {contact && (
-                <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer group">
-                  <Phone className="w-4 h-4 text-slate-500 group-hover:text-slate-800 transition-colors" strokeWidth={2} />
-                  <span className="text-[15px] font-medium">{contact.team}</span>
+                <a href={`mailto:${contact.email}`} className="flex items-center gap-1.5 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer group">
+                  <Phone className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-800 transition-colors" strokeWidth={2} />
+                  <span className="text-sm font-medium">{contact.team}</span>
                 </a>
               )}
             </div>
