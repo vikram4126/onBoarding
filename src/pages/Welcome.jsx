@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Briefcase, User, Mail, Users, Calendar, Award } from 'lucide-react';
+import { Briefcase, User, Mail, Users, Calendar, Award, Key } from 'lucide-react';
 import kpmgLogo from '../assets/kpmg-logo.svg';
+import managersData from '../data/managers.json';
 
 const Welcome = ({ onSaveProfile }) => {
   const [isManagerMode, setIsManagerMode] = useState(false);
@@ -20,7 +21,18 @@ const Welcome = ({ onSaveProfile }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isManagerMode) {
-      onSaveProfile({ ...formData, role: 'manager' });
+      const validManager = managersData.find(
+        m => m.username === formData.username && m.password === formData.password
+      );
+      if (validManager) {
+        onSaveProfile({ 
+          role: 'manager', 
+          username: validManager.username,
+          fullName: validManager.username.charAt(0).toUpperCase() + validManager.username.slice(1)
+        });
+      } else {
+        alert('Invalid Username or Password!');
+      }
     } else {
       onSaveProfile({ ...formData, role: 'employee' });
     }
@@ -56,21 +68,35 @@ const Welcome = ({ onSaveProfile }) => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                  <User className="w-4 h-4 text-primary-500" /> Full Name
-                </label>
-                <input type="text" name="fullName" required onChange={handleChange} value={formData.fullName} className="input-field bg-white/50 backdrop-blur-sm" placeholder="John Doe" />
-              </div>
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-primary-500" /> Email ID
-                </label>
-                <input type="email" name="email" required onChange={handleChange} value={formData.email} className="input-field bg-white/50 backdrop-blur-sm" placeholder="john@company.com" />
-              </div>
-
-              {!isManagerMode && (
+              {isManagerMode ? (
                 <>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                      <User className="w-4 h-4 text-primary-500" /> Username
+                    </label>
+                    <input type="text" name="username" required onChange={handleChange} value={formData.username || ''} className="input-field bg-white/50 backdrop-blur-sm" placeholder="e.g. ashok" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                      <Key className="w-4 h-4 text-primary-500" /> Password
+                    </label>
+                    <input type="password" name="password" required onChange={handleChange} value={formData.password || ''} className="input-field bg-white/50 backdrop-blur-sm" placeholder="••••••••" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                      <User className="w-4 h-4 text-primary-500" /> Full Name
+                    </label>
+                    <input type="text" name="fullName" required onChange={handleChange} value={formData.fullName} className="input-field bg-white/50 backdrop-blur-sm" placeholder="John Doe" />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-primary-500" /> Email ID
+                    </label>
+                    <input type="email" name="email" required onChange={handleChange} value={formData.email} className="input-field bg-white/50 backdrop-blur-sm" placeholder="john@company.com" />
+                  </div>
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                       <Award className="w-4 h-4 text-primary-500" /> Designation
