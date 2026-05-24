@@ -3,6 +3,7 @@ export const STORAGE_KEYS = {
   TASKS: 'onboarding_tasks',
   CUSTOM_TASKS: 'onboarding_custom_tasks',
   NOTES: 'onboarding_notes',
+  MANAGER_EMPLOYEES: 'onboarding_manager_employees'
 };
 
 export const getStorage = (key, defaultValue = null) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, CheckSquare, CalendarDays, BookOpen, Users, Clock, CheckCircle2, LogOut, AlertTriangle } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, CalendarDays, BookOpen, Users, Clock, CheckCircle2, LogOut, AlertTriangle, Download } from 'lucide-react';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 
 const navItems = [
@@ -17,6 +17,27 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
   const handleReset = () => {
     onReset();
     setShowConfirm(false);
+  };
+
+  const handleExport = () => {
+    const data = {
+      profile: JSON.parse(localStorage.getItem('onboarding_profile') || 'null'),
+      tasks: JSON.parse(localStorage.getItem('onboarding_tasks') || 'null'),
+      customTasks: JSON.parse(localStorage.getItem('onboarding_custom_tasks') || 'null'),
+      notes: JSON.parse(localStorage.getItem('onboarding_notes') || 'null'),
+      exportDate: new Date().toISOString()
+    };
+    
+    if (!data.profile) return;
+    
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    const safeName = (data.profile.fullName || 'User').replace(/[^a-zA-Z0-9]/g, '_');
+    a.download = `${safeName}_Progress.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   return (
@@ -52,6 +73,16 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
       </div>
       
       <div className="p-4 border-t border-slate-100 space-y-3">
+        {/* Reset / Change Profile */}
+        {/* Export Progress */}
+        <button
+          onClick={handleExport}
+          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-600 font-medium hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors border border-slate-200 hover:border-primary-200 bg-white shadow-sm"
+        >
+          <Download className="w-4 h-4 text-primary-500" />
+          Share Progress
+        </button>
+
         {/* Reset / Change Profile */}
         {!showConfirm ? (
           <button

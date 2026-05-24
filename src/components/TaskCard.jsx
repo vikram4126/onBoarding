@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 
+const CATEGORY_URLS = {
+  'Kommence': 'https://kommence.kpmg.com',
+  'IT Setup': 'https://itsupport.kpmg.com',
+  'General': 'https://home.kpmg.com',
+  'HR Portal': 'https://talentkonnect.kpmg.in',
+  'Mandatory Training': 'https://glms.kpmg.com',
+  'Statutory Compliance': 'https://compliance.kpmg.in',
+  'Salary & Investment': 'https://hgs.kpmg.in',
+  'Affidavit': 'https://askyourrisk.kpmg.com'
+};
+
 const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }) => {
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const initialNoteText = note || task.remark || '';
@@ -57,21 +68,24 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
                   </button>
                 </div>
               )}
-              {task.url && (
-                <a
-                  href={task.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-primary-50 text-primary-600 text-[10px] font-medium border border-primary-100 whitespace-nowrap hover:bg-primary-100 transition-colors"
-                >
-                  <ExternalLink className="w-2.5 h-2.5" /> Open
-                </a>
-              )}
+
               {task.category && (
-                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-medium border border-blue-100 whitespace-nowrap">
-                  <Folder className="w-2.5 h-2.5" /> {task.category}
-                </span>
+                CATEGORY_URLS[task.category] ? (
+                  <a
+                    href={CATEGORY_URLS[task.category]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={e => e.stopPropagation()}
+                    className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 hover:text-blue-700 hover:bg-blue-100 transition-colors text-[10px] font-medium border border-blue-100 whitespace-nowrap cursor-pointer"
+                    title={`Open ${task.category}`}
+                  >
+                    <Folder className="w-2.5 h-2.5" /> {task.category}
+                  </a>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-medium border border-blue-100 whitespace-nowrap">
+                    <Folder className="w-2.5 h-2.5" /> {task.category}
+                  </span>
+                )
               )}
               {task.type === 'team' && (
                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[10px] font-medium whitespace-nowrap">
