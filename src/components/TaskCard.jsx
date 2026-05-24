@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink } from 'lucide-react';
+import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink, CheckCircle2 } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 
 const CATEGORY_URLS = {
@@ -31,148 +31,151 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask }
   const currentNote = note !== undefined ? note : task.remark;
 
   return (
-    <div className={`card p-3 transition-all duration-300 ${isCompleted ? 'bg-slate-50 border-slate-200' : 'hover:border-primary-200 hover:shadow-md bg-white border-slate-200/60'}`}>
-      <div className="flex gap-3">
+    <div className={`card p-5 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
+      <div className="flex gap-4">
+        {/* Checkbox */}
         <button 
           onClick={() => toggleTask(task.id)}
-          className={`mt-0.5 w-5 h-5 rounded flex items-center justify-center border transition-all duration-200 flex-shrink-0
+          className={`mt-1 w-6 h-6 rounded-md flex items-center justify-center border-2 transition-all duration-200 flex-shrink-0
             ${isCompleted 
-              ? 'bg-primary-500 border-primary-500 text-white' 
-              : 'border-slate-300 hover:border-primary-400 bg-white'}`}
+              ? 'bg-green-600 border-green-600 text-white shadow-sm' 
+              : 'border-slate-300 hover:border-green-500 bg-white'}`}
         >
-          {isCompleted && <Check className="w-3.5 h-3.5" />}
+          {isCompleted && <Check className="w-4 h-4" strokeWidth={3} />}
         </button>
-        
+
         <div className="flex-1 min-w-0">
           {/* Header Row */}
-          <div className="flex justify-between items-start mb-0.5 gap-2">
-            <h4 className={`text-sm font-semibold truncate ${isCompleted ? 'text-slate-400 line-through' : 'text-slate-800'}`} title={task.title}>
+          <div className="flex justify-between items-start gap-4 mb-2">
+            <h4 className="text-[17px] font-semibold text-slate-800 leading-snug">
               {task.title}
             </h4>
-            <div className="flex gap-1.5 items-center flex-shrink-0 flex-wrap justify-end">
-              {task.type === 'custom' && (
-                <div className="flex items-center gap-1 mr-1">
-                  <button 
-                    onClick={() => onEditTask(task)}
-                    className="text-slate-400 hover:text-primary-500 transition-colors"
-                    title="Edit custom task"
-                  >
-                    <Edit2 className="w-3.5 h-3.5" />
-                  </button>
-                  <button 
-                    onClick={() => onDeleteTask(task.id)}
-                    className="text-slate-400 hover:text-red-500 transition-colors"
-                    title="Delete custom task"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
-
+            <div className="flex items-center gap-3 flex-shrink-0 mt-0.5">
+              {/* Category Badge */}
               {task.category && (() => {
                 const categoryLink = task.url || CATEGORY_URLS[task.category];
+                const BadgeContent = (
+                  <span className="px-3 py-1 rounded-full bg-[#e6ebfc] text-[#3b5bd9] text-xs font-semibold border border-[#d1d9f5] whitespace-nowrap">
+                    {task.category}
+                  </span>
+                );
+
                 return categoryLink ? (
                   <a
                     href={categoryLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={e => e.stopPropagation()}
-                    className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 hover:text-blue-700 hover:bg-blue-100 transition-colors text-[10px] font-medium border border-blue-100 whitespace-nowrap cursor-pointer"
+                    className="hover:opacity-80 transition-opacity cursor-pointer inline-flex"
                     title={`Open ${task.category}`}
                   >
-                    <Folder className="w-2.5 h-2.5" /> {task.category}
+                    {BadgeContent}
                   </a>
-                ) : (
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 text-[10px] font-medium border border-blue-100 whitespace-nowrap">
-                    <Folder className="w-2.5 h-2.5" /> {task.category}
-                  </span>
-                );
+                ) : BadgeContent;
               })()}
-              {task.type === 'team' && (
-                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 text-[10px] font-medium whitespace-nowrap">
-                  <Tag className="w-2.5 h-2.5" /> Team
-                </span>
-              )}
+              
               <button 
                 onClick={() => setIsNoteOpen(!isNoteOpen)}
-                className="text-[10px] font-medium text-slate-500 hover:text-primary-600 flex items-center gap-1 transition-colors ml-1"
+                className="text-slate-400 hover:text-slate-700 transition-colors"
                 title="Add or edit remark"
               >
-                <MessageSquare className="w-3.5 h-3.5" />
+                <MessageSquare className="w-6 h-6" strokeWidth={2} />
               </button>
             </div>
           </div>
           
           {/* Description */}
           {task.description && (
-            <p className={`text-xs mb-1.5 line-clamp-2 ${isCompleted ? 'text-slate-400' : 'text-slate-500'}`} title={task.description}>
+            <p className="text-slate-600 text-[15px] mb-4 leading-relaxed pr-8">
               {task.description}
             </p>
           )}
 
-          {/* Meta Row */}
-          {(task.projectCode || task.taskCode || task.hours !== undefined || (!isCompleted && contact)) && (
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-1">
-              {task.projectCode && (
-                <a 
-                  href="https://reconnect.kpmg.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-50 hover:bg-primary-50 hover:text-primary-700 px-1.5 py-0.5 rounded border border-slate-200 hover:border-primary-200 transition-colors"
-                  title="Log time in Reconnect"
-                >
-                  <Hash className="w-3 h-3 text-slate-400 group-hover:text-primary-500" /> Proj: {task.projectCode}
-                </a>
-              )}
-              {task.taskCode && (
-                <a 
-                  href="https://reconnect.kpmg.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
-                  className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-50 hover:bg-primary-50 hover:text-primary-700 px-1.5 py-0.5 rounded border border-slate-200 hover:border-primary-200 transition-colors"
-                  title="Log time in Reconnect"
-                >
-                  <Hash className="w-3 h-3 text-slate-400 group-hover:text-primary-500" /> Task: {task.taskCode}
-                </a>
-              )}
-              {task.hours !== undefined && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-500">
-                  <Clock className="w-3 h-3 text-slate-400" /> {task.hours} hrs
-                </span>
-              )}
-              {!isCompleted && contact && (
-                <a href={`mailto:${contact.email}`} className="text-[11px] text-slate-500 hover:text-primary-600 flex items-center gap-1 transition-colors group ml-auto">
-                  <Phone className="w-3 h-3 group-hover:text-primary-500" /> {contact.team}
-                </a>
-              )}
-            </div>
-          )}
-
           {/* Note Area */}
           {(isNoteOpen || currentNote) && (
-            <div className={`mt-2 ${!isNoteOpen && currentNote ? 'opacity-90' : ''}`}>
+            <div className="mb-5 mt-2">
               {isNoteOpen ? (
                 <div className="flex gap-2">
-                  <input 
-                    type="text" 
+                  <textarea 
                     value={noteText}
                     onChange={(e) => setNoteText(e.target.value)}
                     placeholder="Add remarks or issues..."
-                    className="input-field text-xs py-1 px-2 h-7"
+                    className="input-field text-sm py-2 px-3 min-h-[80px]"
                     autoFocus
                   />
-                  <button onClick={handleSaveNote} className="btn-primary py-1 px-2 h-7 text-xs flex items-center">Save</button>
+                  <div className="flex flex-col gap-2">
+                    <button onClick={handleSaveNote} className="btn-primary py-2 px-4 text-sm font-medium">Save</button>
+                    <button onClick={() => setIsNoteOpen(false)} className="py-2 px-4 text-sm text-slate-500 hover:bg-slate-100 rounded-lg font-medium transition-colors">Cancel</button>
+                  </div>
                 </div>
               ) : (
-                <div className="bg-amber-50 text-amber-800 text-xs p-2 rounded border border-amber-100 flex items-start gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 mt-px text-amber-500 flex-shrink-0" />
-                  <p className="leading-snug">{currentNote}</p>
+                <div className="bg-[#ffebe0] text-[#331100] p-4 pr-6 rounded-r-lg border-l-[6px] border-[#ffb38e] flex items-start gap-4 shadow-sm">
+                  <div className="bg-[#8b4513] text-white p-1.5 rounded-md shadow-sm mt-0.5 flex-shrink-0">
+                    <MessageSquare className="w-4 h-4" strokeWidth={2.5} />
+                  </div>
+                  <p className="italic text-[15px] font-medium leading-relaxed">
+                    "{currentNote}"
+                  </p>
                 </div>
               )}
             </div>
           )}
+          
+          {/* Action Row (Custom Tasks) */}
+          {task.type === 'custom' && !isCompleted && (
+            <div className="flex items-center gap-3 mb-4">
+              <button 
+                onClick={() => onEditTask(task)}
+                className="text-xs font-medium text-primary-600 bg-primary-50 px-3 py-1.5 rounded-lg hover:bg-primary-100 transition-colors flex items-center gap-1.5"
+              >
+                <Edit2 className="w-3.5 h-3.5" /> Edit Custom Task
+              </button>
+              <button 
+                onClick={() => onDeleteTask(task.id)}
+                className="text-xs font-medium text-red-600 bg-red-50 px-3 py-1.5 rounded-lg hover:bg-red-100 transition-colors flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" /> Delete
+              </button>
+            </div>
+          )}
+
+          {/* Footer Row */}
+          <div className="flex items-center justify-between pt-4 mt-2">
+            <div className="flex items-center gap-2">
+              {isCompleted ? (
+                <>
+                  <div className="flex items-center gap-1.5 text-green-700">
+                    <CheckCircle2 className="w-5 h-5" />
+                    <span className="text-[15px] font-semibold">Completed</span>
+                  </div>
+                </>
+              ) : (
+                <span className="text-[15px] font-medium text-slate-400"></span>
+              )}
+            </div>
+            
+            <div className="flex items-center gap-4">
+              {/* Project Codes */}
+              {(task.projectCode || task.taskCode) && (
+                <div className="flex items-center gap-2 mr-2">
+                  {task.projectCode && (
+                    <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">Proj: {task.projectCode}</span>
+                  )}
+                  {task.taskCode && (
+                    <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">Task: {task.taskCode}</span>
+                  )}
+                </div>
+              )}
+              
+              {/* Contact Info */}
+              {contact && (
+                <a href={`mailto:${contact.email}`} className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer group">
+                  <Phone className="w-4 h-4 text-slate-500 group-hover:text-slate-800 transition-colors" strokeWidth={2} />
+                  <span className="text-[15px] font-medium">{contact.team}</span>
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
