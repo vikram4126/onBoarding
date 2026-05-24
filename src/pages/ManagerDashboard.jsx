@@ -53,7 +53,11 @@ const ManagerDashboard = ({ onLogout }) => {
   if (selectedEmployee) {
     const allTasks = [...Object.values(selectedEmployee.tasks || {}), ...(selectedEmployee.customTasks || [])];
     const completedTasks = allTasks.filter(t => t.status === 'completed');
-    const pendingTasks = allTasks.filter(t => t.status !== 'completed');
+    
+    const empCurrentDay = Math.max(1, Math.floor((new Date() - new Date(selectedEmployee.profile.joiningDate)) / (1000 * 60 * 60 * 24)) + 1);
+    
+    const missedTasks = allTasks.filter(t => t.status !== 'completed' && t.day && t.day !== 'Custom' && parseInt(t.day) < empCurrentDay);
+    const pendingTasks = allTasks.filter(t => t.status !== 'completed' && (!t.day || t.day === 'Custom' || parseInt(t.day) >= empCurrentDay));
 
     return (
       <div className="flex flex-col h-screen bg-[#f8fafc]">
@@ -98,15 +102,42 @@ const ManagerDashboard = ({ onLogout }) => {
                 </div>
               </div>
               <div className="card p-5 bg-white border border-slate-200 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <Calendar className="w-6 h-6" />
+                <div className="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center">
+                  <Target className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-500 font-medium">Tasks Pending</p>
-                  <p className="text-2xl font-bold text-slate-800">{pendingTasks.length}</p>
+                  <p className="text-sm text-slate-500 font-medium">Missed Tasks</p>
+                  <p className="text-2xl font-bold text-slate-800">{missedTasks.length}</p>
                 </div>
               </div>
             </div>
+
+            {missedTasks.length > 0 && (
+              <div className="card bg-white border border-red-200 overflow-hidden ring-1 ring-red-100">
+                <div className="px-5 py-4 border-b border-red-100 bg-red-50 flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-red-800">Missed Tasks ({missedTasks.length})</h3>
+                  <span className="text-xs font-medium text-red-600 bg-red-100 px-2 py-0.5 rounded-full">Requires Attention</span>
+                </div>
+                <div className="divide-y divide-red-50 max-h-96 overflow-y-auto">
+                  {missedTasks.map(task => (
+                    <div key={task.id} className="p-4 flex gap-3 hover:bg-red-50/50">
+                      <div className="w-5 h-5 rounded border-2 border-red-300 flex-shrink-0 mt-0.5 bg-white"></div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-semibold text-slate-800 leading-tight">{task.title}</p>
+                          <span className="text-[10px] font-bold text-red-600 bg-red-100 px-1.5 py-0.5 rounded">Day {task.day}</span>
+                        </div>
+                        {selectedEmployee.notes && selectedEmployee.notes[task.id] && (
+                          <div className="mt-2 bg-amber-50 text-amber-800 text-xs p-2 rounded border border-amber-100 inline-block">
+                            <span className="font-semibold">Remark:</span> {selectedEmployee.notes[task.id]}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="card bg-white border border-slate-200 overflow-hidden">
               <div className="px-5 py-4 border-b border-slate-100 bg-slate-50">
@@ -249,6 +280,20 @@ const ManagerDashboard = ({ onLogout }) => {
                         ></div>
                       </div>
                     </div>
+                    
+                    {(() => {
+                      const empCurrentDay = Math.max(1, Math.floor((new Date() - new Date(emp.profile.joiningDate)) / (1000 * 60 * 60 * 24)) + 1);
+                      const allTasks = [...Object.values(emp.tasks || {}), ...(emp.customTasks || [])];
+                      const missed = allTasks.filter(t => t.status !== 'completed' && t.day && t.day !== 'Custom' && parseInt(t.day) < empCurrentDay);
+                      if (missed.length > 0) {
+                        return (
+                          <div className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-red-600 bg-red-50 p-1.5 rounded border border-red-100">
+                            <Target className="w-3.5 h-3.5" /> {missed.length} tasks missed!
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
                     
                     <div className="mt-4 pt-4 border-t border-slate-100 text-[11px] text-slate-400 flex justify-between">
                       <span>Joined: {new Date(emp.profile.joiningDate).toLocaleDateString()}</span>

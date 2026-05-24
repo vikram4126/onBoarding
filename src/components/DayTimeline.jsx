@@ -93,9 +93,10 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                   className={`w-full px-5 py-4 flex items-center justify-between transition-colors ${isOpen ? 'bg-primary-50/50' : isAllCompleted ? 'bg-green-50/30 hover:bg-green-50/60' : 'hover:bg-slate-50'}`}
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition-colors
                       ${isCurrentDay ? 'bg-primary-500 text-white ring-4 ring-primary-50' : 
                         isAllCompleted ? 'bg-green-500 text-white' :
+                        (!isAllCompleted && parseInt(day) < currentDay) ? 'bg-red-50 text-red-600 border border-red-200 ring-2 ring-red-50' :
                         day === 'Custom' ? 'bg-indigo-500 text-white' : 'bg-slate-100 border border-slate-200 text-slate-600'}`}
                     >
                       {isAllCompleted ? <Check className="w-5 h-5" /> : (day === 'Custom' ? 'C' : day)}
@@ -107,8 +108,11 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                         </h3>
                         {isCurrentDay && <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Current</span>}
                         {isAllCompleted && <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">All Done!</span>}
+                        {!isAllCompleted && parseInt(day) < currentDay && <span className="text-xs font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded-full whitespace-nowrap">{totalCount - completedCount} Missed</span>}
                       </div>
-                      <p className="text-xs text-slate-500">{completedCount} of {totalCount} tasks completed</p>
+                      <p className={`text-xs ${(!isAllCompleted && parseInt(day) < currentDay) ? 'text-red-500' : 'text-slate-500'}`}>
+                        {completedCount} of {totalCount} tasks completed
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
