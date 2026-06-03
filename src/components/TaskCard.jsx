@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle, Image as ImageIcon, X } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 import portalsList from '../data/portals.json';
 
@@ -10,6 +11,7 @@ const CATEGORY_URLS = {
 
 const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, currentDay = 1 }) => {
   const [isNoteOpen, setIsNoteOpen] = useState(false);
+  const [guidePortal, setGuidePortal] = useState(null);
   const initialNoteText = note || task.remark || '';
   const [noteText, setNoteText] = useState(initialNoteText);
 
@@ -93,7 +95,7 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
               {task.title}
             </h4>
             <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
-              {/* Category Badge */}
+              {/* Category Badge + Guide Icon */}
               {task.category && (() => {
                 const portalId = task.portalId;
                 const portal = portalId ? portalsList.find(p => p.id === portalId) : null;
@@ -106,18 +108,31 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
                   </span>
                 );
 
-                return categoryLink ? (
-                  <a
-                    href={categoryLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={e => e.stopPropagation()}
-                    className="hover:opacity-80 transition-opacity cursor-pointer inline-flex"
-                    title={`Open ${displayText}`}
-                  >
-                    {BadgeContent}
-                  </a>
-                ) : BadgeContent;
+                return (
+                  <div className="flex items-center gap-1">
+                    {categoryLink ? (
+                      <a
+                        href={categoryLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="hover:opacity-80 transition-opacity cursor-pointer inline-flex"
+                        title={`Open ${displayText}`}
+                      >
+                        {BadgeContent}
+                      </a>
+                    ) : BadgeContent}
+                    {portal?.image && (
+                      <button
+                        onClick={e => { e.stopPropagation(); setGuidePortal(portal); }}
+                        className="text-slate-400 hover:text-primary-600 transition-colors"
+                        title={`View ${displayText} Guide`}
+                      >
+                        <ImageIcon className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                );
               })()}
               
               <button 
@@ -224,6 +239,42 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
         </div>
       </div>
     </div>
+
+    {/* Portal Guide Modal */}
+    {guidePortal && createPortal(
+      <div
+        className="fixed inset-0 bg-slate-900/80 z-[9999] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm"
+        onClick={() => setGuidePortal(null)}
+      >
+        <div
+          className="bg-white rounded-2xl shadow-2xl w-[95vw] max-w-6xl h-[85vh] flex flex-col overflow-hidden"
+          onClick={e => e.stopPropagation()}
+        >
+          <div className="p-4 sm:px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h3 className="font-bold text-xl text-slate-800">{guidePortal.name} Guide</h3>
+            <button onClick={() => setGuidePortal(null)} className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+          <div className="p-4 sm:p-6 overflow-y-auto flex-1 bg-slate-100/50 flex items-center justify-center">
+            <img
+              src={`${import.meta.env.BASE_URL}${guidePortal.image.replace(/^\//, '')}`}
+              alt={guidePortal.name}
+              className="max-w-full max-h-full rounded-xl shadow-md border border-slate-200 object-contain"
+            />
+          </div>
+          <div className="p-4 sm:px-6 border-t border-slate-100 flex justify-end gap-3 bg-white">
+            <button onClick={() => setGuidePortal(null)} className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors">
+              Close
+            </button>
+            <a href={guidePortal.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg shadow-sm transition-colors">
+              Proceed to {guidePortal.name} <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      </div>,
+      document.body
+    )}
   );
 };
 
