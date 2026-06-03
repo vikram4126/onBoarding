@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle, Image as ImageIcon, X } from 'lucide-react';
+import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle, BookOpen, X } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 import portalsList from '../data/portals.json';
 
@@ -75,6 +75,7 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
   };
 
   return (
+    <>  
     <div className={`card p-3 transition-all duration-300 bg-white border border-slate-200/80 rounded-xl relative hover:shadow-md`}>
       <div className="flex gap-2.5">
         {/* Checkbox */}
@@ -125,10 +126,11 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
                     {portal?.image && (
                       <button
                         onClick={e => { e.stopPropagation(); setGuidePortal(portal); }}
-                        className="text-slate-400 hover:text-primary-600 transition-colors"
+                        className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition-colors"
                         title={`View ${displayText} Guide`}
                       >
-                        <ImageIcon className="w-3.5 h-3.5" />
+                        <BookOpen className="w-3 h-3" />
+                        Guide
                       </button>
                     )}
                   </div>
@@ -239,7 +241,6 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
         </div>
       </div>
     </div>
-
     {/* Portal Guide Modal */}
     {guidePortal && createPortal(
       <div
@@ -275,6 +276,7 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
       </div>,
       document.body
     )}
+    </>
   );
 };
 

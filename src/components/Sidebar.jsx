@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { LayoutDashboard, CheckSquare, CalendarDays, BookOpen, Users, Clock, CheckCircle2, LogOut, AlertTriangle, Download, ChevronDown, ChevronRight, Globe, X, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, CalendarDays, BookOpen, Users, Clock, CheckCircle2, LogOut, AlertTriangle, Download, ChevronDown, ChevronRight, Globe, X, ExternalLink } from 'lucide-react';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 
 import portalsList from '../data/portals.json';
@@ -100,10 +100,10 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
                 </a>
                 <button
                   onClick={() => setSelectedPortal(portal)}
-                  className="p-1.5 text-slate-400 hover:text-primary-600 transition-colors"
+                  className="p-1.5 text-slate-400 hover:text-amber-600 transition-colors"
                   title="View Guide"
                 >
-                  <ImageIcon className="w-4 h-4" />
+                  <BookOpen className="w-4 h-4" />
                 </button>
               </div>
             ))}
