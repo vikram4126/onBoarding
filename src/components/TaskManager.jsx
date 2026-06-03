@@ -5,37 +5,37 @@ import { setStorage, STORAGE_KEYS } from '../utils/storage';
 
 const DEPARTMENTS = ['Common', 'Development', 'HR', 'Finance', 'QA', 'Design', 'IT Support', 'Marketing'];
 
-const COLUMNS = ['Day', 'Title', 'Description', 'Category', 'Link', 'ProjectCode', 'TaskCode', 'DeadlineDay'];
+const COLUMNS = ['Day', 'Title', 'Description', 'Category', 'Link', 'ProjectCode', 'TaskCode', 'DeadlineDay', 'ContactId'];
 
 const SAMPLE_DATA = {
   Common: [
-    { Day: 1, Title: 'Received Office ID card from reception', Description: '', Category: 'Kommence', Link: 'https://kommence.kpmg.com', ProjectCode: '1197827', TaskCode: '01', DeadlineDay: '' },
-    { Day: 1, Title: 'Team building', Description: 'Intro to each other and team activities', Category: 'Kommence', Link: 'https://kommence.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 1, Title: 'HR Induction', Description: '', Category: 'Kommence', Link: 'https://kommence.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 1, Title: 'IT Induction (Received Laptop)', Description: 'Receive laptop and complete hardware checklist', Category: 'IT Setup', Link: 'https://itsupport.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Complete Insurance Form', Description: 'Fill and submit the Group Mediclaim form', Category: 'HR Portal', Link: 'https://talentkonnect.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 5 },
-    { Day: 2, Title: 'Setup Corporate Email & Teams', Description: 'Configure your KPMG email and Microsoft Teams', Category: 'IT Setup', Link: 'https://itsupport.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Submit Salary & Investment Declarations', Description: 'Fill investment proofs and salary structure in HGS', Category: 'Salary & Investment', Link: 'https://hgs.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 5 },
-    { Day: 3, Title: 'KPMG Code of Conduct Training', Description: 'Complete mandatory ethics training on GLMS', Category: 'Mandatory Training', Link: 'https://glms.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: 7 },
-    { Day: 3, Title: 'Complete Statutory Compliance', Description: 'Submit PF, ESIC and other statutory forms', Category: 'Statutory Compliance', Link: 'https://compliance.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 7 },
-    { Day: 4, Title: 'Submit Affidavit Form', Description: 'Complete and submit the required affidavit', Category: 'Affidavit', Link: 'https://askyourrisk.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: 10 },
+    { Day: 1, Title: 'Received Office ID card from reception', Description: '', Category: 'Kommence', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '' },
+    { Day: 1, Title: 'Team building', Description: 'Intro to each other and team activities', Category: 'Kommence', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr' },
+    { Day: 1, Title: 'HR Induction', Description: '', Category: 'Kommence', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr' },
+    { Day: 1, Title: 'IT Induction (Received Laptop)', Description: 'Receive laptop and complete hardware checklist', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'it' },
+    { Day: 2, Title: 'Complete Insurance Form', Description: 'Fill and submit the Group Mediclaim form', Category: 'HR Portal', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: 5, ContactId: 'hr' },
+    { Day: 2, Title: 'Setup Corporate Email & Teams', Description: 'Configure your KPMG email and Microsoft Teams', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'it' },
+    { Day: 2, Title: 'Submit Salary & Investment Declarations', Description: 'Fill investment proofs and salary structure in HGS', Category: 'Salary & Investment', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: 5, ContactId: 'finance' },
+    { Day: 3, Title: 'KPMG Code of Conduct Training', Description: 'Complete mandatory ethics training on GLMS', Category: 'Mandatory Training', Link: '', ProjectCode: '1705912', TaskCode: '02', DeadlineDay: 7, ContactId: 'training' },
+    { Day: 3, Title: 'Complete Statutory Compliance', Description: 'Submit PF, ESIC and other statutory forms', Category: 'Statutory Compliance', Link: 'https://compliance.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 7, ContactId: 'finance' },
+    { Day: 4, Title: 'Submit Affidavit Form', Description: 'Complete and submit the required affidavit', Category: 'Affidavit', Link: 'https://askyourrisk.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: 10, ContactId: '' },
   ],
   Development: [
-    { Day: 1, Title: 'Access GitHub Organization', Description: 'Request access to KPMG GitHub org from tech lead', Category: 'IT Setup', Link: 'https://github.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Setup Local Dev Environment', Description: 'Install required tools: Node.js, VS Code, Docker', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: 3 },
-    { Day: 3, Title: 'Complete Code Review Training', Description: 'Review team coding standards and PR process', Category: 'Mandatory Training', Link: 'https://glms.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
+    { Day: 1, Title: 'Access GitHub Organization', Description: 'Request access to KPMG GitHub org from tech lead', Category: 'IT Setup', Link: 'https://github.com', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'it' },
+    { Day: 2, Title: 'Setup Local Dev Environment', Description: 'Install required tools: Node.js, VS Code, Docker', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: 3, ContactId: 'it' },
+    { Day: 3, Title: 'Complete Code Review Training', Description: 'Review team coding standards and PR process', Category: 'Mandatory Training', Link: 'https://glms.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'training' },
   ],
   HR: [
-    { Day: 1, Title: 'Review HR Policies Document', Description: 'Go through the HR handbook on SharePoint', Category: 'HR Portal', Link: 'https://talentkonnect.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Setup Payroll Details', Description: 'Submit bank account and tax details in HR portal', Category: 'Salary & Investment', Link: 'https://hgs.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 3 },
+    { Day: 1, Title: 'Review HR Policies Document', Description: 'Go through the HR handbook on SharePoint', Category: 'HR Portal', Link: 'https://talentkonnect.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr' },
+    { Day: 2, Title: 'Setup Payroll Details', Description: 'Submit bank account and tax details in HR portal', Category: 'Salary & Investment', Link: 'https://hgs.kpmg.in', ProjectCode: '', TaskCode: '', DeadlineDay: 3, ContactId: 'hr' },
   ],
   Finance: [
-    { Day: 1, Title: 'Finance Systems Access Request', Description: 'Request SAP and reporting tool access from IT', Category: 'IT Setup', Link: 'https://itsupport.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Expense Reporting Training', Description: 'Complete training on expense submission process', Category: 'Mandatory Training', Link: 'https://glms.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: 5 },
+    { Day: 1, Title: 'Finance Systems Access Request', Description: 'Request SAP and reporting tool access from IT', Category: 'IT Setup', Link: 'https://itsupport.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'it' },
+    { Day: 2, Title: 'Expense Reporting Training', Description: 'Complete training on expense submission process', Category: 'Mandatory Training', Link: 'https://glms.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: 5, ContactId: 'finance' },
   ],
   QA: [
-    { Day: 1, Title: 'Access JIRA & TestRail', Description: 'Get access to QA tools from team lead', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
-    { Day: 2, Title: 'Review QA Processes', Description: 'Read through test strategy and QA handbook', Category: 'General', Link: 'https://home.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '' },
+    { Day: 1, Title: 'Access JIRA & TestRail', Description: 'Get access to QA tools from team lead', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'it' },
+    { Day: 2, Title: 'Review QA Processes', Description: 'Read through test strategy and QA handbook', Category: 'General', Link: 'https://home.kpmg.com', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '' },
   ],
 };
 
@@ -87,6 +87,7 @@ const TaskManager = () => {
               taskCode: row.TaskCode ? String(row.TaskCode).trim() : '',
               deadlineDay: row.DeadlineDay ? parseInt(row.DeadlineDay) : null,
               url: row.Link ? String(row.Link).trim() : '',
+              contactId: row.ContactId ? String(row.ContactId).trim() : '',
               status: 'pending',
             }));
 

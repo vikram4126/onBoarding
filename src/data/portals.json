@@ -1,0 +1,50 @@
+[
+  {
+    "id": "talentKonnect",
+    "name": "TalentKonnect",
+    "image": "/screenshots/talentKonnect.jpg",
+    "url": "https://kpmg-talentkonnect.com"
+  },
+  {
+    "id": "rekonnect",
+    "name": "Rekonnect",
+    "image": "/screenshots/reconnect.jpg",
+    "url": "https://kpmg-rekonnect.com"
+  },
+  {
+    "id": "kites",
+    "name": "Kites",
+    "image": "/screenshots/Kites.jpg",
+    "url": "https://kpmg-kites.com"
+  },
+  {
+    "id": "hgs",
+    "name": "HGS",
+    "image": "/screenshots/hgs.jpg",
+    "url": "https://kpmg-hgs.com"
+  },
+  {
+    "id": "glms",
+    "name": "GLMS",
+    "image": "/screenshots/glms.jpg",
+    "url": "https://kpmg-glms.com"
+  },
+  {
+    "id": "jobTrack",
+    "name": "Job track",
+    "image": "/screenshots/job-track.jpg",
+    "url": "https://kpmg-jobtrack.com"
+  },
+  {
+    "id": "replicon",
+    "name": "Replicon",
+    "image": "/screenshots/replicon.jpg",
+    "url": "https://kpmg-replicon.com"
+  },
+  {
+    "id": "cisco",
+    "name": "Cisco",
+    "image": "/screenshots/cisco.jpg",
+    "url": "https://kpmg-cisco.com"
+  }
+]

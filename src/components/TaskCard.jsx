@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle } from 'lucide-react';
 import contactsData from '../data/contacts.json';
+import portalsList from '../data/portals.json';
 
 const CATEGORY_URLS = {
-  'Kommence': 'https://kommence.kpmg.com',
-  'IT Setup': 'https://itsupport.kpmg.com',
-  'General': 'https://home.kpmg.com',
-  'HR Portal': 'https://talentkonnect.kpmg.in',
-  'Mandatory Training': 'https://glms.kpmg.com',
   'Statutory Compliance': 'https://compliance.kpmg.in',
-  'Salary & Investment': 'https://hgs.kpmg.in',
   'Affidavit': 'https://askyourrisk.kpmg.com'
 };
 
@@ -25,8 +20,8 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
 
   const isCompleted = task.status === 'completed';
 
-  // Find a related contact randomly or by logic
-  const contact = contactsData[task.title.length % contactsData.length];
+  // Find the related contact from contacts.json using task.contactId
+  const contact = task.contactId ? contactsData.find(c => c.id === task.contactId) : null;
 
   const currentNote = note !== undefined ? note : task.remark;
 
@@ -100,10 +95,14 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
             <div className="flex items-center gap-2 flex-shrink-0 mt-0.5">
               {/* Category Badge */}
               {task.category && (() => {
-                const categoryLink = task.url || CATEGORY_URLS[task.category];
+                const portalId = task.portalId;
+                const portal = portalId ? portalsList.find(p => p.id === portalId) : null;
+                const categoryLink = task.url || portal?.url || CATEGORY_URLS[task.category];
+                const displayText = portal ? portal.name : task.category;
+
                 const BadgeContent = (
-                  <span className="px-2 py-0.5 rounded bg-[#e6ebfc] text-[#3b5bd9] text-[11px] font-semibold border border-[#d1d9f5] whitespace-nowrap">
-                    {task.category}
+                  <span className="px-2 py-0.5 rounded bg-[#e6ebfc] text-[#3b5bd9] text-[11px] font-semibold border border-[#d1d9f5] whitespace-nowrap flex items-center gap-1">
+                    {displayText} {categoryLink && <ExternalLink className="w-3 h-3" />}
                   </span>
                 );
 
@@ -114,7 +113,7 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
                     rel="noopener noreferrer"
                     onClick={e => e.stopPropagation()}
                     className="hover:opacity-80 transition-opacity cursor-pointer inline-flex"
-                    title={`Open ${task.category}`}
+                    title={`Open ${displayText}`}
                   >
                     {BadgeContent}
                   </a>
@@ -216,7 +215,7 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
               {/* Contact Info */}
               {contact && (
                 <a href={`mailto:${contact.email}`} className="flex items-center gap-1.5 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer group">
-                  <Phone className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-800 transition-colors" strokeWidth={2} />
+                  <Mail className="w-3.5 h-3.5 text-slate-500 group-hover:text-slate-800 transition-colors" strokeWidth={2} />
                   <span className="text-sm font-medium">{contact.team}</span>
                 </a>
               )}

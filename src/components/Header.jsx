@@ -91,7 +91,6 @@ const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1, onTo
         <div className="flex items-center gap-3">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-medium text-slate-800 leading-none">{profile?.fullName || 'User'}</p>
-            <p className="text-xs text-slate-500 mt-1">{profile?.designation || 'Role'}</p>
           </div>
           <div className="w-9 h-9 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-medium text-sm shadow-sm border-2 border-white ring-2 ring-slate-100">
             {profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : 'U'}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Trophy, Clock, Phone, AlertCircle } from 'lucide-react';
+import { Target, Trophy, Clock, Mail, AlertCircle } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 
 const RightPanel = ({ tasks, currentDay, profile }) => {
@@ -13,7 +13,7 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
   const upcomingTrainings = tasks.filter(t => t.deadlineDay && currentDay <= t.deadlineDay && t.status !== 'completed').slice(0, 3);
 
   return (
-    <div className="w-80 bg-white border-l border-slate-200 p-6 overflow-y-auto hidden lg:block custom-scrollbar z-0">
+    <div className="w-96 bg-white border-l border-slate-200 p-6 overflow-y-auto hidden lg:block custom-scrollbar z-0">
       <div className="mb-8">
         <h3 className="text-lg font-bold text-slate-800 mb-4">Your Progress</h3>
         
@@ -83,7 +83,7 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
 
       <div>
         <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <Phone className="w-4 h-4 text-primary-500" /> Key Contacts
+          <Mail className="w-4 h-4 text-primary-500" /> Key Contacts
         </h3>
         <div className="space-y-3">
           {contactsData.slice(0, 3).map(contact => (

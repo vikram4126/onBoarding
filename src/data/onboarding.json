@@ -5,28 +5,28 @@
       {
         "id": "t1_1",
         "title": "Received Office ID card and Building ID card from reception",
-        "category": "Kommence",
-        "projectCode": "1197827",
-        "taskCode": "01",
+        "category": "General",
         "status": "pending"
       },
       {
         "id": "t1_2",
         "title": "Team building",
         "description": "Intro to each other and some team building activities",
-        "category": "Kommence",
+        "category": "General",
+        "contactId": "hr",
         "status": "pending"
       },
       {
         "id": "t1_3",
         "title": "Intro to KPMG and Values",
-        "category": "Kommence",
+        "category": "General",
         "status": "pending"
       },
       {
         "id": "t1_4",
         "title": "HR Induction",
         "category": "Kommence",
+        "portalId": "rekonnect",
         "status": "pending"
       },
       {
@@ -34,6 +34,8 @@
         "title": "IT Induction (Received Laptop)",
         "description": "Receive your work laptop from IT and complete initial hardware checklist.",
         "category": "Kommence",
+        "portalId": "kites",
+        "contactId": "it",
         "status": "pending"
       },
       {
@@ -60,7 +62,8 @@
         "title": "Setup Corporate Email & Microsoft Teams",
         "description": "Configure your KPMG email account on Outlook and login to Microsoft Teams.",
         "category": "IT Setup",
-        "url": "https://portal.office.com",
+        "portalId": "cisco",
+        "contactId": "it",
         "status": "pending"
       },
       {
@@ -68,7 +71,7 @@
         "title": "Configure Laptop — VPN & AVD Setup",
         "description": "Complete laptop configuration — install VPN client, Azure Virtual Desktop, and verify network access.",
         "category": "IT Setup",
-        "url": "https://myapps.microsoft.com",
+        "portalId": "kites",
         "status": "pending"
       },
       {
@@ -76,6 +79,7 @@
         "title": "Sign Welcome Kit & Acknowledgement Documents",
         "description": "Sign and return the Welcome Kit acknowledgement, office policies, and Day 1 induction documents shared by HR.",
         "category": "HR",
+        "portalId": "talentKonnect",
         "status": "pending"
       }
     ]
@@ -87,11 +91,12 @@
         "id": "t2_1",
         "title": "Update details in K-Pass (for ID card)",
         "description": "Login to the Kommence portal and fill in your personal details for ID card generation.",
-        "category": "Kommence",
+        "category": "General",
         "projectCode": "1197827",
         "taskCode": "01",
-        "status": "pending",
-        "url": "https://kpmg.com/kommence"
+        "portalId": "talentKonnect",
+        "contactId": "hr",
+        "status": "pending"
       },
       {
         "id": "t2_2",
@@ -104,8 +109,9 @@
         "title": "Document submission — Pichainlabs portal",
         "description": "Upload documents related to education, experience, AADHAAR, PAN etc. in the Pichainlabs portal.",
         "category": "HR",
-        "status": "pending",
-        "url": "https://app.pichainlabs.com"
+        "url": "https://app.pichainlabs.com",
+        "contactId": "hr",
+        "status": "pending"
       },
       {
         "id": "t2_4",
@@ -120,23 +126,23 @@
         "title": "TalentKonnect — Personal details update",
         "description": "Login to TalentKonnect and update your personal profile details.",
         "category": "HR Portal",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t2_6",
         "title": "Update Bank Account details in TalentKonnect",
         "description": "Add your bank account details in TalentKonnect for salary processing.",
         "category": "HR Portal",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t2_7",
         "title": "Update Mobile, Home phone number & address on TalentKonnect",
         "category": "HR Portal",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t2_8",
@@ -156,16 +162,16 @@
         "description": "For Assistant Managers and below KGS (2026). Complete the declaration on the Ask Risk portal.",
         "category": "Affidavit",
         "remark": "When was going through the questionnaire, and got engaged with some other things, realized the session got stuck. Raised ticket in 'Ask Risk' portal which then got assigned to some executive. Next day, when I tried to access the link, it was working and completed the declaration.",
-        "status": "pending",
-        "url": "https://askyourrisk.kpmg.com"
+        "url": "https://askyourrisk.kpmg.com",
+        "status": "pending"
       },
       {
         "id": "t3_2",
         "title": "Sign employment contract",
         "description": "Received email from Pichainlabs to sign employment contract via AADHAAR based digital sign.",
         "category": "Affidavit",
-        "status": "pending",
-        "url": "https://app.pichainlabs.com"
+        "url": "https://app.pichainlabs.com",
+        "status": "pending"
       },
       {
         "id": "t3_3",
@@ -173,8 +179,9 @@
         "description": "Login to the HGS portal to access salary structure and investment declaration.",
         "category": "Salary & Investment",
         "remark": "It's locked and will open in the first week of April",
-        "status": "pending",
-        "url": "https://hgs.kpmg.in"
+        "portalId": "hgs",
+        "contactId": "finance",
+        "status": "pending"
       },
       {
         "id": "t3_4",
@@ -182,8 +189,8 @@
         "description": "Received an email from IN-FM Power Platform to update details in the Statutory Compliance portal.",
         "category": "Statutory Compliance",
         "remark": "Completed all the details in the portal",
-        "status": "pending",
-        "url": "https://compliance.kpmg.in"
+        "url": "https://compliance.kpmg.in",
+        "status": "pending"
       },
       {
         "id": "t3_5",
@@ -192,9 +199,10 @@
         "hours": 2,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com",
-        "deadlineDay": 3
+        "portalId": "glms",
+        "deadlineDay": 3,
+        "contactId": "training",
+        "status": "pending"
       },
       {
         "id": "t3_6",
@@ -203,9 +211,9 @@
         "hours": 1.75,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com",
-        "deadlineDay": 3
+        "portalId": "glms",
+        "deadlineDay": 3,
+        "status": "pending"
       },
       {
         "id": "t3_7",
@@ -214,9 +222,9 @@
         "hours": 1.75,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com",
-        "deadlineDay": 4
+        "portalId": "glms",
+        "deadlineDay": 4,
+        "status": "pending"
       },
       {
         "id": "t3_8",
@@ -225,9 +233,9 @@
         "hours": 2,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com",
-        "deadlineDay": 5
+        "portalId": "glms",
+        "deadlineDay": 5,
+        "status": "pending"
       },
       {
         "id": "t3_9",
@@ -236,8 +244,8 @@
         "hours": 2,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_10",
@@ -246,8 +254,8 @@
         "hours": 2,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_11",
@@ -256,8 +264,8 @@
         "hours": 1.66,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_12",
@@ -266,8 +274,8 @@
         "hours": 0.5,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_13",
@@ -276,85 +284,85 @@
         "hours": 0,
         "projectCode": "1705912",
         "taskCode": "02",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_14",
         "title": "Essential HR policy and guidelines",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_15",
         "title": "Inclusion, Diversity and Equity at KGS",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_16",
         "title": "KGS BCP Training",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_17",
         "title": "KGS Risk and Data Management",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_18",
         "title": "Open PD tool and Performance Development at KGS",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_19",
         "title": "Our Workplace Facilities and Policies",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_20",
         "title": "Corporate Social Responsibility",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_21",
         "title": "ESG 101 — Foundations — Now is the time (Module 1)",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_22",
         "title": "ESG 101 — Foundations — Time for Impact (Module 2)",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_23",
         "title": "ESG 101 — Foundations — Time to Act (Module 3)",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       },
       {
         "id": "t3_24",
         "title": "Learning and Development",
         "category": "Required Training",
-        "status": "pending",
-        "url": "https://glms.kpmg.com"
+        "portalId": "glms",
+        "status": "pending"
       }
     ]
   },
@@ -366,32 +374,32 @@
         "title": "Employee Nomination Form — update Nominees",
         "description": "Fill in your nominee details for insurance and PF in the HR portal.",
         "category": "Insurance & Benefits",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t4_2",
         "title": "Term Life Insurance",
         "description": "Review your Term Life Insurance coverage details and update nominee information.",
         "category": "Insurance & Benefits",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t4_3",
         "title": "Personal Accident Insurance",
         "description": "Review Personal Accident Insurance policy details assigned to you.",
         "category": "Insurance & Benefits",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t4_4",
         "title": "Health Insurance claims / Reimbursement",
         "description": "Review health insurance coverage and understand the claim/reimbursement process.",
         "category": "Insurance & Benefits",
-        "status": "pending",
-        "url": "https://talentkonnect.kpmg.in"
+        "portalId": "talentKonnect",
+        "status": "pending"
       },
       {
         "id": "t4_5",
@@ -411,8 +419,8 @@
         "title": "UK Email ID password change and AVD setup",
         "description": "Change your UK email password as per security policy and complete AVD configuration.",
         "category": "IT Setup",
-        "status": "pending",
-        "url": "https://myapps.microsoft.com"
+        "portalId": "kites",
+        "status": "pending"
       }
     ]
   }

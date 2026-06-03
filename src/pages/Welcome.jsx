@@ -8,9 +8,7 @@ const Welcome = ({ onSaveProfile }) => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    designation: '',
     team: 'Development',
-    reportingManager: '',
     joiningDate: new Date().toISOString().split('T')[0],
   });
 
@@ -97,12 +95,7 @@ const Welcome = ({ onSaveProfile }) => {
                     </label>
                     <input type="email" name="email" required onChange={handleChange} value={formData.email} className="input-field bg-white/50 backdrop-blur-sm" placeholder="john@company.com" />
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                      <Award className="w-4 h-4 text-primary-500" /> Designation
-                    </label>
-                    <input type="text" name="designation" required onChange={handleChange} value={formData.designation} className="input-field bg-white/50 backdrop-blur-sm" placeholder="Software Engineer" />
-                  </div>
+
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                       <Users className="w-4 h-4 text-primary-500" /> Team
@@ -117,12 +110,7 @@ const Welcome = ({ onSaveProfile }) => {
                       <option value="Marketing">Marketing</option>
                     </select>
                   </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
-                      <User className="w-4 h-4 text-primary-500" /> Reporting Manager
-                    </label>
-                    <input type="text" name="reportingManager" required onChange={handleChange} value={formData.reportingManager} className="input-field bg-white/50 backdrop-blur-sm" placeholder="Jane Smith" />
-                  </div>
+
                   <div className="space-y-1">
                     <label className="text-sm font-medium text-slate-700 flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-primary-500" /> Joining Date
