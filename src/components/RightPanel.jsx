@@ -1,6 +1,7 @@
 import React from 'react';
 import { Target, Trophy, Clock, Mail, AlertCircle } from 'lucide-react';
 import contactsData from '../data/contacts.json';
+import { getPeriodSortIndex } from '../utils/dateHelpers';
 
 const RightPanel = ({ tasks, currentDay, profile }) => {
   const completedCount = tasks.filter(t => t.status === 'completed').length;
@@ -9,8 +10,8 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
 
   const pendingTodayCount = tasks.filter(t => t.day === currentDay && t.status === 'pending').length;
 
-  const overdueTasks = tasks.filter(t => t.deadlineDay && currentDay > t.deadlineDay && t.status !== 'completed');
-  const upcomingTrainings = tasks.filter(t => t.deadlineDay && currentDay <= t.deadlineDay && t.status !== 'completed').slice(0, 3);
+  const overdueTasks = tasks.filter(t => t.day && t.day !== 'Custom' && getPeriodSortIndex(currentDay) > getPeriodSortIndex(t.day) && t.status !== 'completed');
+  const upcomingTrainings = tasks.filter(t => t.day && t.day !== 'Custom' && getPeriodSortIndex(currentDay) <= getPeriodSortIndex(t.day) && t.status !== 'completed').slice(0, 3);
 
   return (
     <div className="w-96 bg-white border-l border-slate-200 p-6 overflow-y-auto hidden lg:block custom-scrollbar z-0">
@@ -61,7 +62,7 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
               <div key={task.id} className="card p-3 shadow-none bg-red-50 border-red-100 border">
                 <h4 className="text-sm font-semibold text-slate-800 mb-1 leading-tight">{task.title}</h4>
                 <div className="flex items-center justify-between mt-2">
-                  <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">Overdue by {currentDay - task.deadlineDay} day(s)</span>
+                  <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">Overdue: was due {task.day}</span>
                   <a href={task.url || '#'} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase text-red-600 hover:text-red-700 bg-white border border-red-200 px-2 py-1 rounded">Start</a>
                 </div>
               </div>
@@ -72,7 +73,7 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
                 <h4 className="text-sm font-semibold text-slate-800 mb-1 leading-tight">{task.title}</h4>
                 <p className="text-xs text-slate-500 mb-2">{task.category}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded">Due Day {task.deadlineDay}</span>
+                  <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded">Due: {task.day}</span>
                   <a href={task.url || '#'} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase text-primary-600 hover:text-primary-700">Start</a>
                 </div>
               </div>

@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import TaskCard from './TaskCard';
 import { ChevronDown, ChevronUp, Plus, Check } from 'lucide-react';
+import { getPeriodSortIndex } from '../utils/dateHelpers';
 
 const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab, searchQuery, onAddTask, onDeleteTask, onEditTask }) => {
   const [openDays, setOpenDays] = useState([]);
+  
+  const currentPeriod = currentDay; // It's passed as currentDay but actually holds a period string now.
 
-  // Initialize open accordion for currentDay
+  // Initialize open accordion for currentPeriod
   useEffect(() => {
     if (activeTab === 'timeline' && !searchQuery) {
-      if (!openDays.includes(currentDay.toString())) {
-        setOpenDays(prev => [...prev, currentDay.toString()]);
+      if (!openDays.includes(currentPeriod)) {
+        setOpenDays(prev => [...prev, currentPeriod]);
       }
     }
-  }, [currentDay, activeTab, searchQuery]);
+  }, [currentPeriod, activeTab, searchQuery]);
 
   const toggleDayAccordion = (day) => {
     setOpenDays(prev => 
@@ -28,7 +31,7 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
     filteredTasks = tasks.filter(t => t.title.toLowerCase().includes(q) || (t.description && t.description.toLowerCase().includes(q)));
   } else {
     if (activeTab === 'today') {
-      filteredTasks = tasks.filter(t => t.day === currentDay);
+      filteredTasks = tasks.filter(t => t.day === currentPeriod);
     } else if (activeTab === 'pending') {
       filteredTasks = tasks.filter(t => t.status === 'pending');
     } else if (activeTab === 'completed') {
@@ -36,7 +39,7 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
     }
   }
 
-  // Group by day
+  // Group by day/period
   const tasksByDay = filteredTasks.reduce((acc, task) => {
     const day = task.day || 'Custom';
     if (!acc[day]) acc[day] = [];
@@ -46,9 +49,7 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
 
   // Sort days
   const sortedDays = Object.keys(tasksByDay).sort((a, b) => {
-    if (a === 'Custom') return 1;
-    if (b === 'Custom') return -1;
-    return parseInt(a) - parseInt(b);
+    return getPeriodSortIndex(a) - getPeriodSortIndex(b);
   });
 
   // Open all days if searching
@@ -61,13 +62,13 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
     <div className="space-y-8 pb-10">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-slate-800">
-          {activeTab === 'today' ? "Today's Focus" : 
+          {activeTab === 'today' ? "Current Focus" : 
            activeTab === 'pending' ? 'Pending Tasks' : 
            activeTab === 'completed' ? 'Completed Tasks' : 
            'Onboarding Journey'}
         </h2>
         <p className="text-slate-500 mt-1">
-          {activeTab === 'today' ? `Day ${currentDay} of your 30-day journey.` : 'Track your progress and complete assigned tasks.'}
+          {activeTab === 'today' ? `You are currently in ${currentPeriod} of your journey.` : 'Track your progress and complete assigned tasks.'}
         </p>
       </div>
 
@@ -79,11 +80,17 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
         <div className="space-y-6">
           {sortedDays.map(day => {
             const isOpen = isDayOpen(day);
-            const isCurrentDay = day === currentDay.toString();
+            const isCurrentDay = day === currentPeriod;
             const dayTasks = tasksByDay[day];
             const completedCount = dayTasks.filter(t => t.status === 'completed').length;
             const totalCount = dayTasks.length;
             const isAllCompleted = totalCount > 0 && completedCount === totalCount;
+            const isPast = getPeriodSortIndex(day) < getPeriodSortIndex(currentPeriod);
+            
+            // Extract a short letter or number for the circle icon
+            let iconText = day === 'Custom' ? 'C' : day.replace(/[^0-9a-zA-Z]/g, '').slice(0,2).toUpperCase();
+            if (day.startsWith('Day ')) iconText = day.split(' ')[1];
+            if (day.startsWith('Week ')) iconText = 'W' + day.split(' ')[1];
             
             return (
               <div key={day} className={`bg-white rounded-xl border ${isOpen ? 'border-primary-200 shadow-sm' : isAllCompleted ? 'border-green-200' : 'border-slate-200'} transition-all overflow-hidden`}>
@@ -96,21 +103,21 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm shadow-sm transition-colors
                       ${isCurrentDay ? 'bg-primary-500 text-white ring-4 ring-primary-50' : 
                         isAllCompleted ? 'bg-green-500 text-white' :
-                        (!isAllCompleted && parseInt(day) < currentDay) ? 'bg-red-50 text-red-600 border border-red-200 ring-2 ring-red-50' :
+                        (!isAllCompleted && isPast) ? 'bg-red-50 text-red-600 border border-red-200 ring-2 ring-red-50' :
                         day === 'Custom' ? 'bg-indigo-500 text-white' : 'bg-slate-100 border border-slate-200 text-slate-600'}`}
                     >
-                      {isAllCompleted ? <Check className="w-5 h-5" /> : (day === 'Custom' ? 'C' : day)}
+                      {isAllCompleted ? <Check className="w-5 h-5" /> : iconText}
                     </div>
                     <div className="text-left flex flex-col">
                       <div className="flex items-center gap-2">
                         <h3 className="text-lg font-semibold text-slate-800">
-                          {day === 'Custom' ? 'Custom Tasks' : `Day ${day}`}
+                          {day === 'Custom' ? 'Custom Tasks' : day}
                         </h3>
                         {isCurrentDay && <span className="text-xs font-medium bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Current</span>}
                         {isAllCompleted && <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">All Done!</span>}
-                        {!isAllCompleted && parseInt(day) < currentDay && <span className="text-xs font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded-full whitespace-nowrap">{totalCount - completedCount} Missed</span>}
+                        {!isAllCompleted && isPast && <span className="text-xs font-medium bg-red-100 text-red-700 px-2 py-0.5 rounded-full whitespace-nowrap">{totalCount - completedCount} Missed</span>}
                       </div>
-                      <p className={`text-xs ${(!isAllCompleted && parseInt(day) < currentDay) ? 'text-red-500' : 'text-slate-500'}`}>
+                      <p className={`text-xs ${(!isAllCompleted && isPast) ? 'text-red-500' : 'text-slate-500'}`}>
                         {completedCount} of {totalCount} tasks completed
                       </p>
                     </div>
@@ -144,7 +151,7 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                           saveNote={saveNote}
                           onDeleteTask={onDeleteTask}
                           onEditTask={onEditTask}
-                          currentDay={currentDay}
+                          currentDay={currentPeriod}
                         />
                       ))}
                     </div>

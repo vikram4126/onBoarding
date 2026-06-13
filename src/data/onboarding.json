@@ -1,425 +1,504 @@
 [
   {
-    "day": 1,
+    "day": "Day 1",
     "tasks": [
       {
-        "id": "t1_1",
-        "title": "Received Office ID card and Building ID card from reception",
+        "id": "onb_day1_1",
+        "title": "Confirm receipt of the employment contract",
+        "description": "If you have not received your contract, please contact your HR point of contact. Meet with your Buddy and the team.",
+        "category": "Kommence",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day1_2",
+        "title": "Submit new joiner kit forms",
+        "description": "Submit contract and 2 passport sized photographs.",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day1_3",
+        "title": "Submit form for access card",
+        "description": "Submit as instructed by the local administration team and you will receive your access card on day one/two. Your customized access card will be ready within 4-5 working days.",
         "category": "General",
         "status": "pending"
       },
       {
-        "id": "t1_2",
+        "id": "onb_day1_4",
+        "title": "Collect your laptop and login ID",
+        "description": "Collect from the IT helpdesk. If not done so on day one, ensure to do it on day two. In case of any difficulty please contact the local IT team.",
+        "category": "IT Setup",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day1_5",
+        "title": "Finalize salary account bank",
+        "description": "Finalize on the bank that you would like to have your salary account with.",
+        "category": "Salary & Investment",
+        "status": "pending",
+        "portalId": "hgs"
+      },
+      {
+        "id": "onb_day1_6",
+        "title": "Received Office ID card and Building ID card from reception",
+        "description": "",
+        "category": "Kommence",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day1_7",
         "title": "Team building",
         "description": "Intro to each other and some team building activities",
-        "category": "General",
-        "contactId": "hr",
+        "category": "Kommence",
         "status": "pending"
       },
       {
-        "id": "t1_3",
+        "id": "onb_day1_8",
         "title": "Intro to KPMG and Values",
-        "category": "General",
+        "description": "",
+        "category": "Training",
         "status": "pending"
       },
       {
-        "id": "t1_4",
+        "id": "onb_day1_9",
         "title": "HR Induction",
-        "category": "Kommence",
-        "portalId": "rekonnect",
-        "status": "pending"
+        "description": "",
+        "category": "Training",
+        "status": "pending",
+        "contactId": "hr"
       },
       {
-        "id": "t1_5",
-        "title": "IT Induction (Received Laptop)",
-        "description": "Receive your work laptop from IT and complete initial hardware checklist.",
-        "category": "Kommence",
-        "portalId": "kites",
-        "contactId": "it",
-        "status": "pending"
-      },
-      {
-        "id": "t1_6",
+        "id": "onb_day1_10",
         "title": "Admin Induction",
-        "category": "Kommence",
+        "description": "",
+        "category": "Training",
         "status": "pending"
       },
       {
-        "id": "t1_7",
+        "id": "onb_day1_11",
         "title": "Finance Induction",
-        "category": "Kommence",
-        "status": "pending"
-      },
-      {
-        "id": "t1_8",
-        "title": "Meet Reporting Manager",
-        "description": "Introduction 1:1 with your Reporting Manager. Understand team structure, your role, and immediate priorities.",
-        "category": "General",
-        "status": "pending"
-      },
-      {
-        "id": "t1_9",
-        "title": "Setup Corporate Email & Microsoft Teams",
-        "description": "Configure your KPMG email account on Outlook and login to Microsoft Teams.",
-        "category": "IT Setup",
-        "portalId": "cisco",
-        "contactId": "it",
-        "status": "pending"
-      },
-      {
-        "id": "t1_10",
-        "title": "Configure Laptop — VPN & AVD Setup",
-        "description": "Complete laptop configuration — install VPN client, Azure Virtual Desktop, and verify network access.",
-        "category": "IT Setup",
-        "portalId": "kites",
-        "status": "pending"
-      },
-      {
-        "id": "t1_11",
-        "title": "Sign Welcome Kit & Acknowledgement Documents",
-        "description": "Sign and return the Welcome Kit acknowledgement, office policies, and Day 1 induction documents shared by HR.",
-        "category": "HR",
-        "portalId": "talentKonnect",
+        "description": "",
+        "category": "Training",
         "status": "pending"
       }
     ]
   },
   {
-    "day": 2,
+    "day": "Day 2",
     "tasks": [
       {
-        "id": "t2_1",
-        "title": "Update details in K-Pass (for ID card)",
-        "description": "Login to the Kommence portal and fill in your personal details for ID card generation.",
+        "id": "onb_day2_1",
+        "title": "Check reporting office/team",
+        "description": "Check with your Buddy or HR point of contact on your reporting office/ team from day two/three onwards.",
         "category": "General",
-        "projectCode": "1197827",
-        "taskCode": "01",
-        "portalId": "talentKonnect",
-        "contactId": "hr",
-        "status": "pending"
+        "status": "pending",
+        "contactId": "hr"
       },
       {
-        "id": "t2_2",
-        "title": "Received Permanent ID card",
-        "category": "General",
-        "status": "pending"
-      },
-      {
-        "id": "t2_3",
-        "title": "Document submission — Pichainlabs portal",
-        "description": "Upload documents related to education, experience, AADHAAR, PAN etc. in the Pichainlabs portal.",
-        "category": "HR",
-        "url": "https://app.pichainlabs.com",
-        "contactId": "hr",
-        "status": "pending"
-      },
-      {
-        "id": "t2_4",
+        "id": "onb_day2_2",
         "title": "Review 'Welcome to KPMG' e-mail",
-        "description": "Review e-mail received from the HR team. Check bank info, education info etc.",
-        "category": "HR",
-        "remark": "Bank Info, Education info etc.",
-        "status": "pending"
-      },
-      {
-        "id": "t2_5",
-        "title": "TalentKonnect — Personal details update",
-        "description": "Login to TalentKonnect and update your personal profile details.",
+        "description": "Review the welcome e-mail which you would have received from the HR team.",
         "category": "HR Portal",
-        "portalId": "talentKonnect",
-        "status": "pending"
+        "status": "pending",
+        "contactId": "hr"
       },
       {
-        "id": "t2_6",
-        "title": "Update Bank Account details in TalentKonnect",
-        "description": "Add your bank account details in TalentKonnect for salary processing.",
-        "category": "HR Portal",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t2_7",
-        "title": "Update Mobile, Home phone number & address on TalentKonnect",
-        "category": "HR Portal",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t2_8",
-        "title": "Connect with your Buddy",
-        "description": "Reach out to your assigned buddy for reporting office, working hours and other information.",
+        "id": "onb_day2_3",
+        "title": "Visit the 'My Onboarding' page",
+        "description": "Visit the page on the HR intranet (KPMG intranet home page > Human resources > My onboarding) to familiarize yourself with the Firm.",
         "category": "General",
-        "status": "pending"
-      }
-    ]
-  },
-  {
-    "day": 3,
-    "tasks": [
-      {
-        "id": "t3_1",
-        "title": "New Joiner Independence Confirmation Affidavit",
-        "description": "For Assistant Managers and below KGS (2026). Complete the declaration on the Ask Risk portal.",
-        "category": "Affidavit",
-        "remark": "When was going through the questionnaire, and got engaged with some other things, realized the session got stuck. Raised ticket in 'Ask Risk' portal which then got assigned to some executive. Next day, when I tried to access the link, it was working and completed the declaration.",
-        "url": "https://askyourrisk.kpmg.com",
-        "status": "pending"
+        "status": "pending",
+        "contactId": "hr"
       },
       {
-        "id": "t3_2",
-        "title": "Sign employment contract",
-        "description": "Received email from Pichainlabs to sign employment contract via AADHAAR based digital sign.",
-        "category": "Affidavit",
-        "url": "https://app.pichainlabs.com",
-        "status": "pending"
-      },
-      {
-        "id": "t3_3",
-        "title": "NEW JOINER KIT — HGS Portal login",
-        "description": "Login to the HGS portal to access salary structure and investment declaration.",
-        "category": "Salary & Investment",
-        "remark": "It's locked and will open in the first week of April",
-        "portalId": "hgs",
-        "contactId": "finance",
-        "status": "pending"
-      },
-      {
-        "id": "t3_4",
-        "title": "Update PF Form-11, LWF/ESIC",
-        "description": "Received an email from IN-FM Power Platform to update details in the Statutory Compliance portal.",
-        "category": "Statutory Compliance",
-        "remark": "Completed all the details in the portal",
-        "url": "https://compliance.kpmg.in",
-        "status": "pending"
-      },
-      {
-        "id": "t3_5",
-        "title": "New Joiner Independence Training — Personal Independence 2024/25 India",
-        "category": "Mandatory Training",
-        "hours": 2,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "deadlineDay": 3,
-        "contactId": "training",
-        "status": "pending"
-      },
-      {
-        "id": "t3_6",
-        "title": "Building Public Trust — Independence and Conflicts of Interest (Client Facing)",
-        "category": "Mandatory Training",
-        "hours": 1.75,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "deadlineDay": 3,
-        "status": "pending"
-      },
-      {
-        "id": "t3_7",
-        "title": "Building Public Trust — Our Code",
-        "category": "Mandatory Training",
-        "hours": 1.75,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "deadlineDay": 4,
-        "status": "pending"
-      },
-      {
-        "id": "t3_8",
-        "title": "GBH_KGS_ Financial Crime _2025",
-        "category": "Mandatory Training",
-        "hours": 2,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "deadlineDay": 5,
-        "status": "pending"
-      },
-      {
-        "id": "t3_9",
-        "title": "GBH_KGS_ Protecting Information _2025",
-        "category": "Mandatory Training",
-        "hours": 2,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_10",
-        "title": "New Joiner Mandatory Risk Trainings — Due in 28 days (KGS)",
-        "category": "Mandatory Training",
-        "hours": 2,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_11",
-        "title": "Information Protection and Data Privacy Fundamentals 2025 (IP&DPF)",
-        "category": "Mandatory Training",
-        "hours": 1.66,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_12",
-        "title": "Prevention of Sexual Harassment at Workplace — 2025",
-        "category": "Mandatory Training",
-        "hours": 0.5,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_13",
-        "title": "Complying with Sanctions",
-        "category": "Mandatory Training",
-        "hours": 0,
-        "projectCode": "1705912",
-        "taskCode": "02",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_14",
-        "title": "Essential HR policy and guidelines",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_15",
-        "title": "Inclusion, Diversity and Equity at KGS",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_16",
-        "title": "KGS BCP Training",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_17",
-        "title": "KGS Risk and Data Management",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_18",
-        "title": "Open PD tool and Performance Development at KGS",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_19",
-        "title": "Our Workplace Facilities and Policies",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_20",
-        "title": "Corporate Social Responsibility",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_21",
-        "title": "ESG 101 — Foundations — Now is the time (Module 1)",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_22",
-        "title": "ESG 101 — Foundations — Time for Impact (Module 2)",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_23",
-        "title": "ESG 101 — Foundations — Time to Act (Module 3)",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      },
-      {
-        "id": "t3_24",
-        "title": "Learning and Development",
-        "category": "Required Training",
-        "portalId": "glms",
-        "status": "pending"
-      }
-    ]
-  },
-  {
-    "day": 4,
-    "tasks": [
-      {
-        "id": "t4_1",
-        "title": "Employee Nomination Form — update Nominees",
-        "description": "Fill in your nominee details for insurance and PF in the HR portal.",
-        "category": "Insurance & Benefits",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t4_2",
-        "title": "Term Life Insurance",
-        "description": "Review your Term Life Insurance coverage details and update nominee information.",
-        "category": "Insurance & Benefits",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t4_3",
-        "title": "Personal Accident Insurance",
-        "description": "Review Personal Accident Insurance policy details assigned to you.",
-        "category": "Insurance & Benefits",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t4_4",
-        "title": "Health Insurance claims / Reimbursement",
-        "description": "Review health insurance coverage and understand the claim/reimbursement process.",
-        "category": "Insurance & Benefits",
-        "portalId": "talentKonnect",
-        "status": "pending"
-      },
-      {
-        "id": "t4_5",
-        "title": "Full and Final Settlement",
-        "description": "If applicable, complete the full and final settlement process for previous employment.",
-        "category": "General",
-        "status": "pending"
-      },
-      {
-        "id": "t4_6",
-        "title": "Any other legitimate due(s)",
-        "category": "General",
-        "status": "pending"
-      },
-      {
-        "id": "t4_7",
-        "title": "UK Email ID password change and AVD setup",
-        "description": "Change your UK email password as per security policy and complete AVD configuration.",
+        "id": "onb_day2_4",
+        "title": "Set up your e-mail signature",
+        "description": "Set up your e-mail signature using the guidelines provided in the welcome mail.",
         "category": "IT Setup",
-        "portalId": "kites",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day2_5",
+        "title": "Get Skype set up",
+        "description": "Go through the 'Instant Messenger Policy Training' on the intranet. Once completed write to IN-FM IT Training to get access.",
+        "category": "IT Setup",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day2_6",
+        "title": "Update details in K-Pass (for ID card)",
+        "description": "",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day2_7",
+        "title": "Received ID card",
+        "description": "",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day2_8",
+        "title": "Document submission process",
+        "description": "Update details and upload documents related to education, experience, AADHAAR, PAN etc. in Pichainlabs portal.",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day2_9",
+        "title": "TalentKonnect - personal details update",
+        "description": "",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day2_10",
+        "title": "Update your Bank Account details under TalentKonnect",
+        "description": "",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day2_11",
+        "title": "Update your Mobile phone number, Home phone number and address on TalentKonnect",
+        "description": "",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      }
+    ]
+  },
+  {
+    "day": "Day 3",
+    "tasks": [
+      {
+        "id": "onb_day3_1",
+        "title": "Sign employement contract via AADHAAR based digital sign",
+        "description": "Received email from Pichainlabs to sign employement contract via AADHAAR based digital sign",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day3_2",
+        "title": "Salary structure and Investment declaration",
+        "description": "NEW JOINER KIT-HGS Portal login",
+        "category": "Salary & Investment",
+        "status": "pending",
+        "portalId": "hgs"
+      },
+      {
+        "id": "onb_day3_3",
+        "title": "Mandatory - Statutory Compliance Portal",
+        "description": "Received an email from IN-FM Power Platform to update PF Form-11, LWF/ESIC",
+        "category": "Statutory Compliance",
+        "status": "pending"
+      },
+      {
+        "id": "onb_day3_4",
+        "title": "New Joiner Independence Training",
+        "description": "Personal Independence 2024/25 India (GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_5",
+        "title": "Building Public Trust - Independence and Conflicts of Interest",
+        "description": "Client Facing (GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_6",
+        "title": "Building Public Trust - Our Code",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_7",
+        "title": "GBH_KGS_Financial Crime_2025",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_8",
+        "title": "GBH_KGS_Protecting Information_2025",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_9",
+        "title": "New Joiner Mandatory Risk Trainings",
+        "description": "Due in 28 days (KGS) (GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_10",
+        "title": "Information Protection and Data Privacy Fundamentals 2025 Global Training",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_11",
+        "title": "Prevention of Sexual Harassment at Workplace - 2025",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_12",
+        "title": "Complying with Sanctions",
+        "description": "(GLMS Portal)",
+        "category": "Mandatory Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_13",
+        "title": "Essential HR policy and guidelines",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day3_14",
+        "title": "Inclusion, Diversity and Equity at KGS",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_15",
+        "title": "KGS BCP Training",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_16",
+        "title": "KGS Risk and Data Management",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_17",
+        "title": "Our Workplace Facilities and Policies",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_18",
+        "title": "Corporate Social Responsibility",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_19",
+        "title": "ESG 101 - Foundations - Now is the time (Module 1)",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_20",
+        "title": "ESG 101 - Foundations - Time for Impact (Module 2)",
+        "description": "(GLMS Portal)",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "onb_day3_21",
+        "title": "Employee Nomination Form",
+        "description": "Update Nominees (Term Life Insurance, Personal Accident Insurance, Heath Insurance claims/Reimbursement if any, Full and Final Settlement, Any other legitimate due(s))",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_day3_22",
+        "title": "UK Email ID password change and AVD setup",
+        "description": "",
+        "category": "IT Setup",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": "Week 1",
+    "tasks": [
+      {
+        "id": "onb_week1_1",
+        "title": "Complete Risk Management trainings",
+        "description": "Complete trainings mentioned under Risk Management tab in the Welcome email. Independence training is required within 14 days of joining.",
+        "category": "Mandatory Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week1_2",
+        "title": "Meet with your Performance manager",
+        "description": "Initial meeting with your Performance manager.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week1_3",
+        "title": "Update Intellego details",
+        "description": "Update your personal details and KPMG resume on Intellego.",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_week1_4",
+        "title": "Understand the Open PD process",
+        "description": "Intranet > Human resources > Open Performance Development.",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "onb_week1_5",
+        "title": "Order business cards & stationery",
+        "description": "Order business cards through the KPMG Intranet portal and stationery on KPMG Support Central.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week1_6",
+        "title": "Submit Form 2 (revised) and EPFO form",
+        "description": "Submit to the Finance team. Please also attach a copy of your PAN card with these forms.",
+        "category": "Statutory Compliance",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": "Week 2",
+    "tasks": [
+      {
+        "id": "onb_week2_1",
+        "title": "New Joiner Orientation on Systems, PF, Policies & Online",
+        "description": "45 Min via Teams",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week2_2",
+        "title": "Brand Training",
+        "description": "(1 hour) given by Kubendran",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week2_3",
+        "title": "Internal PPT assignment",
+        "description": "",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_week2_4",
+        "title": "Insurance details update",
+        "description": "",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      }
+    ]
+  },
+  {
+    "day": "First Month",
+    "tasks": [
+      {
+        "id": "onb_firstmonth_1",
+        "title": "Finalise your goals on the system",
+        "description": "Meet with your performance manager and finalise your goals on the system.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_firstmonth_2",
+        "title": "Submit New Joiner Independence Confirmation Affidavit",
+        "description": "Complete the risk trainings as per timelines and submit the affidavit within 30 days of joining.",
+        "category": "Mandatory Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_firstmonth_3",
+        "title": "Ensure you have gone through the staff manual",
+        "description": "Ensure you have gone through the staff manual and the Onboarding page.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_firstmonth_4",
+        "title": "Attend the KPMG Induction",
+        "description": "Attend the KPMG Induction at your location if not done when you joined.",
+        "category": "Mandatory Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_firstmonth_5",
+        "title": "Understand your development journey",
+        "description": "Go through the KPMG Business School page and understand your development journey.",
+        "category": "Training",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": "Second Month",
+    "tasks": [
+      {
+        "id": "onb_secondmonth_1",
+        "title": "Check in with your Buddy",
+        "description": "Schedule a quick coffee chat with your buddy to review your first month.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "onb_secondmonth_2",
+        "title": "Complete advanced role-specific training",
+        "description": "Enroll and complete any secondary learning modules required for your team.",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "onb_secondmonth_3",
+        "title": "Participate in team-building event",
+        "description": "Join your department's quarterly team building or townhall.",
+        "category": "General",
         "status": "pending"
       }
     ]

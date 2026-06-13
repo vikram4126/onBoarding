@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Search, Plus, Bell, AlertCircle, Calendar, Menu } from 'lucide-react';
+import { getPeriodSortIndex } from '../utils/dateHelpers';
 
-const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 1, onToggleSidebar }) => {
+const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 'Day 1', onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   
   const overdueTasks = tasks.filter(t => {
     if (t.status === 'completed') return false;
-    if (t.deadlineDay && currentDay > t.deadlineDay) return true;
-    if (t.day && t.day !== 'Custom' && parseInt(t.day) < currentDay) return true;
+    // For string periods, we use sort index to compare if a task is overdue
+    if (t.day && t.day !== 'Custom' && getPeriodSortIndex(t.day) < getPeriodSortIndex(currentDay)) return true;
     return false;
   });
 

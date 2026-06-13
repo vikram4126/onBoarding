@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getStorage, setStorage, clearStorage, STORAGE_KEYS } from '../utils/storage';
+import { getCurrentPeriod } from '../utils/dateHelpers';
 import onboardingData from '../data/onboarding.json';
 import teamTasksData from '../data/teamTasks.json';
 
@@ -146,7 +147,7 @@ export const useOnboarding = () => {
 
   const allTasks = [...Object.values(tasks), ...customTasks];
   
-  const currentDay = profile ? Math.max(1, Math.floor((new Date() - new Date(profile.joiningDate)) / (1000 * 60 * 60 * 24)) + 1) : 1;
+  const currentPeriod = profile ? getCurrentPeriod(profile.joiningDate) : 'Day 1';
 
   return {
     profile,
@@ -159,6 +160,6 @@ export const useOnboarding = () => {
     editCustomTask,
     notes,
     saveNote,
-    currentDay
+    currentDay: currentPeriod // keep name currentDay for compatibility with components, or rename it
   };
 };

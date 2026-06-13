@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { Upload, Users, LogOut, FileJson, CheckCircle2, Target, Calendar, Settings } from 'lucide-react';
+import React, { useState, useRef, useCallback } from 'react';
+import { Upload, Users, LogOut, FileJson, CheckCircle2, Target, Calendar, Settings, RefreshCw } from 'lucide-react';
 import { getStorage, setStorage, STORAGE_KEYS } from '../utils/storage';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 import TaskManager from '../components/TaskManager';
@@ -8,7 +8,15 @@ const ManagerDashboard = ({ onLogout }) => {
   const [employees, setEmployees] = useState(() => getStorage(STORAGE_KEYS.MANAGER_EMPLOYEES, []));
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [activeTab, setActiveTab] = useState('team');
+  const [toast, setToast] = useState(null); // { message, type: 'success' | 'error' }
   const fileInputRef = useRef(null);
+  const reuploadInputRef = useRef(null);
+  const reuploadTargetEmail = useRef(null); // track which employee's file is being re-uploaded
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3500);
+  };
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
@@ -18,28 +26,74 @@ const ManagerDashboard = ({ onLogout }) => {
     reader.onload = (event) => {
       try {
         const data = JSON.parse(event.target.result);
-        
-        // Basic validation
         if (!data.profile || !data.tasks) {
-          alert('Invalid or corrupted file. Please upload a valid employee progress file.');
+          showToast('Invalid file. Please upload a valid employee progress file.', 'error');
           return;
         }
 
-        // Add or update the employee data
         const updatedEmployees = [...employees];
         const existingIndex = updatedEmployees.findIndex(emp => emp.profile.email === data.profile.email);
-        
-        if (existingIndex >= 0) {
-          updatedEmployees[existingIndex] = data; // Update existing
+        const isUpdate = existingIndex >= 0;
+
+        if (isUpdate) {
+          updatedEmployees[existingIndex] = data;
         } else {
-          updatedEmployees.push(data); // Add new
+          updatedEmployees.push(data);
         }
 
         setEmployees(updatedEmployees);
         setStorage(STORAGE_KEYS.MANAGER_EMPLOYEES, updatedEmployees);
-        e.target.value = null; // reset input
+        e.target.value = null;
+        showToast(
+          isUpdate
+            ? `✓ Updated ${data.profile.fullName}'s progress data.`
+            : `✓ Added ${data.profile.fullName} to your team.`
+        );
       } catch (err) {
-        alert('Error parsing the file. Please ensure it is a valid JSON file.');
+        showToast('Error reading file. Please ensure it is a valid JSON file.', 'error');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // Re-upload for a specific employee – must match their email to prevent duplicates
+  const handleReupload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        if (!data.profile || !data.tasks) {
+          showToast('Invalid file format.', 'error');
+          return;
+        }
+
+        if (data.profile.email !== reuploadTargetEmail.current) {
+          showToast(
+            `File mismatch! Expected ${reuploadTargetEmail.current} but got ${data.profile.email}. Please upload the correct file.`,
+            'error'
+          );
+          e.target.value = null;
+          return;
+        }
+
+        const updatedEmployees = [...employees];
+        const existingIndex = updatedEmployees.findIndex(emp => emp.profile.email === data.profile.email);
+        if (existingIndex >= 0) {
+          updatedEmployees[existingIndex] = data;
+        } else {
+          updatedEmployees.push(data);
+        }
+
+        setEmployees(updatedEmployees);
+        setStorage(STORAGE_KEYS.MANAGER_EMPLOYEES, updatedEmployees);
+        e.target.value = null;
+        reuploadTargetEmail.current = null;
+        showToast(`✓ ${data.profile.fullName}'s data has been updated successfully.`);
+      } catch (err) {
+        showToast('Error reading file.', 'error');
       }
     };
     reader.readAsText(file);
@@ -268,6 +322,29 @@ const ManagerDashboard = ({ onLogout }) => {
             <h2 className="text-xl font-bold text-slate-800">My Team ({employees.length})</h2>
           </div>
 
+          {/* Hidden re-upload input for specific employee */}
+          <input
+            type="file"
+            accept=".json"
+            ref={reuploadInputRef}
+            onChange={handleReupload}
+            className="hidden"
+          />
+
+          {/* Toast Notification */}
+          {toast && (
+            <div className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-xl border text-sm font-medium transition-all duration-300 ${
+              toast.type === 'error'
+                ? 'bg-red-50 border-red-200 text-red-700'
+                : 'bg-emerald-50 border-emerald-200 text-emerald-700'
+            }`}>
+              {toast.type === 'error'
+                ? <span className="text-lg">⚠️</span>
+                : <CheckCircle2 className="w-5 h-5 flex-shrink-0" />}
+              <span>{toast.message}</span>
+            </div>
+          )}
+
           {employees.length === 0 ? (
             <div className="text-center py-20 bg-white border border-slate-200 rounded-2xl border-dashed">
               <FileJson className="w-16 h-16 text-slate-300 mx-auto mb-4" />
@@ -330,9 +407,21 @@ const ManagerDashboard = ({ onLogout }) => {
                       return null;
                     })()}
                     
-                    <div className="mt-4 pt-4 border-t border-slate-100 text-[11px] text-slate-400 flex justify-between">
-                      <span>Joined: {new Date(emp.profile.joiningDate).toLocaleDateString()}</span>
-                      <span>Last Export: {emp.exportDate ? new Date(emp.exportDate).toLocaleDateString() : 'N/A'}</span>
+                    <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                      <div className="text-[11px] text-slate-400">
+                        <span>Joined: {new Date(emp.profile.joiningDate).toLocaleDateString()}</span>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          reuploadTargetEmail.current = emp.profile.email;
+                          reuploadInputRef.current?.click();
+                        }}
+                        title="Re-upload updated file for this employee"
+                        className="flex items-center gap-1.5 text-[11px] font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-200 px-2 py-1 rounded-lg transition-colors"
+                      >
+                        <RefreshCw className="w-3 h-3" /> Re-upload
+                      </button>
                     </div>
                   </div>
                 );
