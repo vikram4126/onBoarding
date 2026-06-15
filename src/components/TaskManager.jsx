@@ -191,6 +191,7 @@ const TaskManager = () => {
     reader.readAsArrayBuffer(file);
   };
 
+  return (
     <div className="space-y-6">
       {/* Target Selector */}
       <div className="bg-white border border-slate-200 rounded-xl p-5">
