@@ -7,7 +7,8 @@ export const STORAGE_KEYS = {
   HAS_SEEN_WELCOME: 'has_seen_welcome_popup',
   TASK_TEMPLATE: 'onboarding_task_template',
   BUDDY_TASKS: 'onboarding_buddy_tasks',
-  BUDDY_EMPLOYEES: 'onboarding_buddy_employees'
+  BUDDY_EMPLOYEES: 'onboarding_buddy_employees',
+  BUDDY_TASK_TEMPLATE: 'onboarding_buddy_task_template'
 };
 
 export const getStorage = (key, defaultValue = null) => {

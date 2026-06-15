@@ -36,14 +36,79 @@ const BuddyDashboard = ({ onLogout }) => {
   };
 
   const getInitialBuddyTasks = () => {
+    const template = getStorage(STORAGE_KEYS.BUDDY_TASK_TEMPLATE, null);
     const initial = {};
-    buddyTasksData.forEach(dayPlan => {
-      dayPlan.tasks.forEach(task => {
-        initial[task.id] = { ...task, day: dayPlan.day };
+
+    if (template) {
+      Object.values(template).forEach(tasksArray => {
+        tasksArray.forEach(task => {
+          initial[task.id] = { ...task };
+        });
       });
-    });
+    } else {
+      buddyTasksData.forEach(dayPlan => {
+        dayPlan.tasks.forEach(task => {
+          initial[task.id] = { ...task, day: dayPlan.day };
+        });
+      });
+    }
     return initial;
   };
+
+  React.useEffect(() => {
+    const template = getStorage(STORAGE_KEYS.BUDDY_TASK_TEMPLATE, null);
+    let baseBuddyTasks = [];
+    
+    if (template) {
+      Object.values(template).forEach(tasksArray => {
+        baseBuddyTasks = [...baseBuddyTasks, ...tasksArray];
+      });
+    } else {
+      buddyTasksData.forEach(dayPlan => {
+        baseBuddyTasks = [...baseBuddyTasks, ...dayPlan.tasks.map(t => ({...t, day: dayPlan.day}))];
+      });
+    }
+
+    const validIds = new Set(baseBuddyTasks.map(t => t.id));
+    const currentTasks = getStorage(STORAGE_KEYS.BUDDY_TASKS, {});
+    let isUpdated = false;
+
+    const mergedData = {};
+    
+    Object.keys(currentTasks).forEach(email => {
+      mergedData[email] = {};
+      const empTasks = currentTasks[email];
+      
+      Object.keys(empTasks).forEach(id => {
+        if (validIds.has(id)) {
+          mergedData[email][id] = empTasks[id];
+        }
+      });
+      
+      baseBuddyTasks.forEach(task => {
+        const existing = mergedData[email][task.id];
+        if (!existing) {
+          mergedData[email][task.id] = task;
+          isUpdated = true;
+        } else {
+          const merged = { ...task, status: existing.status };
+          if (JSON.stringify(existing) !== JSON.stringify(merged)) {
+            mergedData[email][task.id] = merged;
+            isUpdated = true;
+          }
+        }
+      });
+      
+      if (Object.keys(mergedData[email]).length !== Object.keys(empTasks).length) {
+        isUpdated = true;
+      }
+    });
+
+    if (isUpdated) {
+      setBuddyTasks(mergedData);
+      setStorage(STORAGE_KEYS.BUDDY_TASKS, mergedData);
+    }
+  }, []);
 
   const toggleBuddyTask = (email, taskId) => {
     const updated = { ...buddyTasks };

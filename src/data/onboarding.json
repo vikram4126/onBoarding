@@ -4,7 +4,7 @@
     "tasks": [
       {
         "id": "onb_day1_1",
-        "title": "Confirm receipt of the employment contract",
+        "title": "vikram json Confirm receipt of the employment contract",
         "description": "If you have not received your contract, please contact your HR point of contact. Meet with your Buddy and the team.",
         "category": "Kommence",
         "status": "pending",
@@ -203,7 +203,7 @@
       {
         "id": "onb_day3_4",
         "title": "New Joiner Independence Training",
-        "description": "Personal Independence 2024/25 India (GLMS Portal)",
+        "description": "Personal Independence 2024/25 India ",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -211,7 +211,7 @@
       {
         "id": "onb_day3_5",
         "title": "Building Public Trust - Independence and Conflicts of Interest",
-        "description": "Client Facing (GLMS Portal)",
+        "description": "Client Facing ",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -219,7 +219,7 @@
       {
         "id": "onb_day3_6",
         "title": "Building Public Trust - Our Code",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -227,7 +227,7 @@
       {
         "id": "onb_day3_7",
         "title": "GBH_KGS_Financial Crime_2025",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -235,7 +235,7 @@
       {
         "id": "onb_day3_8",
         "title": "GBH_KGS_Protecting Information_2025",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -243,7 +243,7 @@
       {
         "id": "onb_day3_9",
         "title": "New Joiner Mandatory Risk Trainings",
-        "description": "Due in 28 days (KGS) (GLMS Portal)",
+        "description": "Due in 28 days (KGS) ",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -251,7 +251,7 @@
       {
         "id": "onb_day3_10",
         "title": "Information Protection and Data Privacy Fundamentals 2025 Global Training",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -259,7 +259,7 @@
       {
         "id": "onb_day3_11",
         "title": "Prevention of Sexual Harassment at Workplace - 2025",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -267,7 +267,7 @@
       {
         "id": "onb_day3_12",
         "title": "Complying with Sanctions",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Mandatory Training",
         "status": "pending",
         "portalId": "glms"
@@ -275,7 +275,7 @@
       {
         "id": "onb_day3_13",
         "title": "Essential HR policy and guidelines",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms",
@@ -284,7 +284,7 @@
       {
         "id": "onb_day3_14",
         "title": "Inclusion, Diversity and Equity at KGS",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -292,7 +292,7 @@
       {
         "id": "onb_day3_15",
         "title": "KGS BCP Training",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -300,7 +300,7 @@
       {
         "id": "onb_day3_16",
         "title": "KGS Risk and Data Management",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -308,7 +308,7 @@
       {
         "id": "onb_day3_17",
         "title": "Our Workplace Facilities and Policies",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -316,7 +316,7 @@
       {
         "id": "onb_day3_18",
         "title": "Corporate Social Responsibility",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -324,7 +324,7 @@
       {
         "id": "onb_day3_19",
         "title": "ESG 101 - Foundations - Now is the time (Module 1)",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"
@@ -332,7 +332,7 @@
       {
         "id": "onb_day3_20",
         "title": "ESG 101 - Foundations - Time for Impact (Module 2)",
-        "description": "(GLMS Portal)",
+        "description": "",
         "category": "Training",
         "status": "pending",
         "portalId": "glms"

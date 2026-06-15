@@ -8,8 +8,8 @@ const DEPARTMENTS = ['Common', 'Development', 'HR', 'Finance', 'QA', 'Design', '
 const COLUMNS = ['Day', 'Title', 'Description', 'Category', 'Link', 'ProjectCode', 'TaskCode', 'DeadlineDay', 'ContactId', 'PortalId'];
 
 const SAMPLE_DATA = {
-    Common: [
-    { Day: 'Day 1', Title: 'Confirm receipt of the employment contract', Description: 'If you have not received your contract, please contact your HR point of contact. Meet with your Buddy and the team.', Category: 'Kommence', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: '' },
+  Common: [
+    { Day: 'Day 1', Title: 'vikram kumar Confirm receipt of the employment contract', Description: 'If you have not received your contract, please contact your HR point of contact. Meet with your Buddy and the team.', Category: 'Kommence', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: '' },
     { Day: 'Day 1', Title: 'Submit new joiner kit forms', Description: 'Submit contract and 2 passport sized photographs.', Category: 'HR Portal', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: '' },
     { Day: 'Day 1', Title: 'Submit form for access card', Description: 'Submit as instructed by the local administration team and you will receive your access card on day one/two. Your customized access card will be ready within 4-5 working days.', Category: 'General', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
     { Day: 'Day 1', Title: 'Collect your laptop and login ID', Description: 'Collect from the IT helpdesk. If not done so on day one, ensure to do it on day two. In case of any difficulty please contact the local IT team.', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
@@ -34,23 +34,23 @@ const SAMPLE_DATA = {
     { Day: 'Day 3', Title: 'Sign employement contract via AADHAAR based digital sign', Description: 'Received email from Pichainlabs to sign employement contract via AADHAAR based digital sign', Category: 'HR Portal', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: '' },
     { Day: 'Day 3', Title: 'Salary structure and Investment declaration', Description: 'NEW JOINER KIT-HGS Portal login', Category: 'Salary & Investment', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'hgs' },
     { Day: 'Day 3', Title: 'Mandatory - Statutory Compliance Portal', Description: 'Received an email from IN-FM Power Platform to update PF Form-11, LWF/ESIC', Category: 'Statutory Compliance', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
-    { Day: 'Day 3', Title: 'New Joiner Independence Training', Description: 'Personal Independence 2024/25 India (GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Building Public Trust - Independence and Conflicts of Interest', Description: 'Client Facing (GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Building Public Trust - Our Code', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'GBH_KGS_Financial Crime_2025', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'GBH_KGS_Protecting Information_2025', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'New Joiner Mandatory Risk Trainings', Description: 'Due in 28 days (KGS) (GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Information Protection and Data Privacy Fundamentals 2025 Global Training', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Prevention of Sexual Harassment at Workplace - 2025', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Complying with Sanctions', Description: '(GLMS Portal)', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Essential HR policy and guidelines', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Inclusion, Diversity and Equity at KGS', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'KGS BCP Training', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'KGS Risk and Data Management', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Our Workplace Facilities and Policies', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'Corporate Social Responsibility', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'ESG 101 - Foundations - Now is the time (Module 1)', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
-    { Day: 'Day 3', Title: 'ESG 101 - Foundations - Time for Impact (Module 2)', Description: '(GLMS Portal)', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'New Joiner Independence Training', Description: 'Personal Independence 2024/25 India ', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Building Public Trust - Independence and Conflicts of Interest', Description: 'Client Facing ', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Building Public Trust - Our Code', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'GBH_KGS_Financial Crime_2025', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'GBH_KGS_Protecting Information_2025', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'New Joiner Mandatory Risk Trainings', Description: 'Due in 28 days (KGS) ', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Information Protection and Data Privacy Fundamentals 2025 Global Training', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Prevention of Sexual Harassment at Workplace - 2025', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Complying with Sanctions', Description: '', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Essential HR policy and guidelines', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Inclusion, Diversity and Equity at KGS', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'KGS BCP Training', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'KGS Risk and Data Management', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Our Workplace Facilities and Policies', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'Corporate Social Responsibility', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'ESG 101 - Foundations - Now is the time (Module 1)', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
+    { Day: 'Day 3', Title: 'ESG 101 - Foundations - Time for Impact (Module 2)', Description: '', Category: 'Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: 'glms' },
     { Day: 'Day 3', Title: 'Employee Nomination Form', Description: 'Update Nominees (Term Life Insurance, Personal Accident Insurance, Heath Insurance claims/Reimbursement if any, Full and Final Settlement, Any other legitimate due(s))', Category: 'HR Portal', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: 'hr', PortalId: '' },
     { Day: 'Day 3', Title: 'UK Email ID password change and AVD setup', Description: '', Category: 'IT Setup', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
     { Day: 'Week 1', Title: 'Complete Risk Management trainings', Description: 'Complete trainings mentioned under Risk Management tab in the Welcome email. Independence training is required within 14 days of joining.', Category: 'Mandatory Training', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
@@ -91,7 +91,15 @@ const SAMPLE_DATA = {
   ],
 };
 
+const BUDDY_SAMPLE_DATA = [
+  { Day: 'Week 1', Title: 'Welcome call with new joiner', Description: 'Reach out to the new joiner before their Day 1', Category: 'Pre-joining', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
+  { Day: 'Week 1', Title: 'Introduction with PM and team', Description: 'Facilitate introductions', Category: 'Team Processes', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
+  { Day: 'Week 2', Title: 'Check-in on mandatory training', Description: 'Ensure they have completed independence training', Category: 'General', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' },
+  { Day: 'First Month', Title: 'Monthly feedback session', Description: 'Coffee chat to discuss first month', Category: 'General', Link: '', ProjectCode: '', TaskCode: '', DeadlineDay: '', ContactId: '', PortalId: '' }
+];
+
 const TaskManager = () => {
+  const [targetType, setTargetType] = useState('employee'); // 'employee' | 'buddy'
   const [uploadStatus, setUploadStatus] = useState(null); // null | 'success' | 'error'
   const [uploadMessage, setUploadMessage] = useState('');
   const [preview, setPreview] = useState(null);
@@ -99,15 +107,22 @@ const TaskManager = () => {
 
   const handleDownloadTemplate = () => {
     const wb = XLSX.utils.book_new();
-    DEPARTMENTS.forEach(dept => {
-      const rows = SAMPLE_DATA[dept] || [
-        { Day: 'Day 1', Title: `Sample ${dept} Task`, Description: 'Task description here', Category: 'General', ProjectCode: '', TaskCode: '', DeadlineDay: '' }
-      ];
+    
+    if (targetType === 'employee') {
+      DEPARTMENTS.forEach(dept => {
+        const rows = SAMPLE_DATA[dept] || [
+          { Day: 'Day 1', Title: `Sample ${dept} Task`, Description: 'Task description here', Category: 'General', ProjectCode: '', TaskCode: '', DeadlineDay: '' }
+        ];
+        const ws = XLSX.utils.json_to_sheet(rows, { header: COLUMNS });
+        XLSX.utils.book_append_sheet(wb, ws, dept);
+      });
+      XLSX.writeFile(wb, 'KPMG_Onboarding_Tasks_Template.xlsx');
+    } else {
+      const rows = BUDDY_SAMPLE_DATA;
       const ws = XLSX.utils.json_to_sheet(rows, { header: COLUMNS });
-      // Style header row
-      XLSX.utils.book_append_sheet(wb, ws, dept);
-    });
-    XLSX.writeFile(wb, 'KPMG_Onboarding_Tasks_Template.xlsx');
+      XLSX.utils.book_append_sheet(wb, ws, 'Buddy_Tasks');
+      XLSX.writeFile(wb, 'KPMG_Buddy_Tasks_Template.xlsx');
+    }
   };
 
   const handleFileUpload = (e) => {
@@ -157,11 +172,15 @@ const TaskManager = () => {
         }
 
         // Save to localStorage
-        setStorage(STORAGE_KEYS.TASK_TEMPLATE, taskTemplate);
+        if (targetType === 'buddy') {
+          setStorage(STORAGE_KEYS.BUDDY_TASK_TEMPLATE, taskTemplate);
+        } else {
+          setStorage(STORAGE_KEYS.TASK_TEMPLATE, taskTemplate);
+        }
 
         setPreview(taskTemplate);
         setUploadStatus('success');
-        setUploadMessage(`Successfully loaded ${totalTasks} tasks across ${Object.keys(taskTemplate).length} sheets (${Object.keys(taskTemplate).join(', ')}).`);
+        setUploadMessage(`Successfully loaded ${totalTasks} tasks for ${targetType === 'buddy' ? 'Buddy' : 'New Joiner'} across ${Object.keys(taskTemplate).length} sheets.`);
 
         e.target.value = null;
       } catch (err) {
@@ -172,8 +191,25 @@ const TaskManager = () => {
     reader.readAsArrayBuffer(file);
   };
 
-  return (
     <div className="space-y-6">
+      {/* Target Selector */}
+      <div className="bg-white border border-slate-200 rounded-xl p-5">
+        <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <FileSpreadsheet className="w-4 h-4 text-primary-500" />
+          Select Target Profile
+        </h3>
+        <div className="flex gap-4">
+          <label className={`flex-1 flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ${targetType === 'employee' ? 'border-primary-500 bg-primary-50 text-primary-700 font-semibold' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+            <input type="radio" name="targetType" value="employee" checked={targetType === 'employee'} onChange={() => setTargetType('employee')} className="hidden" />
+            New Joiner Tasks
+          </label>
+          <label className={`flex-1 flex items-center justify-center gap-2 p-3 border rounded-lg cursor-pointer transition-all ${targetType === 'buddy' ? 'border-primary-500 bg-primary-50 text-primary-700 font-semibold' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+            <input type="radio" name="targetType" value="buddy" checked={targetType === 'buddy'} onChange={() => setTargetType('buddy')} className="hidden" />
+            Buddy Tasks
+          </label>
+        </div>
+      </div>
+
       {/* Info Banner */}
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
         <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
@@ -188,17 +224,24 @@ const TaskManager = () => {
       </div>
 
       {/* Download Template */}
-      <div className="bg-white border border-slate-200 rounded-xl p-5">
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
-              <FileSpreadsheet className="w-4 h-4 text-emerald-500" />
-              Step 1: Download Template
-            </h3>
-            <p className="text-xs text-slate-500 mb-4">
-              Download the Excel template with sample data. Edit it with your tasks and upload below.
-              Sheets included: <span className="font-medium text-slate-700">{DEPARTMENTS.join(', ')}</span>
+      <div className="bg-white border border-slate-200 rounded-xl p-5 flex items-center justify-between">
+        <div>
+          <h3 className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
+            <Download className="w-4 h-4 text-primary-500" />
+            Step 1: Download {targetType === 'buddy' ? 'Buddy' : 'New Joiner'} Template
+          </h3>
+          <div className="text-xs text-slate-500 mt-2">
+            <p>
+              {targetType === 'buddy' 
+                ? 'The template contains a single sheet for standard Buddy tasks.'
+                : 'The template contains pre-filled sheets for Common tasks and Department-specific tasks.'
+              }
             </p>
+            {targetType === 'employee' && (
+              <p className="mt-1">
+                Sheets included: <span className="font-medium text-slate-700">{DEPARTMENTS.join(', ')}</span>
+              </p>
+            )}
           </div>
         </div>
         <button
@@ -214,10 +257,10 @@ const TaskManager = () => {
       <div className="bg-white border border-slate-200 rounded-xl p-5">
         <h3 className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
           <Upload className="w-4 h-4 text-primary-500" />
-          Step 2: Upload Updated Tasks
+          Step 2: Upload Updated {targetType === 'buddy' ? 'Buddy' : 'New Joiner'} Tasks
         </h3>
         <p className="text-xs text-slate-500 mb-4">
-          Upload your filled Excel file. Tasks will be applied to all new employee logins based on their team.
+          Upload your filled Excel file. Tasks will be applied to all new {targetType === 'buddy' ? 'buddy logins' : 'employee logins based on their team'}.
         </p>
 
         <input type="file" accept=".xlsx,.xls" ref={fileInputRef} onChange={handleFileUpload} className="hidden" />
@@ -231,11 +274,10 @@ const TaskManager = () => {
 
         {/* Status Message */}
         {uploadStatus && (
-          <div className={`mt-4 p-3 rounded-lg flex items-start gap-2 text-sm ${
-            uploadStatus === 'success'
+          <div className={`mt-4 p-3 rounded-lg flex items-start gap-2 text-sm ${uploadStatus === 'success'
               ? 'bg-emerald-50 border border-emerald-200 text-emerald-700'
               : 'bg-red-50 border border-red-200 text-red-700'
-          }`}>
+            }`}>
             {uploadStatus === 'success'
               ? <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" />
               : <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />}
@@ -254,9 +296,8 @@ const TaskManager = () => {
             {Object.entries(preview).map(([sheet, tasks]) => (
               <div key={sheet} className="p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                    sheet === 'Common' ? 'bg-indigo-100 text-indigo-700' : 'bg-primary-100 text-primary-700'
-                  }`}>
+                  <span className={`text-xs font-bold px-2 py-1 rounded-full ${sheet === 'Common' ? 'bg-indigo-100 text-indigo-700' : 'bg-primary-100 text-primary-700'
+                    }`}>
                     {sheet} — {tasks.length} tasks
                   </span>
                 </div>

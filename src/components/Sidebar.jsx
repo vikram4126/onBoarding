@@ -128,33 +128,7 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
           Share Progress
         </button>
 
-        {/* Reset / Change Profile (Development Only) */}
-        {import.meta.env.DEV && (
-          !showConfirm ? (
-            <button
-              onClick={() => setShowConfirm(true)}
-              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              Change Profile / Reset
-            </button>
-          ) : (
-            <div className="bg-red-50 border border-red-100 rounded-xl p-3">
-              <div className="flex items-start gap-2 mb-2">
-                <AlertTriangle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-xs text-red-700 font-medium">This will clear all progress and reset your profile. Are you sure?</p>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={handleReset} className="flex-1 bg-red-500 text-white text-xs py-1.5 rounded-lg font-medium hover:bg-red-600 transition-colors">
-                  Yes, Reset
-                </button>
-                <button onClick={() => setShowConfirm(false)} className="flex-1 bg-white text-slate-600 text-xs py-1.5 rounded-lg font-medium border border-slate-200 hover:bg-slate-50 transition-colors">
-                  Cancel
-                </button>
-              </div>
-            </div>
-          )
-        )}
+
 
         <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
           <p className="text-xs text-slate-500 font-medium mb-1">Need help?</p>

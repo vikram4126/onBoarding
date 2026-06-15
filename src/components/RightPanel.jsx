@@ -31,39 +31,40 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
         </div>
       </div>
 
-      <div className="mb-8">
-        <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <Target className="w-4 h-4 text-primary-500" /> Today's Focus
-        </h3>
-        <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
-              {pendingTodayCount}
-            </div>
-            <div>
-              <p className="font-semibold text-slate-800">Tasks Pending</p>
-              <p className="text-xs text-slate-500">For Day {currentDay}</p>
+      {pendingTodayCount > 0 && (
+        <div className="mb-8">
+          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <Target className="w-4 h-4 text-primary-500" /> Today's Focus
+          </h3>
+          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                {pendingTodayCount}
+              </div>
+              <div>
+                <p className="font-semibold text-slate-800">Tasks Pending</p>
+                <p className="text-xs text-slate-500">For Day {currentDay}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {(overdueTasks.length > 0 || upcomingTrainings.length > 0) && (
         <div className="mb-8">
           <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 flex items-center gap-2">
             {overdueTasks.length > 0 ? (
-              <><AlertCircle className="w-4 h-4 text-red-500" /> Action Required</>
+              <><AlertCircle className="w-4 h-4 text-red-500" /> Action Required ({overdueTasks.length})</>
             ) : (
               <><Clock className="w-4 h-4 text-primary-500" /> Upcoming Tasks</>
             )}
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-3 max-h-[180px] overflow-y-auto pr-1 custom-scrollbar">
             {overdueTasks.map(task => (
               <div key={task.id} className="card p-3 shadow-none bg-red-50 border-red-100 border">
                 <h4 className="text-sm font-semibold text-slate-800 mb-1 leading-tight">{task.title}</h4>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded">Overdue: was due {task.day}</span>
-                  <a href={task.url || '#'} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase text-red-600 hover:text-red-700 bg-white border border-red-200 px-2 py-1 rounded">Start</a>
                 </div>
               </div>
             ))}
@@ -71,7 +72,6 @@ const RightPanel = ({ tasks, currentDay, profile }) => {
             {overdueTasks.length === 0 && upcomingTrainings.map(task => (
               <div key={task.id} className="card p-3 shadow-none bg-slate-50 border-slate-100 border hover:border-primary-200 transition-colors">
                 <h4 className="text-sm font-semibold text-slate-800 mb-1 leading-tight">{task.title}</h4>
-                <p className="text-xs text-slate-500 mb-2">{task.category}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-medium text-amber-600 bg-amber-50 px-2 py-0.5 rounded">Due: {task.day}</span>
                   <a href={task.url || '#'} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold uppercase text-primary-600 hover:text-primary-700">Start</a>

@@ -96,26 +96,22 @@ const TaskCard = ({ task, toggleTask, comments, addComment, editComment, deleteC
                 const categoryLink = task.url || portal?.url || CATEGORY_URLS[task.category];
                 const displayText = portal ? portal.name : task.category;
 
-                const BadgeContent = (
-                  <span className="px-2 py-0.5 rounded bg-[#e6ebfc] text-[#3b5bd9] text-[11px] font-semibold border border-[#d1d9f5] whitespace-nowrap flex items-center gap-1">
-                    {displayText} {categoryLink && <ExternalLink className="w-3 h-3" />}
-                  </span>
-                );
 
                 return (
                   <div className="flex items-center gap-1">
-                    {categoryLink ? (
+                    {categoryLink && (
                       <a
                         href={categoryLink}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        className="hover:opacity-80 transition-opacity cursor-pointer inline-flex"
+                        className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 transition-colors"
                         title={`Open ${displayText}`}
                       >
-                        {BadgeContent}
+                        <ExternalLink className="w-3 h-3" />
+                        {displayText}
                       </a>
-                    ) : BadgeContent}
+                    )}
                     {portal?.image && (
                       <button
                         onClick={e => { e.stopPropagation(); setGuidePortal(portal); }}

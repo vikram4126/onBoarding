@@ -102,7 +102,11 @@ export const useOnboarding = () => {
   };
 
   const resetProfile = () => {
-    clearStorage();
+    localStorage.removeItem(STORAGE_KEYS.PROFILE);
+    localStorage.removeItem(STORAGE_KEYS.TASKS);
+    localStorage.removeItem(STORAGE_KEYS.CUSTOM_TASKS);
+    localStorage.removeItem(STORAGE_KEYS.NOTES);
+    // Note: Deliberately preserving TASK_TEMPLATE, MANAGER_EMPLOYEES, BUDDY_TASKS, BUDDY_EMPLOYEES
     setProfile(null);
     setTasks({});
     setCustomTasks([]);
