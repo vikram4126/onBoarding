@@ -4,6 +4,7 @@ import { getStorage, setStorage, STORAGE_KEYS } from '../utils/storage';
 import { getWorkingDaysDifference } from '../utils/dateHelpers';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 import leaderGatewaysData from '../data/leaderGateways.json';
+import { generateGatewayPpt } from '../utils/generateGatewayPpt';
 
 const LeaderDashboard = ({ onLogout }) => {
   const [employees, setEmployees] = useState(() => getStorage(STORAGE_KEYS.LEADER_EMPLOYEES, []));
@@ -21,6 +22,7 @@ const LeaderDashboard = ({ onLogout }) => {
   const [editingEmployee, setEditingEmployee] = useState(null);
   const [editForm, setEditForm] = useState({ fullName: '', email: '', joiningDate: '' });
   const [confirmDeleteEmail, setConfirmDeleteEmail] = useState(null);
+  const [pptLoading, setPptLoading] = useState(false);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -190,6 +192,20 @@ const LeaderDashboard = ({ onLogout }) => {
       scorecardFilled = gwData.scorecard && (gwData.scorecard.date || gwData.scorecard.requirementsMet || gwData.scorecard.assessor);
     }
     return allChecklistFilled && assessmentFilled && scorecardFilled;
+  };
+
+  const handleExportPpt = async () => {
+    if (!selectedEmployee || !activeJoinerData) return;
+    setPptLoading(true);
+    try {
+      await generateGatewayPpt(selectedEmployee.profile, activeJoinerData, leaderGatewaysData);
+      showToast('✓ PPT downloaded successfully!');
+    } catch (err) {
+      console.error(err);
+      showToast('Failed to generate PPT. Please try again.', 'error');
+    } finally {
+      setPptLoading(false);
+    }
   };
 
   const activeJoinerData = selectedEmployee ? leaderData[selectedEmployee.profile.email.toLowerCase()] : null;
@@ -397,12 +413,25 @@ const LeaderDashboard = ({ onLogout }) => {
         <div className="flex-1 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
           {selectedEmployee && activeJoinerData ? (
             <div className="flex-1 overflow-y-auto">
-              <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Gateways for {selectedEmployee.profile.fullName}</h2>
-                <p className="text-sm text-slate-500 flex items-center gap-2">
-                  <ClipboardCheck className="w-4 h-4" />
-                  Complete the checklist and scorecard for each gateway below.
-                </p>
+              <div className="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-800 mb-1">Gateways for {selectedEmployee.profile.fullName}</h2>
+                  <p className="text-sm text-slate-500 flex items-center gap-2">
+                    <ClipboardCheck className="w-4 h-4" />
+                    Complete the checklist and scorecard for each gateway below.
+                  </p>
+                </div>
+                <button
+                  onClick={handleExportPpt}
+                  disabled={pptLoading}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-[#00338D] text-white text-sm font-bold rounded-lg hover:bg-[#002266] transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex-shrink-0"
+                >
+                  {pptLoading ? (
+                    <>⏳ Generating...</>
+                  ) : (
+                    <>📊 Export PPT</>
+                  )}
+                </button>
               </div>
 
               <div className="p-6 space-y-6">
