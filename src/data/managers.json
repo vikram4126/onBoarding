@@ -18,5 +18,10 @@
     "username": "kubi",
     "role": "buddy",
     "password": "kubi@11"
+  },
+  {
+    "username": "leader",
+    "role": "leader",
+    "password": "leader@11"
   }
 ]

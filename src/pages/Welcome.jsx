@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Briefcase, User, Mail, Users, Calendar, Award, Key, Shield, Heart } from 'lucide-react';
+import { Briefcase, User, Mail, Users, Calendar, Award, Key, Shield, Heart, GraduationCap } from 'lucide-react';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 import managersData from '../data/managers.json';
 
 const ROLES = [
   { id: 'employee', label: 'Employee', icon: User },
   { id: 'buddy', label: 'Buddy', icon: Heart },
+  { id: 'leader', label: 'Leader', icon: GraduationCap },
   { id: 'manager', label: 'Manager', icon: Shield },
 ];
 
@@ -50,12 +51,25 @@ const Welcome = ({ onSaveProfile }) => {
       } else {
         alert('Invalid Buddy Username or Password!');
       }
+    } else if (activeRole === 'leader') {
+      const validLeader = managersData.find(
+        m => m.username === formData.username && m.password === formData.password && m.role === 'leader'
+      );
+      if (validLeader) {
+        onSaveProfile({ 
+          role: 'leader', 
+          username: validLeader.username,
+          fullName: validLeader.username.charAt(0).toUpperCase() + validLeader.username.slice(1)
+        });
+      } else {
+        alert('Invalid Leader Username or Password!');
+      }
     } else {
       onSaveProfile({ ...formData, role: 'employee' });
     }
   };
 
-  const isCredentialMode = activeRole === 'manager' || activeRole === 'buddy';
+  const isCredentialMode = activeRole === 'manager' || activeRole === 'buddy' || activeRole === 'leader';
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-primary-50 to-white">

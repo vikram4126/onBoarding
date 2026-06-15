@@ -1,0 +1,66 @@
+[
+  {
+    "id": "gateway_one",
+    "title": "Gateway one",
+    "deadline": "Week 1",
+    "checklist": [
+      { "id": "g1_c1", "task": "Review OEH Introduction Pack" },
+      { "id": "g1_c2", "task": "Mandatory training" },
+      { "id": "g1_c3", "task": "Operations Team call" },
+      { "id": "g1_c4", "task": "Team Leads call - Creative Strategy" },
+      { "id": "g1_c5", "task": "Team Leads call - Digital" },
+      { "id": "g1_c6", "task": "Team Leads call - Marketing" },
+      { "id": "g1_c7", "task": "Team Leads call - Sales Enablement" },
+      { "id": "g1_c8", "task": "Team Leads call - Motion & Illustration" },
+      { "id": "g1_c9", "task": "Review CREATE Handbook policies" },
+      { "id": "g1_c10", "task": "Review Quality & Brand Checklist" },
+      { "id": "g1_c11", "task": "Introduction to JobTrack" }
+    ]
+  },
+  {
+    "id": "gateway_two",
+    "title": "Gateway two",
+    "deadline": "Week 2",
+    "checklist": [
+      { "id": "g2_c1", "task": "Values Day" },
+      { "id": "g2_c2", "task": "KBS Welcome session" },
+      { "id": "g2_c3", "task": "Workstation training" },
+      { "id": "g2_c4", "task": "Workfront training" },
+      { "id": "g2_c5", "task": "Review KPMG brand guidelines" },
+      { "id": "g2_c6", "task": "Review Brand and GMC section of CREATE Handbook" },
+      { "id": "g2_c7", "task": "Understand SAP Timesheets" },
+      { "id": "g2_c8", "task": "CREATE Automate – self train from Degreed pathway" },
+      { "id": "g2_c9", "task": "Review and understand CREATE SLAs" },
+      { "id": "g2_c10", "task": "Understand the CREATE server" },
+      { "id": "g2_c11", "task": "Review and understand the CREATE team setup" }
+    ],
+    "assessment": [
+      { "id": "g2_a1", "task": "Knowledge checker (20 questions – 14 operational, 6 design. 90% pass rate required)" },
+      { "id": "g2_a2", "task": "Front cover assessment" },
+      { "id": "g2_a3", "task": "Spread design assessment" },
+      { "id": "g2_a4", "task": "Social media assessment" }
+    ]
+  },
+  {
+    "id": "gateway_three",
+    "title": "Gateway three",
+    "deadline": "Week 3",
+    "checklist": [
+      { 
+        "id": "g3_c1", 
+        "task": "a) Live project assessment",
+        "description": "Individual to complete five live projects under the guidance of the Team Lead.\nProjects are required to be worked on and must be Right First Time as per the CREATE Quality and Brand checklist. Each project must be individually reviewed by CREATE Brand Governance.\nAn error will break the chain but any pass with development guidance will not. Team Lead is required to keep a record of any quality checks as part of the individual's scorecard to demonstrate eligibility. Once eligibility is achieved, the scorecard should be submitted to the Operations Manager."
+      },
+      { 
+        "id": "g3_c2", 
+        "task": "b) Pass with development",
+        "description": "If pass with development quality outcomes occur, Team Lead and Operations Manager to assess the number of instances, the impact and whether further reviews are required to be checked prior to awarding the accreditation. If the Operations Manager is satisfied, the individual will be awarded accredited status.\nIf not, a further number of reviews (as defined by the Operations Manager) are required to be checked and the individual will revert back to step a). An email is required to be sent by the Operations Manager confirming the outcome to the Team Lead."
+      },
+      { 
+        "id": "g3_c3", 
+        "task": "c) Assessment fail",
+        "description": "If the individual has not attained accredited status after the quality check of twenty-five projects, the matter must be escalated to the Operations Manager for any next steps. Operations Manager will consider if the individual is required to revert to step c) under Gateway Two with further tailored support or whether further steps/action is required.\nThe outcome of any steps should be documented and saved for audit in the Analyst training folder."
+      }
+    ]
+  }
+]

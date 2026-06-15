@@ -4,6 +4,7 @@ import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import ManagerDashboard from './pages/ManagerDashboard';
 import BuddyDashboard from './pages/BuddyDashboard';
+import LeaderDashboard from './pages/LeaderDashboard';
 import WelcomePopup from './components/WelcomePopup';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
         <ManagerDashboard onLogout={resetProfile} />
       ) : profile.role === 'buddy' ? (
         <BuddyDashboard onLogout={resetProfile} />
+      ) : profile.role === 'leader' ? (
+        <LeaderDashboard onLogout={resetProfile} />
       ) : (
         <Dashboard />
       )}
