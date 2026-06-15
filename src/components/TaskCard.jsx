@@ -3,29 +3,22 @@ import { createPortal } from 'react-dom';
 import { Check, MessageSquare, Tag, Folder, Hash, Clock, Phone, Mail, Trash2, Edit2, ExternalLink, CheckCircle2, AlertCircle, BookOpen, X } from 'lucide-react';
 import contactsData from '../data/contacts.json';
 import portalsList from '../data/portals.json';
+import CommentsList from './CommentsList';
 
 const CATEGORY_URLS = {
   'Statutory Compliance': 'https://compliance.kpmg.in',
   'Affidavit': 'https://askyourrisk.kpmg.com'
 };
 
-const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, currentDay = 1 }) => {
+const TaskCard = ({ task, toggleTask, comments, addComment, editComment, deleteComment, onDeleteTask, onEditTask, currentDay = 1, authorName = 'New Joiner' }) => {
   const [isNoteOpen, setIsNoteOpen] = useState(false);
   const [guidePortal, setGuidePortal] = useState(null);
-  const initialNoteText = note || task.remark || '';
-  const [noteText, setNoteText] = useState(initialNoteText);
-
-  const handleSaveNote = () => {
-    saveNote(task.id, noteText);
-    setIsNoteOpen(false);
-  };
 
   const isCompleted = task.status === 'completed';
 
   // Find the related contact from contacts.json using task.contactId
   const contact = task.contactId ? contactsData.find(c => c.id === task.contactId) : null;
 
-  const currentNote = note !== undefined ? note : task.remark;
 
   const getDueStatus = () => {
     if (isCompleted) {
@@ -155,32 +148,15 @@ const TaskCard = ({ task, toggleTask, note, saveNote, onDeleteTask, onEditTask, 
           )}
 
           {/* Note Area */}
-          {(isNoteOpen || currentNote) && (
+          {(isNoteOpen || (comments && comments.length > 0)) && (
             <div className="mb-3 mt-1.5">
-              {isNoteOpen ? (
-                <div className="flex gap-2">
-                  <textarea 
-                    value={noteText}
-                    onChange={(e) => setNoteText(e.target.value)}
-                    placeholder="Add remarks or issues..."
-                    className="input-field text-sm py-2 px-3 min-h-[80px]"
-                    autoFocus
-                  />
-                  <div className="flex flex-col gap-1.5">
-                    <button onClick={handleSaveNote} className="btn-primary py-1 px-3 text-[11px] font-medium">Save</button>
-                    <button onClick={() => setIsNoteOpen(false)} className="py-1 px-3 text-[11px] text-slate-500 hover:bg-slate-100 rounded font-medium transition-colors">Cancel</button>
-                  </div>
-                </div>
-              ) : (
-                <div className="bg-[#ffebe0] text-[#331100] p-2.5 pr-3 rounded-r border-l-[3px] border-[#ffb38e] flex items-start gap-2 shadow-sm">
-                  <div className="bg-[#8b4513] text-white p-1 rounded-sm shadow-sm mt-0.5 flex-shrink-0">
-                    <MessageSquare className="w-3 h-3" strokeWidth={2.5} />
-                  </div>
-                  <p className="italic text-[13px] font-medium leading-relaxed">
-                    "{currentNote}"
-                  </p>
-                </div>
-              )}
+              <CommentsList 
+                comments={comments} 
+                onAdd={(text, author) => addComment(task.id, text, author)} 
+                onEdit={(id, text) => editComment(task.id, id, text)} 
+                onDelete={(id) => deleteComment(task.id, id)} 
+                authorName={authorName}
+              />
             </div>
           )}
           

@@ -11,7 +11,6 @@ const navItems = [
   { id: 'pending', icon: Clock, label: 'Pending Tasks' },
   { id: 'completed', icon: CheckCircle2, label: 'Completed Tasks' },
   { id: 'trainings', icon: BookOpen, label: 'Trainings' },
-  { id: 'contacts', icon: Users, label: 'Contacts' },
 ];
 
 const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
@@ -43,6 +42,13 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+
+    // Open mail client
+    setTimeout(() => {
+      const subject = encodeURIComponent(`${data.profile.fullName || 'New Joiner'} - Onboarding Progress`);
+      const body = encodeURIComponent(`Hi,\n\nPlease find my updated onboarding progress JSON file attached.\n(Note: Please attach the progress file that was just downloaded to your system)\n\nThanks,\n${data.profile.fullName || 'New Joiner'}`);
+      window.location.href = `mailto:vikramkuamr4@kpmg.com?subject=${subject}&body=${body}`;
+    }, 500);
   };
 
   return (
@@ -122,30 +128,32 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
           Share Progress
         </button>
 
-        {/* Reset / Change Profile */}
-        {!showConfirm ? (
-          <button
-            onClick={() => setShowConfirm(true)}
-            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            Change Profile / Reset
-          </button>
-        ) : (
-          <div className="bg-red-50 border border-red-100 rounded-xl p-3">
-            <div className="flex items-start gap-2 mb-2">
-              <AlertTriangle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-red-700 font-medium">This will clear all progress and reset your profile. Are you sure?</p>
+        {/* Reset / Change Profile (Development Only) */}
+        {import.meta.env.DEV && (
+          !showConfirm ? (
+            <button
+              onClick={() => setShowConfirm(true)}
+              className="w-full flex items-center gap-2 px-3 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Change Profile / Reset
+            </button>
+          ) : (
+            <div className="bg-red-50 border border-red-100 rounded-xl p-3">
+              <div className="flex items-start gap-2 mb-2">
+                <AlertTriangle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-red-700 font-medium">This will clear all progress and reset your profile. Are you sure?</p>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={handleReset} className="flex-1 bg-red-500 text-white text-xs py-1.5 rounded-lg font-medium hover:bg-red-600 transition-colors">
+                  Yes, Reset
+                </button>
+                <button onClick={() => setShowConfirm(false)} className="flex-1 bg-white text-slate-600 text-xs py-1.5 rounded-lg font-medium border border-slate-200 hover:bg-slate-50 transition-colors">
+                  Cancel
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button onClick={handleReset} className="flex-1 bg-red-500 text-white text-xs py-1.5 rounded-lg font-medium hover:bg-red-600 transition-colors">
-                Yes, Reset
-              </button>
-              <button onClick={() => setShowConfirm(false)} className="flex-1 bg-white text-slate-600 text-xs py-1.5 rounded-lg font-medium border border-slate-200 hover:bg-slate-50 transition-colors">
-                Cancel
-              </button>
-            </div>
-          </div>
+          )
         )}
 
         <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
@@ -168,8 +176,8 @@ const Sidebar = ({ activeTab, setActiveTab, profile, onReset }) => {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-4 sm:p-6 overflow-y-auto flex-1 bg-slate-100/50 flex items-center justify-center">
-              <img src={`${import.meta.env.BASE_URL}${selectedPortal.image.replace(/^\//, '')}`} alt={selectedPortal.name} className="max-w-full max-h-full rounded-xl shadow-md border border-slate-200 object-contain" />
+            <div className="overflow-y-auto flex-1 bg-slate-100/50 px-6 py-4">
+              <img src={`${import.meta.env.BASE_URL}${selectedPortal.image.replace(/^\//, '')}`} alt={selectedPortal.name} className="w-full rounded-xl shadow-md border border-slate-200 object-contain block" />
             </div>
             <div className="p-4 sm:px-6 border-t border-slate-100 flex justify-end gap-3 bg-white">
               <button onClick={() => setSelectedPortal(null)} className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors">

@@ -8,7 +8,22 @@ export const useOnboarding = () => {
   const [profile, setProfile] = useState(() => getStorage(STORAGE_KEYS.PROFILE));
   const [tasks, setTasks] = useState(() => getStorage(STORAGE_KEYS.TASKS, {}));
   const [customTasks, setCustomTasks] = useState(() => getStorage(STORAGE_KEYS.CUSTOM_TASKS, []));
-  const [notes, setNotes] = useState(() => getStorage(STORAGE_KEYS.NOTES, {}));
+  const [notes, setNotes] = useState(() => {
+    const stored = getStorage(STORAGE_KEYS.NOTES, {});
+    // Migrate old string notes to array format
+    const migrated = { ...stored };
+    Object.keys(migrated).forEach(taskId => {
+      if (typeof migrated[taskId] === 'string') {
+        migrated[taskId] = [{
+          id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+          text: migrated[taskId],
+          author: 'New Joiner',
+          timestamp: new Date().toISOString()
+        }];
+      }
+    });
+    return migrated;
+  });
 
   // Initialize or update tasks based on profile team
   useEffect(() => {
@@ -125,8 +140,31 @@ export const useOnboarding = () => {
     setStorage(STORAGE_KEYS.CUSTOM_TASKS, updated);
   };
 
-  const saveNote = (taskId, note) => {
-    const updatedNotes = { ...notes, [taskId]: note };
+  const addComment = (taskId, text, author = 'New Joiner') => {
+    const newComment = {
+      id: `comment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      text,
+      author,
+      timestamp: new Date().toISOString()
+    };
+    const taskComments = Array.isArray(notes[taskId]) ? [...notes[taskId]] : [];
+    const updatedNotes = { ...notes, [taskId]: [...taskComments, newComment] };
+    setNotes(updatedNotes);
+    setStorage(STORAGE_KEYS.NOTES, updatedNotes);
+  };
+
+  const editComment = (taskId, commentId, newText) => {
+    const taskComments = Array.isArray(notes[taskId]) ? [...notes[taskId]] : [];
+    const updatedTaskComments = taskComments.map(c => c.id === commentId ? { ...c, text: newText } : c);
+    const updatedNotes = { ...notes, [taskId]: updatedTaskComments };
+    setNotes(updatedNotes);
+    setStorage(STORAGE_KEYS.NOTES, updatedNotes);
+  };
+
+  const deleteComment = (taskId, commentId) => {
+    const taskComments = Array.isArray(notes[taskId]) ? [...notes[taskId]] : [];
+    const updatedTaskComments = taskComments.filter(c => c.id !== commentId);
+    const updatedNotes = { ...notes, [taskId]: updatedTaskComments };
     setNotes(updatedNotes);
     setStorage(STORAGE_KEYS.NOTES, updatedNotes);
   };
@@ -159,7 +197,9 @@ export const useOnboarding = () => {
     deleteCustomTask,
     editCustomTask,
     notes,
-    saveNote,
+    addComment,
+    editComment,
+    deleteComment,
     currentDay: currentPeriod // keep name currentDay for compatibility with components, or rename it
   };
 };

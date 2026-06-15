@@ -3,6 +3,7 @@ import { Upload, Users, LogOut, FileJson, CheckCircle2, Target, Calendar, Settin
 import { getStorage, setStorage, STORAGE_KEYS } from '../utils/storage';
 import kpmgLogo from '../assets/kpmg-logo.svg';
 import TaskManager from '../components/TaskManager';
+import CommentsList from '../components/CommentsList';
 
 const ManagerDashboard = ({ onLogout }) => {
   const [employees, setEmployees] = useState(() => getStorage(STORAGE_KEYS.MANAGER_EMPLOYEES, []));
@@ -183,11 +184,10 @@ const ManagerDashboard = ({ onLogout }) => {
                           <p className="text-sm font-semibold text-slate-800 leading-tight">{task.title}</p>
                           <span className="text-[10px] font-bold text-red-600 bg-red-100 px-1.5 py-0.5 rounded">Day {task.day}</span>
                         </div>
-                        {selectedEmployee.notes && selectedEmployee.notes[task.id] && (
-                          <div className="mt-2 bg-amber-50 text-amber-800 text-xs p-2 rounded border border-amber-100 inline-block">
-                            <span className="font-semibold">Remark:</span> {selectedEmployee.notes[task.id]}
-                          </div>
-                        )}
+                        <CommentsList 
+                          comments={selectedEmployee.notes && selectedEmployee.notes[task.id] ? selectedEmployee.notes[task.id] : []}
+                          readOnly={true}
+                        />
                       </div>
                     </div>
                   ))}
@@ -206,11 +206,10 @@ const ManagerDashboard = ({ onLogout }) => {
                     <div>
                       <p className="text-sm font-semibold text-slate-800 leading-tight mb-1">{task.title}</p>
                       {task.description && <p className="text-xs text-slate-500">{task.description}</p>}
-                      {selectedEmployee.notes && selectedEmployee.notes[task.id] && (
-                        <div className="mt-2 bg-amber-50 text-amber-800 text-xs p-2 rounded border border-amber-100 inline-block">
-                          <span className="font-semibold">Remark:</span> {selectedEmployee.notes[task.id]}
-                        </div>
-                      )}
+                      <CommentsList 
+                        comments={selectedEmployee.notes && selectedEmployee.notes[task.id] ? selectedEmployee.notes[task.id] : []}
+                        readOnly={true}
+                      />
                     </div>
                   </div>
                 )) : (
@@ -229,11 +228,10 @@ const ManagerDashboard = ({ onLogout }) => {
                     <div className="w-5 h-5 rounded border-2 border-slate-300 flex-shrink-0 mt-0.5"></div>
                     <div>
                       <p className="text-sm font-medium text-slate-700 leading-tight mb-1">{task.title}</p>
-                      {selectedEmployee.notes && selectedEmployee.notes[task.id] && (
-                        <div className="mt-2 bg-amber-50 text-amber-800 text-xs p-2 rounded border border-amber-100 inline-block">
-                          <span className="font-semibold">Remark:</span> {selectedEmployee.notes[task.id]}
-                        </div>
-                      )}
+                      <CommentsList 
+                        comments={selectedEmployee.notes && selectedEmployee.notes[task.id] ? selectedEmployee.notes[task.id] : []}
+                        readOnly={true}
+                      />
                     </div>
                   </div>
                 )) : (

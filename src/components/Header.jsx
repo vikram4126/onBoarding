@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Search, Plus, Bell, AlertCircle, Calendar, Menu } from 'lucide-react';
+import { Search, Plus, Bell, AlertCircle, Calendar, Menu, LogOut } from 'lucide-react';
 import { getPeriodSortIndex } from '../utils/dateHelpers';
 
-const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 'Day 1', onToggleSidebar }) => {
+const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 'Day 1', onToggleSidebar, onLogout }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   
   const overdueTasks = tasks.filter(t => {
@@ -96,6 +96,11 @@ const Header = ({ profile, onSearch, onAddTask, tasks = [], currentDay = 'Day 1'
           <div className="w-9 h-9 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-medium text-sm shadow-sm border-2 border-white ring-2 ring-slate-100">
             {profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : 'U'}
           </div>
+          {onLogout && (
+            <button onClick={onLogout} className="p-2 ml-1 text-slate-400 hover:text-red-500 transition-colors" title="Logout">
+              <LogOut className="w-5 h-5" />
+            </button>
+          )}
         </div>
       </div>
     </header>

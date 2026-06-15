@@ -7,7 +7,7 @@ import RightPanel from '../components/RightPanel';
 import AddTaskModal from '../components/AddTaskModal';
 
 const Dashboard = () => {
-  const { profile, tasks, toggleTask, addCustomTask, deleteCustomTask, editCustomTask, resetProfile, notes, saveNote, currentDay } = useOnboarding();
+  const { profile, tasks, toggleTask, addCustomTask, deleteCustomTask, editCustomTask, resetProfile, notes, addComment, editComment, deleteComment, currentDay } = useOnboarding();
   const [activeTab, setActiveTab] = useState('timeline');
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isAddTaskModalOpen, setAddTaskModalOpen] = useState(false);
@@ -59,7 +59,7 @@ const Dashboard = () => {
       </div>
       
       <div className="flex-1 flex flex-col h-full overflow-hidden relative w-full">
-        <Header profile={profile} onSearch={handleSearch} onAddTask={() => handleOpenAddTask('Custom')} tasks={tasks} currentDay={currentDay} onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
+        <Header profile={profile} onSearch={handleSearch} onAddTask={() => handleOpenAddTask('Custom')} tasks={tasks} currentDay={currentDay} onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} onLogout={resetProfile} />
         
         <main className="flex-1 overflow-auto">
           <div className="flex h-full">
@@ -69,13 +69,16 @@ const Dashboard = () => {
                 tasks={tasks} 
                 toggleTask={toggleTask} 
                 notes={notes} 
-                saveNote={saveNote}
+                addComment={addComment}
+                editComment={editComment}
+                deleteComment={deleteComment}
                 currentDay={currentDay}
                 activeTab={activeTab}
                 searchQuery={searchQuery}
                 onAddTask={handleOpenAddTask}
                 onDeleteTask={deleteCustomTask}
                 onEditTask={handleOpenEditTask}
+                authorName={profile?.fullName || 'New Joiner'}
               />
             </div>
             

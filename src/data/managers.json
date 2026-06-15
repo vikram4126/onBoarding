@@ -2,11 +2,21 @@
   {
     "username": "admin",
     "role": "manager",
-    "password": "admin@12345"
+    "password": "admin@122333"
+  },
+  {
+    "username": "ashok",
+    "role": "manager",
+    "password": "ashok@11"
   },
   {
     "username": "vikram",
-    "role": "senior",
-    "password": "vikram@123456"
+    "role": "buddy",
+    "password": "vikram@11"
+  },
+  {
+    "username": "kubi",
+    "role": "buddy",
+    "password": "kubi@11"
   }
 ]

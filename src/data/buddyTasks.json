@@ -1,0 +1,174 @@
+[
+  {
+    "day": "Week 1",
+    "tasks": [
+      {
+        "id": "buddy_w1_1",
+        "title": "Welcome call with new joiner prior to onboarding",
+        "description": "Reach out to the new joiner before their Day 1 and introduce yourself as their buddy.",
+        "category": "Pre-joining",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_2",
+        "title": "Day 1 call to ensure laptop delivery, ID card application etc.",
+        "description": "Check in on Day 1 post induction to confirm laptop, ID card and other essentials are sorted.",
+        "category": "IT Setup",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_3",
+        "title": "Introduction with PM, the wider team and HRBP",
+        "description": "Facilitate introductions between the new joiner and their Performance Manager, team members, and HR Business Partner.",
+        "category": "Team Processes",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_4",
+        "title": "Sharing coordinates for important SPOCs",
+        "description": "Share contact details for key SPOCs — Admin, IT, Transport etc.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_5",
+        "title": "Complete overview of and assistance in filling all timesheets",
+        "description": "Walk the new joiner through timesheet submission process and help them fill their first timesheet.",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_6",
+        "title": "Share relevant charge codes",
+        "description": "Provide the project and task charge codes the new joiner needs for timesheets.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_7",
+        "title": "Extend team meeting invites",
+        "description": "Add the new joiner to huddle, standup, and other scheduled/recurring team meetings.",
+        "category": "Team Processes",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w1_8",
+        "title": "Understand any specific nuance for interns/CWK workers",
+        "description": "If the new joiner is an intern or CWK, understand and communicate any specific policies or processes.",
+        "category": "General",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "day": "Week 2",
+    "tasks": [
+      {
+        "id": "buddy_w2_1",
+        "title": "Familiarize with team structure and roles",
+        "description": "Help the new joiner understand the team hierarchy, who does what, and their role within the team.",
+        "category": "Team Processes",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w2_2",
+        "title": "Connect with team leadership",
+        "description": "Introduce the new joiner to team leads and senior leadership.",
+        "category": "Team Processes",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w2_3",
+        "title": "Ensure completion of all mandatory trainings within timeline",
+        "description": "Follow up to confirm all GLMS mandatory trainings are completed on time.",
+        "category": "Mandatory Training",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w2_4",
+        "title": "Raise access request for necessary DLs",
+        "description": "Help raise access requests for any Distribution Lists the new joiner needs.",
+        "category": "IT Setup",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w2_5",
+        "title": "Overview of Intranet and iSeek policy hub",
+        "description": "Walk the new joiner through the KPMG intranet and the iSeek policy hub, highlighting important sections.",
+        "category": "Training",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w2_6",
+        "title": "Familiarize with main portals",
+        "description": "Walk through GLMS, TalentKonnect, Rekonnect, Happay, Kites, Support Central, My Seat and all timesheet portals.",
+        "category": "Training",
+        "status": "pending",
+        "portalId": "glms"
+      },
+      {
+        "id": "buddy_w2_7",
+        "title": "NJ should be made aware of AskHR portal",
+        "description": "Ensure the new joiner knows about the AskHR portal for all necessary and immediate query resolution.",
+        "category": "HR Portal",
+        "status": "pending",
+        "contactId": "hr"
+      }
+    ]
+  },
+  {
+    "day": "Week 3",
+    "tasks": [
+      {
+        "id": "buddy_w3_1",
+        "title": "Follow up and seek feedback on first two-week activities",
+        "description": "Check in on how the first two weeks went and gather feedback on the onboarding experience so far.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w3_2",
+        "title": "Connect with Tower Lead",
+        "description": "Facilitate a meeting between the new joiner and the Tower Lead.",
+        "category": "Team Processes",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w3_3",
+        "title": "Familiarize with the Open PD process along with PM",
+        "description": "Help the new joiner understand the Open Performance Development process together with their Performance Manager.",
+        "category": "HR Portal",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w3_4",
+        "title": "Check on the progress on process trainings",
+        "description": "Review training progress and ensure all required process trainings are on track.",
+        "category": "Mandatory Training",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w3_5",
+        "title": "Assess any challenge being faced",
+        "description": "Have an open conversation about any challenges or blockers the new joiner is facing.",
+        "category": "General",
+        "status": "pending"
+      },
+      {
+        "id": "buddy_w3_6",
+        "title": "Take feedback on overall onboarding process and share with lead and HR",
+        "description": "Collect comprehensive feedback and share it with the team lead and HR for process improvement.",
+        "category": "General",
+        "status": "pending",
+        "contactId": "hr"
+      },
+      {
+        "id": "buddy_w3_7",
+        "title": "Continue to be the new joiner's ally",
+        "description": "Remain available as a go-to person for any questions, concerns, or support the new joiner needs going forward.",
+        "category": "General",
+        "status": "pending"
+      }
+    ]
+  }
+]

@@ -3,6 +3,7 @@ import { useOnboarding } from './hooks/useOnboarding';
 import Welcome from './pages/Welcome';
 import Dashboard from './pages/Dashboard';
 import ManagerDashboard from './pages/ManagerDashboard';
+import BuddyDashboard from './pages/BuddyDashboard';
 import WelcomePopup from './components/WelcomePopup';
 
 function App() {
@@ -10,11 +11,13 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-slate-800">
-      {profile && profile.role !== 'manager' && profile.username !== 'admin' && <WelcomePopup profile={profile} />}
+      {profile && profile.role === 'employee' && <WelcomePopup profile={profile} />}
       {!profile ? (
         <Welcome onSaveProfile={saveProfile} />
       ) : profile.role === 'manager' ? (
         <ManagerDashboard onLogout={resetProfile} />
+      ) : profile.role === 'buddy' ? (
+        <BuddyDashboard onLogout={resetProfile} />
       ) : (
         <Dashboard />
       )}

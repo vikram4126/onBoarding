@@ -3,7 +3,7 @@
     "id": "hr",
     "team": "HR Team",
     "name": "Sarah Jenkins",
-    "email": "hr@company.com",
+    "email": "hr@kpmg.com",
     "phone": "+91 9876543210",
     "role": "HR Business Partner "
   },
@@ -11,7 +11,7 @@
     "id": "it",
     "team": "IT Team",
     "name": "IT Helpdesk",
-    "email": "it.support@company.com",
+    "email": "it.support@kpmg.com",
     "phone": "+91 9876543211",
     "role": "Technical Support"
   },
@@ -19,7 +19,7 @@
     "id": "finance",
     "team": "Finance Team",
     "name": "David Smith",
-    "email": "finance@company.com",
+    "email": "finance@kpmg.com",
     "phone": "+91 9876543212",
     "role": "Payroll Manager"
   },
@@ -27,7 +27,7 @@
     "id": "training",
     "team": "Training Team",
     "name": "L&D Support",
-    "email": "learning@company.com",
+    "email": "learning@kpmg.com",
     "phone": "+91 9876543213",
     "role": "Learning & Development"
   }

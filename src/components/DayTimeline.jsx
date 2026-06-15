@@ -3,7 +3,7 @@ import TaskCard from './TaskCard';
 import { ChevronDown, ChevronUp, Plus, Check } from 'lucide-react';
 import { getPeriodSortIndex } from '../utils/dateHelpers';
 
-const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab, searchQuery, onAddTask, onDeleteTask, onEditTask }) => {
+const DayTimeline = ({ tasks, toggleTask, notes, addComment, editComment, deleteComment, currentDay, activeTab, searchQuery, onAddTask, onDeleteTask, onEditTask, authorName }) => {
   const [openDays, setOpenDays] = useState([]);
   
   const currentPeriod = currentDay; // It's passed as currentDay but actually holds a period string now.
@@ -147,8 +147,11 @@ const DayTimeline = ({ tasks, toggleTask, notes, saveNote, currentDay, activeTab
                           key={task.id} 
                           task={task} 
                           toggleTask={toggleTask}
-                          note={notes[task.id]}
-                          saveNote={saveNote}
+                          comments={notes[task.id]}
+                          addComment={addComment}
+                          editComment={editComment}
+                          deleteComment={deleteComment}
+                          authorName={authorName}
                           onDeleteTask={onDeleteTask}
                           onEditTask={onEditTask}
                           currentDay={currentPeriod}
