@@ -1,1 +1,172 @@
-{}
+{
+  "Development": [
+    {
+      "id": "development_Day1_0",
+      "day": "Day 1",
+      "title": "Access GitHub Organization",
+      "description": "Request access to KPMG GitHub org from tech lead",
+      "category": "IT Setup",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://github.com",
+      "contactId": "it",
+      "portalId": ""
+    },
+    {
+      "id": "development_Week1_1",
+      "day": "Week 1",
+      "title": "Setup Local Dev Environment",
+      "description": "Install required tools: Node.js, VS Code, Docker",
+      "category": "IT Setup",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "",
+      "contactId": "it",
+      "portalId": ""
+    },
+    {
+      "id": "development_Week2_2",
+      "day": "Week 2",
+      "title": "Complete Code Review Training",
+      "description": "Review team coding standards and PR process",
+      "category": "Mandatory Training",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://glms.kpmg.com",
+      "contactId": "training",
+      "portalId": ""
+    }
+  ],
+  "HR": [
+    {
+      "id": "hr_Day1_0",
+      "day": "Day 1",
+      "title": "Review HR Policies Document",
+      "description": "Go through the HR handbook on SharePoint",
+      "category": "HR Portal",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://talentkonnect.kpmg.in",
+      "contactId": "hr",
+      "portalId": ""
+    },
+    {
+      "id": "hr_Week1_1",
+      "day": "Week 1",
+      "title": "Setup Payroll Details",
+      "description": "Submit bank account and tax details in HR portal",
+      "category": "Salary & Investment",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://hgs.kpmg.in",
+      "contactId": "hr",
+      "portalId": ""
+    }
+  ],
+  "Finance": [
+    {
+      "id": "finance_Day1_0",
+      "day": "Day 1",
+      "title": "Finance Systems Access Request",
+      "description": "Request SAP and reporting tool access from IT",
+      "category": "IT Setup",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://itsupport.kpmg.com",
+      "contactId": "it",
+      "portalId": ""
+    },
+    {
+      "id": "finance_Week1_1",
+      "day": "Week 1",
+      "title": "Expense Reporting Training",
+      "description": "Complete training on expense submission process",
+      "category": "Mandatory Training",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://glms.kpmg.com",
+      "contactId": "finance",
+      "portalId": ""
+    }
+  ],
+  "QA": [
+    {
+      "id": "qa_Day1_0",
+      "day": "Day 1",
+      "title": "Access JIRA & TestRail",
+      "description": "Get access to QA tools from team lead",
+      "category": "IT Setup",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "",
+      "contactId": "it",
+      "portalId": ""
+    },
+    {
+      "id": "qa_Week1_1",
+      "day": "Week 1",
+      "title": "Review QA Processes",
+      "description": "Read through test strategy and QA handbook",
+      "category": "General",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "https://home.kpmg.com",
+      "contactId": "",
+      "portalId": ""
+    }
+  ],
+  "Design": [
+    {
+      "id": "design_Day1_0",
+      "day": "Day 1",
+      "title": "Sample Design Task",
+      "description": "Task description here",
+      "category": "General",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "",
+      "contactId": "",
+      "portalId": ""
+    }
+  ],
+  "IT Support": [
+    {
+      "id": "it_support_Day1_0",
+      "day": "Day 1",
+      "title": "Sample IT Support Task",
+      "description": "Task description here",
+      "category": "General",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "",
+      "contactId": "",
+      "portalId": ""
+    }
+  ],
+  "Marketing": [
+    {
+      "id": "marketing_Day1_0",
+      "day": "Day 1",
+      "title": "Sample Marketing Task",
+      "description": "Task description here",
+      "category": "General",
+      "projectCode": "",
+      "taskCode": "",
+      "deadlineDay": null,
+      "url": "",
+      "contactId": "",
+      "portalId": ""
+    }
+  ]
+}
