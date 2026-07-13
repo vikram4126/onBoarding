@@ -1,1273 +1,324 @@
-# 📱 KPMG Onboarding – PowerApps Implementation Guide
+# OnBoarding Portal — Complete Power Apps Build Guide
+### Prototype → Production Implementation
 
-> **Based on:** Existing React onboarding web app  
-> **Platform:** Microsoft Power Apps (Canvas App)  
-> **Data:** SharePoint Online Lists (No Dataverse)  
-> **Roles Covered:** Employee · Buddy · Leader · Manager
+> This document maps every feature of the OnBoarding Portal to its exact Power Apps/SharePoint equivalent, with column names, Power Fx formulas, and Power Automate flow steps.
 
 ---
 
-## 📑 Table of Contents
-
-1. [Overview & Architecture](#1-overview--architecture)
-2. [SharePoint Lists – Full Setup](#2-sharepoint-lists--full-setup)
-3. [PowerApps App Setup](#3-powerapps-app-setup)
-4. [Global Variables & OnStart](#4-global-variables--onstart)
-5. [Screen: Login / Role Selection](#5-screen-login--role-selection)
-6. [Screen: Employee Dashboard (Accordion + Progress)](#6-screen-employee-dashboard-accordion--progress)
-7. [Screen: Buddy Dashboard](#7-screen-buddy-dashboard)
-8. [Screen: Leader Dashboard](#8-screen-leader-dashboard)
-9. [Screen: Manager Dashboard](#9-screen-manager-dashboard)
-10. [Formulas Quick Reference](#10-formulas-quick-reference)
-
----
-
-## 1. Overview & Architecture
-
-### What This App Does
-- Employee logs in → sees **Day-wise & Month-wise accordion** tasks
-- Each **checkbox click** marks task complete → **overall progress bar** updates live
-- Buddy sees tasks assigned to them for their assigned new joiners
-- Leader sees team-level summary and progress
-- Manager sees all employees, their progress, missed tasks
-
-### Data Flow
-```
-SharePoint Lists
-      │
-      ▼
-PowerApps Canvas App
-      │
-      ├── Employee Screen  → reads/writes OnboardingTasks
-      ├── Buddy Screen     → reads BuddyTasks
-      ├── Leader Screen    → reads OnboardingTasks (read-only)
-      └── Manager Screen   → reads all lists (read-only)
-```
+## TABLE OF CONTENTS
+1. [Project Overview](#1-project-overview)
+2. [SharePoint Lists Setup](#2-sharepoint-lists-setup)
+3. [Power Apps — App Setup & RBAC](#3-power-apps--app-setup--rbac)
+4. [Screen-by-Screen Build Guide](#4-screen-by-screen-build-guide)
+   - [Manager Dashboard](#screen-manager-dashboard)
+   - [New Joiner View](#screen-new-joiner-view)
+   - [Buddy Dashboard](#screen-buddy-dashboard)
+   - [Leadership View](#screen-leadership-view)
+5. [Power Automate Flows](#5-power-automate-flows)
+   - [Flow 1: Auto-Assign Tasks to New Joiner](#flow-1-auto-assign-tasks-to-new-joiner)
+   - [Flow 2: Comment Email Alert](#flow-2-comment-email-alert)
+   - [Flow 3: Missed Deadline Alert (Scheduled)](#flow-3-missed-deadline-alert-scheduled)
+6. [Complete Formula Reference](#6-complete-formula-reference)
 
 ---
 
-## 2. SharePoint Lists – Full Setup
+## 1. PROJECT OVERVIEW
 
-> Go to your SharePoint site → **Site Contents → New → List**
-
-### 📋 List 1: `OnboardingTasks`
-*Employee ke saare tasks yahan store honge*
-
-| Column Name      | Type                     | Required | Notes                          |
-|------------------|--------------------------|----------|--------------------------------|
-| `Title`          | Single line of text      | ✅       | Task name                      |
-| `Description`    | Multiple lines of text   | ❌       | Task details                   |
-| `DayNumber`      | Number                   | ✅       | 1 to 30                        |
-| `MonthNumber`    | Number                   | ✅       | 1, 2, or 3                     |
-| `WeekNumber`     | Number                   | ❌       | Optional: 1 to 4               |
-| `Status`         | Choice                   | ✅       | Choices: `Pending`, `Completed`|
-| `EmployeeEmail`  | Single line of text      | ✅       | User().Email                   |
-| `Category`       | Single line of text      | ❌       | e.g. IT, HR, Finance           |
-| `PortalURL`      | Hyperlink                | ❌       | Link to portal                 |
-| `PortalName`     | Single line of text      | ❌       | e.g. TalentKonnect             |
-| `TaskType`       | Choice                   | ✅       | Choices: `Standard`, `Custom`  |
-| `DeadlineDay`    | Number                   | ❌       | Which day it must be done by   |
-| `CompletedOn`    | Date and Time            | ❌       | Auto-set when completed        |
-| `Notes`          | Multiple lines of text   | ❌       | Employee's remark/comment      |
-
-> **Default Status** set karo = `Pending` (list settings → column → default value)
+### What we are building
+An enterprise portal for New Joiner Onboarding where:
+- No manual login is required (auto-detects role via SharePoint/Active Directory).
+- Managers add new joiners and assign Buddies.
+- New Joiners see tasks divided by Day 1, Week 1, Month 1, etc.
+- Buddies, Managers, and Leaders track real-time progress.
+- Automated emails trigger for new comments and missed task deadlines.
 
 ---
 
-### 📋 List 2: `EmployeeProfiles`
-*Employee ki profile info store karne ke liye*
+## 2. SHAREPOINT LISTS SETUP
 
-| Column Name      | Type                   | Required | Notes                            |
-|------------------|------------------------|----------|----------------------------------|
-| `Title`          | Single line of text    | ✅       | Employee full name               |
-| `EmployeeEmail`  | Single line of text    | ✅       | User's email (unique key)        |
-| `Team`           | Choice                 | ✅       | Dev, QA, HR, Finance, etc.       |
-| `Designation`    | Single line of text    | ❌       | Job title                        |
-| `JoiningDate`    | Date and Time          | ✅       | Date of joining                  |
-| `ManagerEmail`   | Single line of text    | ❌       | Assigned manager's email         |
-| `BuddyEmail`     | Single line of text    | ❌       | Assigned buddy's email           |
-| `LeaderEmail`    | Single line of text    | ❌       | Assigned leader's email          |
+> Create these lists in your SharePoint Site **before** opening Power Apps.
 
----
+### LIST 1: `Onboarding_Users`
+**Purpose:** Stores all New Joiners, Buddies, and Managers to drive Role-Based Access.
 
-### 📋 List 3: `BuddyTasks`
-*Buddy ke liye tasks – new joiner ko help karna*
+| Column Name | SharePoint Type | Required | Notes |
+|---|---|---|---|
+| **Title** | Single line text | ✅ | Employee Name |
+| **Email** | Single line text | ✅ | Employee Email (used for auto-login) |
+| **Role** | Choice | ✅ | New Joiner, Buddy, Manager, Leader |
+| **Department**| Choice | ✅ | e.g., IT, HR, Sales, Finance |
+| **ManagerEmail** | Single line text | ✅ | Manager's Email |
+| **BuddyEmail** | Single line text | ❌ | Buddy's Email |
+| **JoiningDate** | Date and Time | ✅ | Used to calculate deadlines |
 
-| Column Name       | Type                   | Required | Notes                            |
-|-------------------|------------------------|----------|----------------------------------|
-| `Title`           | Single line of text    | ✅       | Buddy task name                  |
-| `Description`     | Multiple lines of text | ❌       | Task details                     |
-| `DayNumber`       | Number                 | ✅       | 1 to 30                          |
-| `MonthNumber`     | Number                 | ✅       | 1, 2, or 3                       |
-| `Status`          | Choice                 | ✅       | `Pending`, `Completed`           |
-| `BuddyEmail`      | Single line of text    | ✅       | Buddy's email                    |
-| `AssignedToEmail` | Single line of text    | ✅       | New joiner's email               |
-| `Notes`           | Multiple lines of text | ❌       | Buddy's note                     |
-| `CompletedOn`     | Date and Time          | ❌       | Auto-set when completed          |
+### LIST 2: `Onboarding_MasterTasks`
+**Purpose:** Template of all tasks that a new joiner needs to complete. Managers can update these to keep links and guides fresh.
 
----
+| Column Name | SharePoint Type | Required | Notes |
+|---|---|---|---|
+| **Title** | Single line text | ✅ | Task Name (e.g., "Setup IT Assets") |
+| **Department**| Choice | ✅ | **Multi-select:** Tag multiple (e.g., IT, HR) or "All" |
+| **Timeline** | Choice | ✅ | Day 1, Week 1, Month 1 |
+| **Description** | Multiple lines text| ❌ | Instructions for the task |
+| **PortalLink** | Hyperlink | ❌ | Link to company portal/system |
+| **GuideImageURL** | Single line text | ❌ | Link to guide popup image/screenshot |
+| **ProjectCode** | Single line text | ❌ | Relevant project code (if any) |
+| **ContactHR** | Person or Group | ❌ | Contact person (e.g., HR) |
 
-### 📋 List 4: `AppUsers`
-*Role management – kaun Manager hai, kaun Buddy hai*
+### LIST 3: `Onboarding_UserTasks`
+**Purpose:** Actual tasks assigned to the specific New Joiner. Created automatically by a Flow.
 
-| Column Name   | Type                | Required | Notes                                        |
-|---------------|---------------------|----------|----------------------------------------------|
-| `Title`       | Single line of text | ✅       | User full name                               |
-| `UserEmail`   | Single line of text | ✅       | User's email                                 |
-| `Role`        | Choice              | ✅       | Choices: `Employee`, `Buddy`, `Leader`, `Manager` |
-| `IsActive`    | Yes/No              | ✅       | Default: Yes                                 |
+| Column Name | SharePoint Type | Required | Notes |
+|---|---|---|---|
+| **Title** | Single line text | ✅ | Task Name |
+| **JoinerEmail** | Single line text | ✅ | Email of the New Joiner |
+| **Timeline** | Choice | ✅ | Day 1, Week 1, Month 1 |
+| **Status** | Choice | ✅ | Pending, In Progress, Completed |
+| **Deadline** | Date and Time | ✅ | Calculated target date |
+| **PortalLink** | Hyperlink | ❌ | Copied from Master Task |
+| **GuideImageURL** | Single line text | ❌ | Copied from Master Task |
+| **ProjectCode** | Single line text | ❌ | Copied from Master Task |
+| **ContactHR** | Person or Group | ❌ | Copied from Master Task |
+| **LatestComment**| Multiple lines text| ❌ | Comments added by user |
+| **CommentUpdates**| Multiple lines text| ❌ | Append-only log of all comments |
 
----
+### LIST 4: `Onboarding_PortalLinks`
+**Purpose:** Stores global company portal links shown in the left sidebar. Managed by Managers.
 
-### 📋 List 5: `TaskMasterTemplate`
-*Manager tasks template banane ke liye (pre-defined tasks)*
-
-| Column Name    | Type                   | Required | Notes                     |
-|----------------|------------------------|----------|---------------------------|
-| `Title`        | Single line of text    | ✅       | Task name                 |
-| `Description`  | Multiple lines of text | ❌       | Task detail               |
-| `DayNumber`    | Number                 | ✅       | Default day               |
-| `MonthNumber`  | Number                 | ✅       | 1, 2, or 3                |
-| `Category`     | Single line of text    | ❌       | Category                  |
-| `PortalURL`    | Hyperlink              | ❌       | Portal link               |
-| `PortalName`   | Single line of text    | ❌       | Portal display name       |
-| `IsActive`     | Yes/No                 | ✅       | Default: Yes              |
-
----
-
-## 3. PowerApps App Setup
-
-### Step 1: Create Canvas App
-```
-Power Apps Studio → Create → Canvas App from Blank
-Name: KPMG Onboarding
-Format: Tablet (1366 x 768) or Phone
-```
-
-### Step 2: Connect All SharePoint Lists
-```
-Left panel → Data → Add data → SharePoint
-Site URL: https://[your-company].sharepoint.com/sites/[your-site]
-
-Add these lists one by one:
-✅ OnboardingTasks
-✅ EmployeeProfiles
-✅ BuddyTasks
-✅ AppUsers
-✅ TaskMasterTemplate
-```
-
-### Step 3: Add 5 Screens
-```
-Screens (rename them):
-1. scrLogin       → Login / Role selection
-2. scrEmployee    → Employee Dashboard
-3. scrBuddy       → Buddy Dashboard
-4. scrLeader      → Leader Dashboard
-5. scrManager     → Manager Dashboard
-```
+| Column Name | SharePoint Type | Required | Notes |
+|---|---|---|---|
+| **Title** | Single line text | ✅ | Link Name (e.g., "HR Portal") |
+| **URL** | Hyperlink | ✅ | The actual web URL |
+| **IconName** | Single line text | ❌ | Name of the icon or image |
+| **IsActive** | Yes/No | ✅ | Default: Yes (To show/hide links easily) |
 
 ---
 
-## 4. Global Variables & OnStart
+## 3. POWER APPS — APP SETUP & RBAC
 
-> **App → OnStart** mein ye formulas daalo (App select karo, OnStart property)
+### Step 1: Create App & Connect Data
+1. Create a Canvas App (Tablet Layout) named `OnBoarding Portal`.
+2. Connect to SharePoint and add the 3 lists above.
 
-```powerapps
-// ── Step 1: Current user ka email
-Set(varUserEmail, Lower(User().Email));
+### Step 2: Auto-Login & Role Detection (App.OnStart)
+```powerapps-dot
+// 1. Get Current User's Email
+Set(varUserEmail, User().Email);
 
-// ── Step 2: Current user ka role check karo AppUsers list se
-Set(
-    varCurrentUser,
-    LookUp(AppUsers, Lower(UserEmail) = varUserEmail)
-);
+// 2. Lookup the user's role in the Onboarding_Users list
+Set(varUserDetails, LookUp(Onboarding_Users, Email = varUserEmail));
 
-Set(varUserRole, varCurrentUser.Role.Value);  // "Employee" / "Buddy" / "Leader" / "Manager"
-Set(varUserName,  varCurrentUser.Title);
+// 3. Define the Role Variable
+Set(varUserRole, If(IsBlank(varUserDetails), "Guest", varUserDetails.Role.Value));
 
-// ── Step 3: Employee profile
-Set(
-    varMyProfile,
-    LookUp(EmployeeProfiles, Lower(EmployeeEmail) = varUserEmail)
-);
-
-// ── Step 4: Joining date se current day number calculate karo
-Set(
-    varCurrentDay,
-    If(
-        IsBlank(varMyProfile.JoiningDate),
-        1,
-        Max(1, DateDiff(varMyProfile.JoiningDate, Today(), Days) + 1)
-    )
-);
-
-// ── Step 5: Accordion variables reset
-Set(varExpandedMonth, 0);
-Set(varExpandedDay,   "");
-Set(varExpandedBuddyDay, "");
-
-// ── Step 6: Route to correct screen based on role
-Switch(
-    varUserRole,
-    "Manager", Navigate(scrManager,  ScreenTransition.Fade),
-    "Buddy",   Navigate(scrBuddy,    ScreenTransition.Fade),
-    "Leader",  Navigate(scrLeader,   ScreenTransition.Fade),
-               Navigate(scrEmployee, ScreenTransition.Fade)  // default: Employee
-);
-```
-
----
-
-## 5. Screen: Login / Role Selection (`scrLogin`)
-
-### Layout
-```
-┌─────────────────────────────────────┐
-│          KPMG Logo                  │
-│       "Welcome Aboard!"             │
-│                                     │
-│  [Employee] [Buddy] [Leader] [Mgr]  │
-│                                     │
-│  Name:  _______________             │
-│  Email: _______________             │
-│                                     │
-│       [Start My Journey]            │
-└─────────────────────────────────────┘
-```
-
-### Controls & Formulas
-
-**Variable for selected role tab:**
-```powerapps
-// Button "Employee" OnSelect:
-Set(varSelectedRole, "Employee")
-
-// Button "Buddy" OnSelect:
-Set(varSelectedRole, "Buddy")
-
-// Button "Leader" OnSelect:
-Set(varSelectedRole, "Leader")
-
-// Button "Manager" OnSelect:
-Set(varSelectedRole, "Manager")
-```
-
-**Role button – selected style (Fill property):**
-```powerapps
-// Blue background if this role is selected, else light grey
-If(varSelectedRole = "Employee", ColorValue("#0078D4"), Color.LightGray)
-```
-
-**Submit Button OnSelect:**
-```powerapps
-// Check if user exists in AppUsers
-Set(
-    varLoginUser,
-    LookUp(AppUsers, Lower(UserEmail) = Lower(txtEmail.Text), IsActive = true)
-);
-
+// 4. Auto-Navigate based on Role
 If(
-    IsBlank(varLoginUser),
-    // New employee – create profile and tasks from template
-    If(
-        varSelectedRole = "Employee",
-        // 1. Create employee profile
-        Patch(
-            EmployeeProfiles,
-            Defaults(EmployeeProfiles),
-            {
-                Title:         txtName.Text,
-                EmployeeEmail: Lower(txtEmail.Text),
-                Team:          drpTeam.Selected.Value,
-                JoiningDate:   dtpJoiningDate.SelectedDate
-            }
-        );
-        // 2. Copy tasks from TaskMasterTemplate to OnboardingTasks
-        ForAll(
-            Filter(TaskMasterTemplate, IsActive = true),
-            Patch(
-                OnboardingTasks,
-                Defaults(OnboardingTasks),
-                {
-                    Title:         ThisRecord.Title,
-                    Description:   ThisRecord.Description,
-                    DayNumber:     ThisRecord.DayNumber,
-                    MonthNumber:   ThisRecord.MonthNumber,
-                    Category:      ThisRecord.Category,
-                    PortalURL:     ThisRecord.PortalURL,
-                    PortalName:    ThisRecord.PortalName,
-                    Status:        {Value: "Pending"},
-                    TaskType:      {Value: "Standard"},
-                    EmployeeEmail: Lower(txtEmail.Text)
-                }
-            )
-        );
-        // 3. Create AppUsers entry
-        Patch(
-            AppUsers,
-            Defaults(AppUsers),
-            {
-                Title:     txtName.Text,
-                UserEmail: Lower(txtEmail.Text),
-                Role:      {Value: "Employee"},
-                IsActive:  true
-            }
-        );
-        Set(varUserEmail, Lower(txtEmail.Text));
-        Set(varUserRole, "Employee");
-        Set(varUserName, txtName.Text);
-        Set(varMyProfile, LookUp(EmployeeProfiles, Lower(EmployeeEmail) = Lower(txtEmail.Text)));
-        Set(varCurrentDay, Max(1, DateDiff(dtpJoiningDate.SelectedDate, Today(), Days) + 1));
-        Navigate(scrEmployee, ScreenTransition.Fade),
-
-        // Non-employee role not found → show error
-        Notify("User not found. Please contact your administrator.", NotificationType.Error)
-    ),
-
-    // Existing user found → set variables and navigate
-    Set(varUserEmail, Lower(txtEmail.Text));
-    Set(varUserRole, varLoginUser.Role.Value);
-    Set(varUserName, varLoginUser.Title);
-    Set(varMyProfile, LookUp(EmployeeProfiles, Lower(EmployeeEmail) = Lower(txtEmail.Text)));
-    Set(varCurrentDay, Max(1, DateDiff(varMyProfile.JoiningDate, Today(), Days) + 1));
-    Switch(
-        varLoginUser.Role.Value,
-        "Manager", Navigate(scrManager,  ScreenTransition.Fade),
-        "Buddy",   Navigate(scrBuddy,    ScreenTransition.Fade),
-        "Leader",  Navigate(scrLeader,   ScreenTransition.Fade),
-                   Navigate(scrEmployee, ScreenTransition.Fade)
-    )
+    varUserRole = "New Joiner", Navigate(ScreenNewJoiner),
+    varUserRole = "Buddy", Navigate(ScreenBuddy),
+    varUserRole = "Manager", Navigate(ScreenManager),
+    varUserRole = "Leader", Navigate(ScreenLeader),
+    Navigate(ScreenAccessDenied)
 );
 ```
 
 ---
 
-## 6. Screen: Employee Dashboard (`scrEmployee`)
+## 4. SCREEN-BY-SCREEN BUILD GUIDE
 
-### Layout
-```
-┌──────────────────────────────────────────────────┐
-│ KPMG Logo   |  Welcome, [Name]        [Logout]   │
-├──────────────────────────────────────────────────┤
-│ Overall Progress: ████████░░░░  72%              │
-│ Completed: 18/25 tasks                           │
-├──────────────────────────────────────────────────┤
-│ ▼ Month 1  [8/10 done]                           │
-│   ▶ Day 1  [2/2 done] ✓                          │
-│   ▼ Day 2  [1/2 done]                            │
-│      ☑ Complete IT setup form                    │
-│      ☐ Register on TalentKonnect                 │
-│   ▶ Day 3  [0/3 done]                            │
-│ ▶ Month 2  [4/8 done]                            │
-└──────────────────────────────────────────────────┘
-```
+### SCREEN: Left Navigation Bar (Sidebar Component)
+**Purpose:** Shown on the left side for all users, containing Company Portal links.
+- **Gallery (`galSidebarLinks`):**
+  ```powerapps-dot
+  // Connects to the Onboarding_PortalLinks list so managers can manage links directly from SharePoint
+  Items = Filter(Onboarding_PortalLinks, IsActive = true)
+  ```
+  - **Inside Gallery:**
+    - **Label (`lblLinkName`):** `ThisItem.Title`
+    - **OnSelect for Link Item:** `Launch(ThisItem.URL)`
 
----
+### SCREEN: Manager Dashboard
+**Purpose:** Manager adds new joiners, assigns their buddies, and updates task templates (guides, links).
 
-### 6A. Overall Progress Bar
+#### 1. Add New Joiner Form (`frmAddJoiner`)
+- **DataSource:** `Onboarding_Users`
+- **Fields to show:** Title (Name), Email, Role (Set Default to "New Joiner"), Department, ManagerEmail (Set Default to `varUserEmail`), BuddyEmail, JoiningDate.
+- **Submit Button OnSelect:**
+  ```powerapps-dot
+  SubmitForm(frmAddJoiner);
+  Notify("New Joiner Added! Background Flow will auto-assign tasks shortly.", NotificationType.Success);
+  ```
 
-**Add Rectangle control → name it `rectProgressBg`**
-```powerapps
-// Width (background - full bar):
-500   // fixed width
+#### 2. Manage Master Tasks (`galMasterTasks`)
+- **Gallery Items:** `Onboarding_MasterTasks`
+- **Action:** Manager can click an edit icon to open a form (`frmEditMasterTask`) to update the Portal Links, Guide Images, Project Codes, and HR Contacts for future joiners.
+- **Gallery (`galMyTeam`):** Shows joiners under this manager.
+  ```powerapps-dot
+  Items = Filter(Onboarding_Users, ManagerEmail = varUserEmail)
+  ```
 
-// Height: 16
-// Fill: RGBA(220, 220, 220, 1)
-```
+### SCREEN: New Joiner View (Accordion Layout)
+**Purpose:** Joiner sees tasks grouped by timeline (Day 1, Week 1) using an expandable Accordion.
 
-**Add another Rectangle → name it `rectProgressFill`**
-```powerapps
-// Width formula (fills according to progress):
-(
-    CountIf(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail)) = 0,
-        1,
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail))
-    )
-) * 500
+#### 1. Outer Gallery (`galTimelines`) - The Accordion Headers
+- **Items:** `["Day 1", "Week 1", "Month 1"]`
+- **Inside Outer Gallery:**
+  - **Label (`lblTimelineName`):** `ThisItem.Value` (e.g., "Day 1")
+  - **Expand/Collapse Icon:** `If(locExpandedTimeline = ThisItem.Value, Icon.ChevronUp, Icon.ChevronDown)`
+  - **OnSelect (Header/Icon):** 
+    ```powerapps-dot
+    UpdateContext({locExpandedTimeline: If(locExpandedTimeline = ThisItem.Value, Blank(), ThisItem.Value)})
+    ```
 
-// Fill: RGBA(0, 120, 212, 1)   ← Blue (KPMG color)
-// Height: 16
-// X: same as rectProgressBg X
-// Y: same as rectProgressBg Y
-```
+#### 2. Inner Gallery (`galTasks`) - The Actual Tasks (Placed INSIDE `galTimelines`)
+- **Visible Property:** `locExpandedTimeline = ThisItem.Value` (Shows tasks only when section is expanded)
+- **Items:**
+  ```powerapps-dot
+  Filter(Onboarding_UserTasks, JoinerEmail = varUserEmail, Timeline.Value = ThisItem.Value)
+  ```
 
-**Progress % Label:**
-```powerapps
-Text(
-    CountIf(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail)) = 0,
-        1,
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail))
-    ),
-    "[$-en-US]0%"
-)
-```
+#### 3. Task Completion (Green Check Sign) inside `galTasks`
+Instead of a simple checkbox, use a modern Icon (`Icon.CheckBadge`).
+- **Icon Property:** `If(ThisItem.Status.Value = "Completed", Icon.CheckBadge, Icon.Circle)`
+- **Color Property:** `If(ThisItem.Status.Value = "Completed", RGBA(0,184,148,1) /*Green*/, RGBA(150,150,150,1) /*Gray*/)`
+- **OnSelect (Toggle status & update SharePoint):**
+  ```powerapps-dot
+  If(
+      ThisItem.Status.Value = "Completed",
+      Patch(Onboarding_UserTasks, ThisItem, {Status: {Value: "Pending"}}),
+      Patch(Onboarding_UserTasks, ThisItem, {Status: {Value: "Completed"}})
+  )
+  ```
 
-**Completed count label:**
-```powerapps
-"Completed: " &
-CountIf(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail), Status.Value = "Completed") &
-"/" &
-CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail)) &
-" tasks"
-```
+- **Comment Button -> Opens Pop-up:**
+  ```powerapps-dot
+  // Save Comment Formula
+  Patch(Onboarding_UserTasks, varSelectedTask, {
+      LatestComment: txtComment.Text
+  });
+  // Note: Saving this will trigger the Email Flow to the Buddy!
+  ```
 
----
+### SCREEN: Buddy Dashboard (Master-Detail Layout)
+**Purpose:** Buddy sees a list of their assigned joiners on the left, and clicks on one to see their specific task progress on the right.
 
-### 6B. Month Accordion (Outer Gallery)
+#### 1. Left Panel (Joiner List)
+- **Gallery (`galMyAssignedJoiners`):**
+  ```powerapps-dot
+  Items = Filter(Onboarding_Users, BuddyEmail = varUserEmail)
+  ```
+- **OnSelect (of Joiner card):**
+  ```powerapps-dot
+  UpdateContext({locSelectedJoiner: ThisItem})
+  ```
+- **Progress Bar (Inside Gallery):**
+  ```powerapps-dot
+  // Calculate overall completion % for this joiner
+  Width = (CountRows(Filter(Onboarding_UserTasks, JoinerEmail = ThisItem.Email, Status.Value = "Completed")) / 
+          CountRows(Filter(Onboarding_UserTasks, JoinerEmail = ThisItem.Email))) * Parent.Width
+  ```
 
-**Add Vertical Gallery → name it `galMonths`**
+#### 2. Right Panel (Selected Joiner's Progress)
+- **Visible Property (for the right container):** `!IsBlank(locSelectedJoiner)`
+- **Header Label:** `"Tasks for " & locSelectedJoiner.Title`
+- **Gallery (`galJoinerTasks`):**
+  ```powerapps-dot
+  // Shows all tasks for the joiner selected in the left panel
+  Items = Filter(Onboarding_UserTasks, JoinerEmail = locSelectedJoiner.Email)
+  ```
+- **Task Status Indicator (Inside `galJoinerTasks`):**
+  ```powerapps-dot
+  Icon = If(ThisItem.Status.Value = "Completed", Icon.CheckBadge, Icon.Clock)
+  Color = If(ThisItem.Status.Value = "Completed", RGBA(0,184,148,1) /*Green*/, RGBA(255,165,0,1) /*Orange*/)
+  ```
 
-```powerapps
-// Items:
-Sort(
-    Distinct(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = varUserEmail),
-        MonthNumber
-    ),
-    Result,
-    SortOrder.Ascending
-)
+### SCREEN: Leadership View (Executive Dashboard)
+**Purpose:** High-level overview of the entire onboarding program across all departments.
 
-// TemplateHeight: 50 (just the header row)
-// ShowScrollbar: false
-```
+#### 1. KPI Cards (Metrics)
+- **Total Active New Joiners:**
+  ```powerapps-dot
+  Text(CountRows(Filter(Onboarding_Users, Role.Value = "New Joiner")))
+  ```
+- **Tasks Overdue (Company-wide):**
+  ```powerapps-dot
+  Text(CountRows(Filter(Onboarding_UserTasks, Status.Value <> "Completed", Deadline < Today())))
+  ```
+- **Completed Tasks:**
+  ```powerapps-dot
+  Text(CountRows(Filter(Onboarding_UserTasks, Status.Value = "Completed")))
+  ```
 
-**Inside galMonths – Add Button (Month Header):**
-```powerapps
-// Text:
-"Month " & Text(ThisItem.Result) &
-"   [" &
-CountIf(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = varUserEmail,
-        MonthNumber = ThisItem.Result
-    ),
-    Status.Value = "Completed"
-) & "/" &
-CountRows(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = varUserEmail,
-        MonthNumber = ThisItem.Result
-    )
-) & " done]"
-
-// OnSelect:
-If(
-    varExpandedMonth = ThisItem.Result,
-    Set(varExpandedMonth, 0),    // collapse
-    Set(varExpandedMonth, ThisItem.Result)  // expand
-);
-Set(varExpandedDay, "")  // close all day accordions when switching month
-
-// Fill: RGBA(0, 120, 212, 0.1)
-// FontWeight: FontWeight.Bold
-```
-
-**Arrow icon on month button:**
-```powerapps
-// Text (chevron):
-If(varExpandedMonth = ThisItem.Result, "▼", "▶")
-```
-
----
-
-### 6C. Day Accordion (Inner Gallery – inside month)
-
-> Place this gallery **below** the month header inside `galMonths`. Set its `Visible` to show only when month is expanded.
-
-**Add Vertical Gallery → name it `galDays`**
-
-```powerapps
-// Items:
-Sort(
-    Distinct(
-        Filter(OnboardingTasks,
-            Lower(EmployeeEmail) = varUserEmail,
-            MonthNumber = galMonths.Selected.Result
-        ),
-        DayNumber
-    ),
-    Result,
-    SortOrder.Ascending
-)
-
-// Visible:
-varExpandedMonth = galMonths.Selected.Result
-
-// TemplateHeight: 44
-```
-
-**Inside galDays – Day Header Button:**
-```powerapps
-// Text:
-"Day " & Text(ThisItem.Result) &
-"  " &
-CountIf(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = varUserEmail,
-        MonthNumber = galMonths.Selected.Result,
-        DayNumber = ThisItem.Result
-    ),
-    Status.Value = "Completed"
-) & "/" &
-CountRows(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = varUserEmail,
-        MonthNumber = galMonths.Selected.Result,
-        DayNumber = ThisItem.Result
-    )
-) & " done"
-
-// OnSelect:
-If(
-    varExpandedDay = Text(galMonths.Selected.Result) & "_" & Text(ThisItem.Result),
-    Set(varExpandedDay, ""),
-    Set(varExpandedDay, Text(galMonths.Selected.Result) & "_" & Text(ThisItem.Result))
-)
-// Note: We combine Month+Day as unique key e.g. "1_3" = Month 1, Day 3
-
-// Fill - green if all done, else blue:
-If(
-    CountIf(
-        Filter(OnboardingTasks,
-            Lower(EmployeeEmail) = varUserEmail,
-            MonthNumber = galMonths.Selected.Result,
-            DayNumber = ThisItem.Result
-        ),
-        Status.Value = "Completed"
-    )
-    =
-    CountRows(
-        Filter(OnboardingTasks,
-            Lower(EmployeeEmail) = varUserEmail,
-            MonthNumber = galMonths.Selected.Result,
-            DayNumber = ThisItem.Result
-        )
-    ),
-    RGBA(16, 124, 65, 0.15),    // all done → green tint
-    RGBA(0, 120, 212, 0.07)     // pending  → blue tint
-)
-```
+#### 2. Master Progress Gallery (`galLeaderBoard`)
+- **Items:** `Filter(Onboarding_Users, Role.Value = "New Joiner")`
+- **Inside Gallery:**
+  - **Joiner Name & Dept:** `ThisItem.Title & " (" & ThisItem.Department.Value & ")"`
+  - **Manager & Buddy:** `"Mgr: " & ThisItem.ManagerEmail & " | Buddy: " & ThisItem.BuddyEmail`
+  - **Overall Progress Bar:** 
+    ```powerapps-dot
+    Width = (CountRows(Filter(Onboarding_UserTasks, JoinerEmail = ThisItem.Email, Status.Value = "Completed")) / 
+            CountRows(Filter(Onboarding_UserTasks, JoinerEmail = ThisItem.Email))) * Parent.Width
+    ```
+  - **Overdue Warning Icon (Visible Property):** Shows a red warning if this joiner has missed deadlines.
+    ```powerapps-dot
+    CountRows(Filter(Onboarding_UserTasks, JoinerEmail = ThisItem.Email, Status.Value <> "Completed", Deadline < Today())) > 0
+    ```
 
 ---
 
-### 6D. Task List (Innermost – inside day)
+## 5. POWER AUTOMATE FLOWS
 
-**Add Vertical Gallery → name it `galTasks`**
+### FLOW 1: Auto-Assign Tasks to New Joiner
+**Trigger:** When an item is created in `Onboarding_Users`.
 
-```powerapps
-// Items:
-Filter(
-    OnboardingTasks,
-    Lower(EmployeeEmail) = varUserEmail,
-    MonthNumber = galMonths.Selected.Result,
-    DayNumber = galDays.Selected.Result
-)
+1. **Condition:** Check if `Role` equals "New Joiner".
+2. **If Yes:** Get ALL items from `Onboarding_MasterTasks`.
+3. **Filter Array:** Filter the Master Tasks list.
+   - **Condition:** `string(item()?['Department'])` *contains* `@{triggerBody()?['Department/Value']}` 
+   - **OR:** `string(item()?['Department'])` *contains* `'All'`
+4. **Apply to each (Filtered Task):**
+   - Create item in `Onboarding_UserTasks`.
+   - Title: `CurrentItem.Title`
+   - JoinerEmail: `TriggerBody.Email`
+   - Timeline: `CurrentItem.Timeline`
+   - PortalLink: `CurrentItem.PortalLink`
+   - GuideImageURL: `CurrentItem.GuideImageURL`
+   - ProjectCode: `CurrentItem.ProjectCode`
+   - ContactHR (Claims): `CurrentItem.ContactHR/Claims`
+   - Status: "Pending"
+   - **Deadline Calculation:**
+     - If Timeline = Day 1: `addDays(JoiningDate, 1)`
+     - If Timeline = Week 1: `addDays(JoiningDate, 7)`
+     - If Timeline = Month 1: `addDays(JoiningDate, 30)`
 
-// Visible:
-varExpandedDay = Text(galMonths.Selected.Result) & "_" & Text(galDays.Selected.Result)
+### FLOW 2: Comment Email Alert (As you suggested)
+**Trigger:** When an item is modified in `Onboarding_UserTasks`.
 
-// TemplateHeight: 64
-```
+1. **Condition:** Check if `LatestComment` has changed.
+2. **Get Item:** Lookup the Joiner in `Onboarding_Users` to find the `BuddyEmail`.
+3. **Send Email (V2):**
+   - **To:** `BuddyEmail`
+   - **Subject:** New Comment from `JoinerEmail` on task `Title`
+   - **Body:** "The new joiner has added a comment to their task: '`LatestComment`'. Please log in to the portal to assist them."
 
-**Inside galTasks – Checkbox:**
-```powerapps
-// Default (checked state):
-ThisItem.Status.Value = "Completed"
+### FLOW 3: Missed Deadline Alert (Scheduled)
+**Trigger:** Scheduled - Runs every day at 8:00 AM.
 
-// OnCheck (when user ticks):
-Patch(
-    OnboardingTasks,
-    ThisItem,
-    {
-        Status:      {Value: "Completed"},
-        CompletedOn: Now()
-    }
-);
-Notify("✓ Task marked complete!", NotificationType.Success)
-
-// OnUncheck (when user unticks):
-Patch(
-    OnboardingTasks,
-    ThisItem,
-    {
-        Status:      {Value: "Pending"},
-        CompletedOn: Blank()
-    }
-);
-Notify("Task marked as pending.", NotificationType.Information)
-```
-
-**Inside galTasks – Task Title Label:**
-```powerapps
-// Text:
-ThisItem.Title
-
-// Font: If(ThisItem.Status.Value = "Completed", Font.'Segoe UI', Font.'Segoe UI')
-// Color: If(ThisItem.Status.Value = "Completed", Color.Gray, Color.Black)
-// Strikethrough: ThisItem.Status.Value = "Completed"
-```
-
-**Inside galTasks – Category/Portal Button (optional):**
-```powerapps
-// Text:
-ThisItem.PortalName
-
-// Visible:
-!IsBlank(ThisItem.PortalName)
-
-// OnSelect:
-Launch(ThisItem.PortalURL)
-```
-
-**Inside galTasks – Due Status Label:**
-```powerapps
-// Text (due status logic):
-If(
-    ThisItem.Status.Value = "Completed",
-    "✓ Completed",
-    If(
-        IsBlank(ThisItem.DeadlineDay),
-        "Pending",
-        If(
-            varCurrentDay = ThisItem.DeadlineDay,
-            "⚠ Due Today",
-            If(
-                varCurrentDay > ThisItem.DeadlineDay + 1,
-                "🔴 Overdue",
-                If(
-                    varCurrentDay = ThisItem.DeadlineDay + 1,
-                    "🔴 Due Yesterday",
-                    "📅 Due Day " & Text(ThisItem.DeadlineDay)
-                )
-            )
-        )
-    )
-)
-
-// Color:
-Switch(
-    true,
-    ThisItem.Status.Value = "Completed",          Color.DarkGreen,
-    !IsBlank(ThisItem.DeadlineDay) && varCurrentDay > ThisItem.DeadlineDay + 1, Color.Red,
-    !IsBlank(ThisItem.DeadlineDay) && varCurrentDay = ThisItem.DeadlineDay,     Color.DarkOrange,
-    Color.Gray
-)
-```
-
-**Inside galTasks – Notes/Comment TextInput:**
-```powerapps
-// Default:
-ThisItem.Notes
-
-// OnChange:
-Patch(
-    OnboardingTasks,
-    ThisItem,
-    {Notes: Self.Text}
-)
-```
+1. **Get Items:** `Onboarding_UserTasks` where `Status` is NOT 'Completed' and `Deadline` is less than `utcNow()`.
+2. **Apply to each (Overdue Task):**
+   - Get Joiner details from `Onboarding_Users` to get `BuddyEmail`.
+   - **Send Email (V2):**
+     - **To:** `JoinerEmail`; `BuddyEmail`
+     - **Subject:** OVERDUE: Onboarding Task - `Title`
+     - **Body:** "This task was due on `Deadline`. Please complete it ASAP."
 
 ---
 
-## 7. Screen: Buddy Dashboard (`scrBuddy`)
-
-### What Buddy Sees
-- Their own assigned tasks from `BuddyTasks` list
-- Progress of new joiners assigned to them (read-only)
-- Day-wise accordion same as Employee screen
-
-### Layout
-```
-┌──────────────────────────────────────────────────┐
-│ KPMG Logo  |  Buddy: [Name]          [Logout]    │
-├──────────────────────────────────────────────────┤
-│ My Buddy Tasks Progress: ████░░  65%             │
-├──────────────────────────────────────────────────┤
-│ [My Tasks] [My New Joiners]  ← Tab buttons       │
-├──────────────────────────────────────────────────┤
-│ TAB: My Tasks                                    │
-│  ▼ Day 1   [2/3 done]                            │
-│     ☑ Introduce yourself to new joiner           │
-│     ☑ Share team contact list                    │
-│     ☐ Setup 1:1 calendar invite                  │
-│  ▶ Day 2   [1/2 done]                            │
-└──────────────────────────────────────────────────┘
-```
-
-### 7A. Buddy Progress Bar
-
-```powerapps
-// Progress fill width:
-(
-    CountIf(
-        Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail)) = 0,
-        1,
-        CountRows(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail))
-    )
-) * 500
-
-// Progress % text:
-Text(
-    CountIf(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail), Status.Value = "Completed")
-    /
-    If(CountRows(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail)) = 0, 1,
-       CountRows(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail))),
-    "[$-en-US]0%"
-)
-```
-
-### 7B. Tab Switching
-
-```powerapps
-// Variable for active tab:
-// Set in OnStart:
-Set(varBuddyTab, "MyTasks")
-
-// "My Tasks" button OnSelect:
-Set(varBuddyTab, "MyTasks")
-
-// "My New Joiners" button OnSelect:
-Set(varBuddyTab, "MyJoiners")
-
-// Button fill (active state):
-If(varBuddyTab = "MyTasks", RGBA(0,120,212,1), RGBA(220,220,220,1))
-```
-
-### 7C. Buddy Tasks Day Accordion
-
-**Day Gallery Items (BuddyTasks):**
-```powerapps
-Sort(
-    Distinct(
-        Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail),
-        DayNumber
-    ),
-    Result,
-    SortOrder.Ascending
-)
-
-// Visible: varBuddyTab = "MyTasks"
-```
-
-**Day Header text:**
-```powerapps
-"Day " & Text(ThisItem.Result) &
-"  [" &
-CountIf(
-    Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail, DayNumber = ThisItem.Result),
-    Status.Value = "Completed"
-) & "/" &
-CountRows(Filter(BuddyTasks, Lower(BuddyEmail) = varUserEmail, DayNumber = ThisItem.Result)) &
-" done]"
-```
-
-**Day Header OnSelect:**
-```powerapps
-If(
-    varExpandedBuddyDay = Text(ThisItem.Result),
-    Set(varExpandedBuddyDay, ""),
-    Set(varExpandedBuddyDay, Text(ThisItem.Result))
-)
-```
-
-**Buddy Task Checkbox OnCheck:**
-```powerapps
-Patch(
-    BuddyTasks,
-    ThisItem,
-    {
-        Status:      {Value: "Completed"},
-        CompletedOn: Now()
-    }
-);
-Notify("✓ Task completed!", NotificationType.Success)
-```
-
-**Buddy Task Checkbox OnUncheck:**
-```powerapps
-Patch(
-    BuddyTasks,
-    ThisItem,
-    {Status: {Value: "Pending"}, CompletedOn: Blank()}
-)
-```
-
-### 7D. My New Joiners Tab
-
-**Gallery for assigned new joiners:**
-```powerapps
-// Items (all employees where BuddyEmail = current buddy):
-Filter(EmployeeProfiles, Lower(BuddyEmail) = varUserEmail)
-
-// Visible: varBuddyTab = "MyJoiners"
-```
-
-**New joiner progress % formula (inside gallery):**
-```powerapps
-// Progress label inside joiner gallery card:
-Text(
-    CountIf(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail))) = 0,
-        1,
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)))
-    ),
-    "[$-en-US]0%"
-)
-```
-
----
-
-## 8. Screen: Leader Dashboard (`scrLeader`)
-
-### What Leader Sees
-- Team-level summary: total employees, avg progress
-- Each employee card with their progress %
-- Click on employee → see their task breakdown (read-only)
-- Overdue/missed task alerts
-
-### Layout
-```
-┌──────────────────────────────────────────────────┐
-│ KPMG Logo  |  Leader: [Name]         [Logout]    │
-├──────────────────────────────────────────────────┤
-│  Team Members: 12  |  Avg Progress: 68%          │
-│  Fully Complete: 3 |  With Missed Tasks: 2       │
-├──────────────────────────────────────────────────┤
-│  [Vikram Singh]   ████████░░  78%  Day 14        │
-│  [Priya Sharma]   ██████░░░░  62%  Day 9  🔴 2  │
-│  [Arjun Mehta]    ██████████ 100%  ✓ Complete!   │
-└──────────────────────────────────────────────────┘
-```
-
-### 8A. Team Summary Stats
-
-```powerapps
-// All employees under this leader:
-// Set on screen OnVisible or App OnStart:
-ClearCollect(
-    colMyTeam,
-    Filter(EmployeeProfiles, Lower(LeaderEmail) = varUserEmail)
-);
-
-// Total employees label:
-"Team Members: " & CountRows(colMyTeam)
-
-// Average progress label:
-"Avg Progress: " &
-Text(
-    Average(
-        AddColumns(
-            colMyTeam,
-            "EmpProgress",
-            CountIf(
-                Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(EmployeeEmail)),
-                Status.Value = "Completed"
-            ) /
-            If(
-                CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(EmployeeEmail))) = 0,
-                1,
-                CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(EmployeeEmail)))
-            )
-        ),
-        EmpProgress
-    ),
-    "[$-en-US]0%"
-)
-```
-
-### 8B. Employee List Gallery (Leader view)
-
-```powerapps
-// Items:
-Filter(EmployeeProfiles, Lower(LeaderEmail) = varUserEmail)
-
-// Template Height: 90
-```
-
-**Employee name label:**
-```powerapps
-ThisItem.Title & " · " & ThisItem.Team
-```
-
-**Employee progress % label:**
-```powerapps
-Text(
-    CountIf(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail))) = 0,
-        1,
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)))
-    ),
-    "[$-en-US]0%"
-)
-```
-
-**Progress bar fill width (inside leader gallery card):**
-```powerapps
-(
-    CountIf(
-        Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)),
-        Status.Value = "Completed"
-    )
-    /
-    If(
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail))) = 0,
-        1,
-        CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)))
-    )
-) * 300   // 300 is the bar's max width in pixels
-```
-
-**Missed tasks alert (red badge):**
-```powerapps
-// Visible:
-CountIf(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail),
-        Status.Value <> "Completed"
-    ),
-    DayNumber < Max(1, DateDiff(ThisItem.JoiningDate, Today(), Days) + 1)
-) > 0
-
-// Text:
-"🔴 " &
-CountIf(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail),
-        Status.Value <> "Completed"
-    ),
-    DayNumber < Max(1, DateDiff(ThisItem.JoiningDate, Today(), Days) + 1)
-) & " missed"
-```
-
-**Current day label:**
-```powerapps
-"Day " & Text(Max(1, DateDiff(ThisItem.JoiningDate, Today(), Days) + 1))
-```
-
-**OnSelect (view employee detail):**
-```powerapps
-Set(varSelectedEmployee, ThisItem);
-Navigate(scrEmployeeDetail, ScreenTransition.Fade)
-// Create a 6th read-only screen: scrEmployeeDetail
-```
-
----
-
-## 9. Screen: Manager Dashboard (`scrManager`)
-
-### What Manager Sees
-- ALL employees (not just their team)
-- Upload tasks from template (add to TaskMasterTemplate)
-- See missed tasks count
-- Filter by team
-
-### Layout
-```
-┌──────────────────────────────────────────────────┐
-│ KPMG Logo  |  Manager Dashboard      [Logout]    │
-├──────────────────────────────────────────────────┤
-│ [My Team] [Task Manager]   ← Tabs                │
-├──────────────────────────────────────────────────┤
-│ MY TEAM TAB:                                     │
-│ Filter: [All Teams ▼]   Total: 24 employees      │
-│                                                  │
-│ [Vikram] Dev  ████████░  78%  Day 14             │
-│ [Priya]  QA   ██████░░░  62%  Day 9  🔴 2 missed│
-├──────────────────────────────────────────────────┤
-│ TASK MANAGER TAB:                                │
-│ [+ Add New Task Template]                        │
-│ Day 1 | Month 1 | IT | Setup laptop access       │
-│ Day 2 | Month 1 | HR | Complete joining forms    │
-└──────────────────────────────────────────────────┘
-```
-
-### 9A. Manager Tab Toggle
-
-```powerapps
-// Variable: Set in OnStart → Set(varManagerTab, "Team")
-
-// "My Team" button OnSelect:
-Set(varManagerTab, "Team")
-
-// "Task Manager" button OnSelect:
-Set(varManagerTab, "Tasks");
-ClearCollect(colTaskTemplates, TaskMasterTemplate)
-
-// Tab fill (active highlight):
-If(varManagerTab = "Team", RGBA(0,120,212,1), RGBA(220,220,220,1))
-```
-
-### 9B. Team Filter Dropdown
-
-```powerapps
-// Dropdown Items:
-["All Teams", "Development", "QA", "Design", "HR", "Finance", "IT Support", "Marketing"]
-
-// Set variable on change:
-Set(varTeamFilter, drpTeamFilter.Selected.Value)
-```
-
-**Employee gallery filter by team:**
-```powerapps
-// Gallery Items:
-If(
-    varTeamFilter = "All Teams" || IsBlank(varTeamFilter),
-    EmployeeProfiles,
-    Filter(EmployeeProfiles, Team.Value = varTeamFilter)
-)
-```
-
-### 9C. Manager – All Employees Gallery
-
-**Same as Leader gallery but shows ALL employees:**
-
-```powerapps
-// Items:
-If(
-    varTeamFilter = "All Teams",
-    EmployeeProfiles,
-    Filter(EmployeeProfiles, Team.Value = varTeamFilter)
-)
-```
-
-**Completed / Total task count label:**
-```powerapps
-CountIf(
-    Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail)),
-    Status.Value = "Completed"
-) &
-"/" &
-CountRows(Filter(OnboardingTasks, Lower(EmployeeEmail) = Lower(ThisItem.EmployeeEmail))) &
-" tasks"
-```
-
-### 9D. Task Manager Tab – Add New Template Task
-
-**Add TextInput for task name, Number inputs for Day and Month, and Save button:**
-
-```powerapps
-// Save button OnSelect (adds new task to TaskMasterTemplate):
-If(
-    IsBlank(txtTaskTitle.Text),
-    Notify("Please enter a task title.", NotificationType.Warning),
-    Patch(
-        TaskMasterTemplate,
-        Defaults(TaskMasterTemplate),
-        {
-            Title:       txtTaskTitle.Text,
-            Description: txtTaskDesc.Text,
-            DayNumber:   Value(txtDayNumber.Text),
-            MonthNumber: Value(txtMonthNumber.Text),
-            Category:    txtCategory.Text,
-            PortalURL:   txtPortalURL.Text,
-            PortalName:  txtPortalName.Text,
-            IsActive:    true
-        }
-    );
-    Notify("✓ Task template added!", NotificationType.Success);
-    ClearCollect(colTaskTemplates, TaskMasterTemplate);
-    Reset(txtTaskTitle);
-    Reset(txtTaskDesc)
-)
-```
-
-**Task template gallery:**
-```powerapps
-// Items:
-colTaskTemplates
-
-// Or directly:
-Sort(TaskMasterTemplate, DayNumber, SortOrder.Ascending)
-```
-
-**Delete template task:**
-```powerapps
-// Delete icon OnSelect:
-Remove(TaskMasterTemplate, ThisItem);
-ClearCollect(colTaskTemplates, TaskMasterTemplate);
-Notify("Task template deleted.", NotificationType.Information)
-```
-
----
-
-## 10. Formulas Quick Reference
-
-### 🔢 Progress Calculation (reusable pattern)
-
-```powerapps
-// Template – replace [FilterCondition] with your filter
-CountIf(
-    Filter(OnboardingTasks, [FilterCondition]),
-    Status.Value = "Completed"
-)
-/
-If(
-    CountRows(Filter(OnboardingTasks, [FilterCondition])) = 0,
-    1,
-    CountRows(Filter(OnboardingTasks, [FilterCondition]))
-)
-
-// Example for current employee:
-// [FilterCondition] = Lower(EmployeeEmail) = varUserEmail
-```
-
-### ✅ Mark Task Complete (Patch)
-
-```powerapps
-Patch(
-    OnboardingTasks,    // or BuddyTasks
-    ThisItem,
-    {
-        Status:      {Value: "Completed"},
-        CompletedOn: Now()
-    }
-)
-```
-
-### ❌ Mark Task Pending (Patch)
-
-```powerapps
-Patch(
-    OnboardingTasks,
-    ThisItem,
-    {Status: {Value: "Pending"}, CompletedOn: Blank()}
-)
-```
-
-### 📅 Calculate Current Day
-
-```powerapps
-Max(1, DateDiff(varMyProfile.JoiningDate, Today(), Days) + 1)
-```
-
-### 🎯 Check if Task is Overdue
-
-```powerapps
-// Returns true if task is overdue:
-!IsBlank(ThisItem.DeadlineDay) &&
-ThisItem.Status.Value <> "Completed" &&
-varCurrentDay > ThisItem.DeadlineDay
-```
-
-### 🔑 Accordion Key (unique key for Month+Day)
-
-```powerapps
-// To create a unique key for each day inside a month:
-Text(galMonths.Selected.Result) & "_" & Text(ThisItem.Result)
-// e.g. "1_3" = Month 1, Day 3
-// e.g. "2_7" = Month 2, Day 7
-```
-
-### 📊 Missed Tasks Count (for any employee)
-
-```powerapps
-CountIf(
-    Filter(OnboardingTasks,
-        Lower(EmployeeEmail) = Lower(varTargetEmail),   // replace varTargetEmail
-        Status.Value <> "Completed",
-        !IsBlank(DayNumber)
-    ),
-    DayNumber < Max(1, DateDiff(varMyProfile.JoiningDate, Today(), Days) + 1)
-)
-```
-
-### 🧭 Navigate Back
-
-```powerapps
-// Back button OnSelect:
-Navigate(scrEmployee, ScreenTransition.Fade)
-
-// Logout button OnSelect:
-Set(varUserEmail, "");
-Set(varUserRole, "");
-Set(varUserName, "");
-Set(varMyProfile, Blank());
-Navigate(scrLogin, ScreenTransition.Fade)
-```
-
----
-
-## ⚙️ SharePoint Permission Setup
-
-| Role     | `OnboardingTasks`     | `BuddyTasks`       | `EmployeeProfiles`  | `AppUsers`     | `TaskMasterTemplate` |
-|----------|-----------------------|--------------------|---------------------|----------------|----------------------|
-| Employee | Read + Write (own)    | No access          | Read (own)          | Read           | Read                 |
-| Buddy    | Read only             | Read + Write (own) | Read (assigned)     | Read           | Read                 |
-| Leader   | Read (team)           | Read               | Read (team)         | Read           | Read                 |
-| Manager  | Full Read             | Full Read          | Full Read + Write   | Full Read+Write| Full Read + Write    |
-
-> **Tip:** For row-level security, use SharePoint list permissions or handle in PowerApps by always filtering with `Lower(EmployeeEmail) = varUserEmail`.
-
----
-
-## 🗂️ Suggested Screen Count
-
-| Screen Name           | Purpose                                  |
-|-----------------------|------------------------------------------|
-| `scrLogin`            | Role selection + login                   |
-| `scrEmployee`         | Employee accordion + progress            |
-| `scrBuddy`            | Buddy tasks + new joiners overview       |
-| `scrLeader`           | Team summary + employee cards            |
-| `scrManager`          | All employees + task template manager    |
-| `scrEmployeeDetail`   | Read-only employee task view (Leader/Mgr)|
-
----
-
-## 📦 Sample Data to Add in SharePoint
-
-### AppUsers list (add these rows manually):
-
-| Title         | UserEmail              | Role     | IsActive |
-|---------------|------------------------|----------|----------|
-| Admin Manager | manager@kpmg.com       | Manager  | Yes      |
-| Buddy One     | buddy1@kpmg.com        | Buddy    | Yes      |
-| Leader One    | leader@kpmg.com        | Leader   | Yes      |
-
-### TaskMasterTemplate list (sample rows):
-
-| Title                          | DayNumber | MonthNumber | Category |
-|--------------------------------|-----------|-------------|----------|
-| Complete IT setup form         | 1         | 1           | IT       |
-| Register on TalentKonnect      | 1         | 1           | HR       |
-| Setup laptop and access cards  | 2         | 1           | IT       |
-| Meet your buddy                | 2         | 1           | General  |
-| Complete joining paperwork     | 3         | 1           | HR       |
-| Attend orientation session     | 5         | 1           | Training |
-| Setup email and Teams          | 1         | 1           | IT       |
-
----
-
-> 📝 **Note:** This guide is based on the existing React onboarding web app logic.  
-> React's `localStorage` → replaced with **SharePoint Lists**  
-> React's `useState` → replaced with **PowerApps Variables (`Set()`)**  
-> React's `.filter()` → replaced with **PowerApps `Filter()`**  
-> React's checkbox `toggleTask()` → replaced with **`Patch()` to SharePoint**
+## 6. COMPLETE FORMULA REFERENCE
+
+| Action | Formula |
+|---|---|
+| Auto-Login Check | `LookUp(Onboarding_Users, Email = User().Email)` |
+| Filter Tasks | `Filter(Onboarding_UserTasks, JoinerEmail = User().Email)` |
+| Mark Complete | `Patch(Onboarding_UserTasks, ThisItem, {Status: {Value: "Completed"}})` |
+| Progress Math | `CountRows(Completed) / CountRows(AllTasks) * 100` |
+| Add Comment | `Patch(Onboarding_UserTasks, ThisItem, {LatestComment: txtComment.Text})` |
